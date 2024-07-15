@@ -1,71 +1,71 @@
 def obter_conjunto(nome):
     return set(input(f"Digite os elementos do conjunto {nome} separados por espaço: ").split())
 
-def complementar(conjunto, universo):
-    return universo.difference(conjunto)
+def substituir_variaveis(variaveis, expressao):
+    for var in variaveis:
+        expressao = expressao.replace(var, f"variaveis['{var}']")
+    return expressao
 
-def calcular_operacao(conjunto1, conjunto2, operacao, universo):
-    if operacao == 'U':
-        return conjunto1.union(conjunto2)
-    elif operacao == 'A':
-        return conjunto1.intersection(conjunto2)
-    elif operacao in ['M', '-']:
-        return conjunto1.difference(conjunto2)
-    elif operacao == '_':
-        return complementar(conjunto1, universo)
-    elif operacao == 'S':
-        return conjunto1.symmetric_difference(conjunto2)
-    else:
+def eval_expression(expressao, variaveis):
+    try:
+        return eval(expressao)
+    except Exception as e:
+        print(f"Erro ao avaliar a expressão: {e}")
         return None
 
 def main():
     universo = obter_conjunto("Universo (Un)")
     conjunto_a = obter_conjunto("A")
     conjunto_b = obter_conjunto("B")
+    conjuntos = {
+        'A': conjunto_a,
+        'B': conjunto_b,
+        'U': universo
+    }
 
     while True:
+        confirma = input("Deseja adicionar mais algum conjunto? (digite nao caso nao queira): ")
+        if confirma == "nao":
+            break;
+        nome_conjunto = input("Digite o nome para o conjunto (deve ser em maiúsculo e não pode colidir com outros: ")
+        conjuntos.update({nome_conjunto + '': obter_conjunto(nome_conjunto)})
+        
+    while True:
         print("\nOperações possíveis: União (U), Interseção (A), Diferença (M ou -), Complementar (_), Diferença Simétrica (S)")
-        operacao = input("Digite a operação desejada (ou 'sair' para encerrar): ")
+        expressao = input("Digite a expressão de conjuntos (ou 'sair' para encerrar ou 'alterar' para adicionar novos valores em um conjunto já existente): ")
 
-        if operacao.lower() == 'sair':
+        if expressao.lower() == 'sair':
             print("Encerrando o programa.")
             break
 
-        if operacao == '_':
-            conjunto = input("Digite o conjunto para complementar (A ou B): ")
-            if conjunto == 'A':
-                resultado = complementar(conjunto_a, universo)
-            elif conjunto == 'B':
-                resultado = complementar(conjunto_b, universo)
+        if expressao == 'alterar':
+            nome_conjunto = input("Digite o nome do conjunto pré-existente: ")
+            if conjuntos.get(nome_conjunto):
+                conjuntos.update({nome_conjunto + '': obter_conjunto(nome_conjunto)})
             else:
-                print("Conjunto inválido.")
-                continue
-        else:
-            conjunto1 = input("Digite o primeiro conjunto (A ou B): ")
-            conjunto2 = input("Digite o segundo conjunto (A ou B): ")
+                print("Determinado conjunto é inexistente")
+            continue
+        # Substituir operadores de conjuntos por funções Python
+        expressao = expressao.replace('u', '|')
+        expressao = expressao.replace('a', '&')
+        expressao = expressao.replace('m', '-')
+        expressao = expressao.replace('d', '-')
+        expressao = expressao.replace('s', '^')
+        expressao = expressao.replace('_', 'U ^')
 
-            if conjunto1 == 'A':
-                conjunto1 = conjunto_a
-            elif conjunto1 == 'B':
-                conjunto1 = conjunto_b
-            else:
-                print("Conjunto inválido.")
-                continue
+        # Substituir variáveis de conjuntos
+        expressao = substituir_variaveis(conjuntos, expressao)
 
-            if conjunto2 == 'A':
-                conjunto2 = conjunto_a
-            elif conjunto2 == 'B':
-                conjunto2 = conjunto_b
-            else:
-                print("Conjunto inválido.")
-                continue
-
-            resultado = calcular_operacao(conjunto1, conjunto2, operacao, universo)
+        # Avaliar a expressão de conjuntos
+        resultado = eval_expression(expressao, conjuntos)
 
         if resultado is not None:
-            print(f"Resultado da operação: {resultado}")
+            if len(resultado) > 0:
+                print(f"Resultado da expressão: {resultado}")
+            else:
+                print("Conjunto vazio")
         else:
-            print("Operação inválida.")
+            print("Expressão inválida.")
 
 if __name__ == "__main__":
     main()
