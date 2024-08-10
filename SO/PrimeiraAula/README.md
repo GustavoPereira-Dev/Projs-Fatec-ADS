@@ -27,3 +27,6 @@ um vetor de entrada de 8 posições.</li>
 
 
 </ol>
+
+<p>Imagens de input/output do código</p>
+<img src="./prints.png"/>
