@@ -1,7 +1,7 @@
-package model.estrutura;
+package model.estrutura_simples;
 
 import java.lang.Exception;
-import model.estrutura.No;
+import model.estrutura_simples.No;
 
 public class ListaEncadeadaSimples<T>{
 	private No<T> inicio = null;
@@ -64,12 +64,15 @@ public class ListaEncadeadaSimples<T>{
 	public void insert(int index, T elemento) throws IllegalArgumentException{
 		if(index == 0){
 			No<T> buffer_novo = new No<>(elemento);
-			if(this.inicio != null){
-				No<T> buffer_inicio = this.inicio;
-				buffer_novo.setProximo(buffer_inicio);
-				this.inicio = buffer_inicio;
-			} else{
+			if(this.inicio == null){
 				this.inicio = buffer_novo;
+				this.fim = buffer_novo;
+			} else{
+				No<T> ex_inicio = this.inicio;
+				buffer_novo.setProximo(ex_inicio);
+				this.inicio = buffer_novo;
+				buffer_novo.setProximo(ex_inicio);
+				ex_inicio.setAnterior(buffer_novo);
 			}
 		} else{
 			this.insert(this.get(--index), elemento);
@@ -110,6 +113,7 @@ public class ListaEncadeadaSimples<T>{
 		buffer_anterior.setProximo(buffer_proximo);
 		item.setProximo(null);
 		item.setValor(null);
+	}
 		
 	public int total(){
 		if(this.inicio == null)
@@ -124,24 +128,22 @@ public class ListaEncadeadaSimples<T>{
 		return total_elementos;
 	}
 		
-		@Override
-		public String toString(){
-			if(this.inicio == null){
-				return "[]";
-			}
-			
-			StringBuilder builder = new StringBuilder("[");
-			No<T> buffer = this.inicio;
-			builder.append(buffer.getValor());
-			while(buffer.getProximo() != null){
-				builder.append(", ");
-				buffer = buffer.getProximo();
-				builder.append(buffer.getValor());
-			}
-			builder.append("]");
-			return builder.toString();
+	@Override
+	public String toString(){
+		if(this.inicio == null){
+			return "[]";
 		}
-		
-		
+			
+		StringBuilder builder = new StringBuilder("[");
+		No<T> buffer = this.inicio;
+		builder.append(buffer.getValor());
+		while(buffer.getProximo() != null){
+			builder.append(", ");
+			buffer = buffer.getProximo();
+			builder.append(buffer.getValor());
+		}
+		builder.append("]");
+		return builder.toString();
 	}
+		
 }

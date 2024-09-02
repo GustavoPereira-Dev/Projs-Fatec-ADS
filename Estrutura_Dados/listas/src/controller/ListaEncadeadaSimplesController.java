@@ -1,6 +1,6 @@
 package controller;
 
-import model.estrutura.ListaEncadeadaSimples;
+import model.estrutura_simples.ListaEncadeadaSimples;
 
 public class ListaEncadeadaSimplesController{
 	public ListaEncadeadaSimplesController(){
@@ -14,7 +14,7 @@ public class ListaEncadeadaSimplesController{
 		lista.append(2);
 		lista.append(3);
 		
-		lista.remove(1);
+		lista.remove(2);
 		
 		return lista.toString();
 	}
