@@ -12,7 +12,7 @@ public class Main {
 
 		
 		int i, j;
-		System.out.println("--------------------------------Exercício 1----------------------------------------");
+		System.out.println("--------------------------------ExercÃ­cio 1----------------------------------------");
 		
 		// 1
 		for(i = 0; i < 5; i++) {
@@ -23,7 +23,7 @@ public class Main {
 		
 		
 		// 2
-		System.out.println("--------------------------------Exercício 2----------------------------------------");
+		System.out.println("--------------------------------ExercÃ­cio 2----------------------------------------");
 		int[][] mt = new int[3][5];
 		for(i = 0; i < 3; i++) {
 			for(j = 0; j < 5; j++) {
@@ -34,9 +34,12 @@ public class Main {
 		}
 		
 		
-		System.out.println("--------------------------------Exercício 3----------------------------------------");
+		System.out.println("--------------------------------ExercÃ­cio 3----------------------------------------");
 		// 3
 		int[] vt = new int[1000];
+   for(i = 0; i < 100; i++){
+      vt[i] = (int) (Math.random() * 100) + 1;   
+   }
 		for(i = 0; i < 2; i++) {
 			ThreadVetor threadVetor = new ThreadVetor(i + 1, vt);
 			threadVetor.start();
@@ -44,7 +47,7 @@ public class Main {
 		
 		
 		
-		System.out.println("--------------------------------Exercício 5----------------------------------------");
+		System.out.println("--------------------------------ExercÃ­cio 5----------------------------------------");
 		// 5
 		String[][] sites = {{"UOL", "www.uol.com.br"}, {"Terra", "www.terra.com.br"}, {"Google","www.google.com.br"}};
 		for(i = 0; i < 3; i++) {
@@ -53,26 +56,32 @@ public class Main {
 		}
 		
 		
-		System.out.println("--------------------------------Exercício 4----------------------------------------");
+		System.out.println("--------------------------------ExercÃ­cio 4----------------------------------------");
 		// 4
 		int sapo1, sapo2, sapo3, sapo4, sapo5;
-		for(i = 0; i < 10; i++) {
-			
-			try {
-				Thread.sleep(500);
-				sapo1 = (int) (Math.random() * 5) + 1;
-				sapo2 = (int) (Math.random() * 5) + 1;
-				sapo3 = (int) (Math.random() * 5) + 1;
-				sapo4 = (int) (Math.random() * 5) + 1;
-				sapo5 = (int) (Math.random() * 5) + 1;
-				
-				CorridaSapos corrida = new CorridaSapos(sapo1,sapo2,sapo3,sapo4,sapo5);
-				corrida.start();
-			} catch(Exception e) {
-				
-			}
-			
-		}
+		                boolean fimCorrida = false;
+                do {
+                        
+                        try {
+                                sapo1 = (int) (Math.random() * 5) + 1;
+                                sapo2 = (int) (Math.random() * 5) + 1;
+                                sapo3 = (int) (Math.random() * 5) + 1;
+                                sapo4 = (int) (Math.random() * 5) + 1;
+                                sapo5 = (int) (Math.random() * 5) + 1;
+
+                                CorridaSapos corrida = new CorridaSapos(sapo1,sapo2,sapo3,sapo4,sapo5);
+                                corrida.start();
+                                
+                                Thread.sleep(500);
+                                fimCorrida = !corrida.finalCorrida;
+                                
+                        } catch(Exception e) {
+
+                        }
+                        
+                        
+                        
+                } while(fimCorrida);
 		
 	}
 	
