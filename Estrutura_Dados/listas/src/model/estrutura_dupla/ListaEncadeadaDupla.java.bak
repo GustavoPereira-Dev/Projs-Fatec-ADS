@@ -19,7 +19,7 @@ public class ListaEncadeadaDupla<T>{
 	
 	public void append(T elemento){
 		try{
-			No<T> buffer = new No<>(elemento);
+			No<T> novo = new No<>(elemento);
 			if(this.fim == null){
 				this.fim = buffer;
 				this.inicio = buffer;
@@ -137,27 +137,32 @@ public class ListaEncadeadaDupla<T>{
 	}
 	
 	public void remove(int index){
-		if(index == 0){
-			this.inicio.setValor(null);
-			if(this.inicio.getProximo() == null){
-				this.inicio = null;
-				this.fim = null;
-			} else{
-				No<T> buffer = this.inicio.getProximo();
-				No<T> anterior = this.inicio.getAnterior();
-				this.inicio.setProximo(null);
-				this.inicio.setAnterior(null);
-				this.inicio = buffer;
+		try{
+			if(index == 0){
+				this.inicio.setValor(null);
+				if(this.inicio.getProximo() == null){
+					this.inicio = null;
+					this.fim = null;
+				} else{
+					No<T> buffer = this.inicio.getProximo();
+					No<T> anterior = this.inicio.getAnterior();
+					this.inicio.setProximo(null);
+					this.inicio.setAnterior(null);
+					this.inicio = buffer;
+				}
+			} else {
+				No<T> buffer_anterior = this.get(--index);
+				No<T> item = buffer_anterior.getProximo();
+				No<T> buffer_proximo = item.getProximo();
+				buffer_anterior.setProximo(buffer_proximo);
+				item.setProximo(null);
+				item.setValor(null);
 			}
-		} else {
-			No<T> buffer_anterior = this.get(--index);
-			No<T> item = buffer_anterior.getProximo();
-			No<T> buffer_proximo = item.getProximo();
-			buffer_anterior.setProximo(buffer_proximo);
-			item.setProximo(null);
-			item.setValor(null);
+			total--;
+		} catch(Exception e){
+			throw e;
 		}
-		total--;
+
 	}
 	
 	public int getTotal(){
