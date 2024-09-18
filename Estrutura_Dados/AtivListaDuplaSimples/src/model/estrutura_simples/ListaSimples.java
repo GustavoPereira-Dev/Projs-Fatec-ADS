@@ -2,22 +2,22 @@
 package model.estrutura_simples;
 
 public class ListaSimples<T> {
-    NoSimples<T> inicio;
+    private NoSimples<T> inicio;
 
     // Adiciona um elemento de forma ordenada (neste caso específico para String)
     public void adicionarOrdenado(T valor) {
         NoSimples<T> novoNo = new NoSimples<>(valor);
 
-        if (inicio == null || compararStrings(valor, inicio.valor) < 0) {
-            novoNo.proximo = inicio;
+        if (inicio == null || compararStrings(valor, inicio.getValor()) < 0) {
+            novoNo.setProximo(inicio);
             inicio = novoNo;
         } else {
             NoSimples<T> atual = inicio;
-            while (atual.proximo != null && compararStrings(atual.proximo.valor, valor) < 0) {
-                atual = atual.proximo;
+            while (atual.getProximo() != null && compararStrings(atual.getProximo().getValor(), valor) < 0) {
+                atual = atual.getProximo();
             }
-            novoNo.proximo = atual.proximo;
-            atual.proximo = novoNo;
+            novoNo.setProximo(atual.getProximo());
+            atual.setProximo(novoNo);
         }
     }
 
@@ -25,15 +25,15 @@ public class ListaSimples<T> {
     public boolean remover(T valor) {
         if (inicio == null) return false;
 
-        if (compararStrings(inicio.valor, valor) == 0) {
-            inicio = inicio.proximo;
+        if (compararStrings(inicio.getValor(), valor) == 0) {
+            inicio = inicio.getProximo();
         } else {
             NoSimples<T> atual = inicio;
-            while (atual.proximo != null && compararStrings(atual.proximo.valor, valor) != 0) {
-                atual = atual.proximo;
+            while (atual.getProximo() != null && compararStrings(atual.getProximo().getValor(), valor) != 0) {
+                atual = atual.getProximo();
             }
-            if (atual.proximo != null) {
-                atual.proximo = atual.proximo.proximo;
+            if (atual.getProximo() != null) {
+                atual.setProximo(atual.getProximo().getProximo());
             }
         }
         return inicio == null;
@@ -43,10 +43,10 @@ public class ListaSimples<T> {
     public T localizar(T valor) {
         NoSimples<T> atual = inicio;
         while (atual != null) {
-            if (compararStrings(atual.valor, valor) == 0) {
-                return atual.valor;
+            if (compararStrings(atual.getValor(), valor) == 0) {
+                return atual.getValor();
             }
-            atual = atual.proximo;
+            atual = atual.getProximo();
         }
         return null;
     }
@@ -63,8 +63,8 @@ public class ListaSimples<T> {
         StringBuilder listaNomes = new StringBuilder();
         NoSimples<T> atual = inicio;
         while (atual != null) {
-            listaNomes.append(atual.valor.toString()).append(" ");
-            atual = atual.proximo;
+            listaNomes.append(atual.getValor().toString()).append(" ");
+            atual = atual.getProximo();
         }
         return listaNomes.toString().trim(); // Remove espaços no final
     }
@@ -73,8 +73,8 @@ public class ListaSimples<T> {
     public void exibir() {
         NoSimples<T> atual = inicio;
         while (atual != null) {
-            System.out.print(atual.valor + " ");
-            atual = atual.proximo;
+            System.out.print(atual.getValor() + " ");
+            atual = atual.getProximo();
         }
         System.out.println();
     }
