@@ -14,12 +14,15 @@ public class ListaEncadeadaSimples<T>{
 	// remove	Remover
 	// total	Total de elementos
 	
+	private No<T> fim = null;
 	public void append(T elemento){
 		No<T> buffer = new No<>(elemento);
 		if(this.inicio == null){
 			this.inicio = buffer;
+			this.fim = buffer;
 		} else{
-			this.last().setProximo(buffer);
+			this.fim.setProximo(buffer);
+			this.fim = buffer;
 		}
 	}
 	
@@ -66,13 +69,10 @@ public class ListaEncadeadaSimples<T>{
 			No<T> buffer_novo = new No<>(elemento);
 			if(this.inicio == null){
 				this.inicio = buffer_novo;
-				this.fim = buffer_novo;
 			} else{
 				No<T> ex_inicio = this.inicio;
 				buffer_novo.setProximo(ex_inicio);
 				this.inicio = buffer_novo;
-				buffer_novo.setProximo(ex_inicio);
-				ex_inicio.setAnterior(buffer_novo);
 			}
 		} else{
 			this.insert(this.get(--index), elemento);
@@ -82,7 +82,7 @@ public class ListaEncadeadaSimples<T>{
 	public void insert(No<T> item, T elemento) throws IllegalArgumentException{
 		No<T> buffer_novo = new No<>(elemento);
 		No<T> buffer_proximo = item.getProximo();
-		item.setProximo(buffer_proximo);
+		item.setProximo(buffer_novo);
 		buffer_novo.setProximo(buffer_proximo);
 	}
 
@@ -113,6 +113,7 @@ public class ListaEncadeadaSimples<T>{
 		buffer_anterior.setProximo(buffer_proximo);
 		item.setProximo(null);
 		item.setValor(null);
+
 	}
 		
 	public int total(){

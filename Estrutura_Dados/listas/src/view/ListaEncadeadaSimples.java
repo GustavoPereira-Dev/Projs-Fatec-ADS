@@ -10,6 +10,7 @@ public class ListaEncadeadaSimples{
 			
 		} catch(Exception e){
 			e.printStackTrace();
+			
 		}
 	}
 }

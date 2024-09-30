@@ -145,9 +145,7 @@ public class ListaEncadeadaDupla<T>{
 					this.fim = null;
 				} else{
 					No<T> buffer = this.inicio.getProximo();
-					No<T> anterior = this.inicio.getAnterior();
 					this.inicio.setProximo(null);
-					this.inicio.setAnterior(null);
 					this.inicio = buffer;
 				}
 			} else {
