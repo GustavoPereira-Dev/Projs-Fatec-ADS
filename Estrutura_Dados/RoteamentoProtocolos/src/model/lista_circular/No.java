@@ -5,14 +5,12 @@ import model.fila_fifo.FilaFIFO;
 public class No<T> {
 	private No<T> proximo;
 	private String type;
-	private String dados;
 	FilaFIFO<T> fila = new FilaFIFO<>();
 	
 
-	public No(String type, String dados) {
+	public No(String type) {
 		this.proximo = null;
 		this.type = type;
-		this.dados = dados;
 	}
 
 	public No<T> getProximo() {
@@ -32,15 +30,6 @@ public class No<T> {
 		this.type = type;
 	}
 
-	public String getDados() {
-		return dados;
-	}
-
-	public void setDados(String dados) {
-		this.dados = dados;
-	}
-	
-	
 
 	public FilaFIFO<T> getFila() {
 		return fila;
@@ -51,6 +40,6 @@ public class No<T> {
 	}
 
 	public String toString() {
-		return  type + " " + dados;
+		return  type + " " + fila.toString();
 	}
 }

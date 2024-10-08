@@ -7,12 +7,12 @@ public class RotementoProtocolosController {
 		ListaCircular c = new ListaCircular();
 		
 		
-		c.append("http", "2122");
-		c.enqueueFila("a", "http");
-		c.enqueueFila("b", "http");
-		c.enqueueFila("c", "pop");
-		
-		c.dequeueFila("http");
+		c.append("http", "a");
+		c.append("http", "b");
+		c.append("http", "c");
+		c.append("pop", "d");
+		c.append("pop", "e");
+		c.append("icmp", "e");
 		return c.toString();
 	}
 }
