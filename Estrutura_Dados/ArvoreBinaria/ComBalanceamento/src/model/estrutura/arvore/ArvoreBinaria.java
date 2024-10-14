@@ -1,0 +1,340 @@
+package model.estrutura.arvore;
+
+import model.estrutura.arvore.No;
+import model.estrutura.lista.ListaEncadeadaSimples;
+
+public class ArvoreBinaria<T extends Comparable>{
+	private No<T> raiz;
+	private int tamanho = 0;
+	
+	// add: adiciona um novo No
+	// altura(No<T>): altura do No
+	// balancear(No<T>): Balanceamento a partir de um no
+	// defineBalanceamento(No<T>): indice de balanceamento
+	// ordem: retorna um lista na ordem
+	// preOrdem: retorna uma lista na pre-ordem
+	// posOrdem: retorn uma lista na pos-ordem
+	// remove: remove um No (ordenando os outros depois do removido)
+	// rotacaoEsquerda(No<T>): Rotaciona para esquerda
+	// rotacaoDireita(No<T>): Rotaciona para direita
+	// rotacaoDuplaEsquerda(No<T>): Rotação dupla para esquerda
+	// rotacaoDuplaDireita(No<T>): Rotação dupla para direita
+	
+	public ArvoreBinaria(){
+		this.raiz = null;
+	}
+	
+	public void add(T valor){
+		No<T> novo = new No<T>(valor);
+		tamanho++;
+		if(raiz == null){
+			this.raiz = novo;
+			defineBalanceamento(this.raiz);
+		} else{
+			No<T> atual = this.raiz;
+			while(true){
+				if(novo.getValor().compareTo(atual.getValor()) == -1){
+					if(atual.getMenor() != null){
+						atual = atual.getMenor();
+					} else{
+						atual.setMenor(novo);
+						novo.setRaiz(atual);
+						defineBalanceamento(this.raiz);
+						this.raiz = balancear(raiz);
+						break;
+					}
+				} else{
+					if(atual.getMaior() != null){
+						atual = atual.getMaior();
+					} else{
+						atual.setMaior(novo);
+						novo.setRaiz(atual);
+						defineBalanceamento(this.raiz);
+						this.raiz = balancear(raiz);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	public int altura(No<T> atual){
+		if(atual == null){
+			// Se o nó for nulo, sua altura será -1
+			return -1;
+		}
+		if(atual.getMaior() == null && atual.getMenor() == null){
+			// Se ele não tiver nenhum filho, sua altura será 0
+			return 0;
+		} else if(atual.getMenor() == null){
+			// Se o nó tiver apenas um filho, sua altura será 1 + a altura do nó filho
+			return 1 + altura(atual.getMaior());
+		} else if(atual.getMaior() == null){
+			// Se o nó tiver apenas um filho, sua altura será 1 + a altura do nó filho
+			return 1 + altura(atual.getMenor());
+		} else{
+			// Se ele tiver dois filhos, temos que verificar qual filho é mais "alto"
+			if(altura(atual.getMenor()) > altura(atual.getMaior())){
+				// A altura será 1 + a altura do nó mais alto
+				return 1 + altura(atual.getMenor()); 
+			} else{
+				return 1 + altura(atual.getMaior());
+			}
+		}
+		
+	}
+	
+	public void defineBalanceamento(No<T> atual){
+		atual.setBalanceamento(altura(atual.getMenor()) - altura(atual.getMaior()));
+		
+		if(atual.getMaior() != null) defineBalanceamento(atual.getMaior());
+		if(atual.getMenor() != null) defineBalanceamento(atual.getMenor());
+	}
+	
+	public No<T> rotacaoEsquerda(No<T> atual){
+		No<T> aux = atual.getMaior();
+		aux.setRaiz(atual.getRaiz());
+		
+		// tratamento para quando a árvore é egenerada
+		if(aux.getMenor() != null) aux.getMenor().setRaiz(atual);
+		
+		atual.setRaiz(aux);
+		atual.setMaior(aux.getMenor());
+		aux.setMenor(atual);
+		
+		if(aux.getRaiz() != null){
+			if(aux.getRaiz().getMaior() == atual){
+				aux.getRaiz().setMaior(aux);
+			} else if(aux.getRaiz().getMenor() == atual){
+				aux.getRaiz().setMenor(aux);
+			}
+		}
+		
+		// atualiza o valor do balanceamento
+		defineBalanceamento(aux);
+		
+		return aux;
+	}
+	
+	public No<T> rotacaoDireita(No<T> atual){
+		// Armazena o valor do nó da esquerda do atual
+		No<T> aux = atual.getMenor();
+		aux.setRaiz(atual.getRaiz());
+		
+		// tratamento para quando a árvore é egenerada
+		if(aux.getMaior() != null) aux.getMaior().setRaiz(atual);
+		
+		atual.setRaiz(aux);
+		// Joga o valor da direita do nó da esquerda do atual, na esquerda do atual
+		atual.setMenor(aux.getMaior());
+		// troca o valor da direita do nó da esquerda pelo atual
+		aux.setMaior(atual);
+		
+		if(aux.getRaiz() != null){
+			// Se aux não for a raiz principal, configura o pai para apontar pro novo nó
+			if(aux.getRaiz().getMaior() == atual){
+				aux.getRaiz().setMaior(aux);
+			} else if(aux.getRaiz().getMenor() == atual){
+				aux.getRaiz().setMenor(aux);
+			}
+		}
+		
+		// atualiza o valor do balanceamento
+		defineBalanceamento(aux);
+		
+		return aux; // retorna o valor do nó da esquerda que é o novo pai
+	}
+	
+	public No<T> rotacaoDuplaDireita(No<T> atual){
+		// Armazena o valor do filho da esquerda
+		No<T> aux = atual.getMenor();
+		// faz uma rotação para a esquerda do filho da esquerda
+		atual.setMenor(rotacaoEsquerda(aux));
+		// Faz uma rotação para a direita no atual/pai com o filho da esquerda já rodado
+		No<T> aux2 = rotacaoDireita(atual);
+		return aux2;
+	}
+	
+	public No<T> rotacaoDuplaEsquerda(No<T> atual){
+		// Armazena o valor do filho da direita
+		No<T> aux = atual.getMaior();
+		// faz uma rotação para a direita do filho da direita
+		atual.setMaior(rotacaoDireita(aux));
+		// Faz uma rotação para a esquerda no atual/pai com o filho da direita já rodado
+		No<T> aux2 = rotacaoEsquerda(atual);
+		return aux2;
+	}
+	
+	public void balancear(){
+		this.raiz = balancear(this.raiz);
+	}
+	
+	public No<T> balancear(No<T> atual){
+		if(atual.getBalanceamento() == 2 && atual.getMenor().getBalanceamento() >= 0){
+			atual = rotacaoDireita(atual);
+		} else if(atual.getBalanceamento() == -2 && atual.getMaior().getBalanceamento() <= 0){
+			atual = rotacaoEsquerda(atual);
+		} else if(atual.getBalanceamento() == 2 && atual.getMenor().getBalanceamento() < 0){
+			atual = rotacaoDuplaDireita(atual);
+		} else if(atual.getBalanceamento() == -2 && atual.getMaior().getBalanceamento() > 0){
+			atual = rotacaoDuplaEsquerda(atual);
+		}
+		
+		if(atual.getMaior() != null){
+			balancear(atual.getMaior());
+		}
+		
+		if(atual.getMenor() != null){
+			balancear(atual.getMenor());
+		}
+		
+		return atual;
+	}
+	
+	public ListaEncadeadaSimples ordem(){
+		ListaEncadeadaSimples lista = new ListaEncadeadaSimples();
+		No<T> atual = this.raiz;
+		ordem(atual,lista);
+		return lista;
+	}
+	
+	public ListaEncadeadaSimples preOrdem(){
+		ListaEncadeadaSimples lista = new ListaEncadeadaSimples();
+		No<T> atual = this.raiz;
+		preOrdem(atual,lista);
+		return lista;
+	}
+	
+	public ListaEncadeadaSimples posOrdem(){
+		ListaEncadeadaSimples lista = new ListaEncadeadaSimples();
+		No<T> atual = this.raiz;
+		posOrdem(atual,lista);
+		return lista;
+	}
+	
+	private void ordem(No<T> atual, ListaEncadeadaSimples lista){
+		if(atual != null){
+			ordem(atual.getMenor(), lista);
+			lista.append(atual.getValor());
+			ordem(atual.getMaior(), lista);
+		}
+	}
+	
+	private void preOrdem(No<T> atual, ListaEncadeadaSimples lista){
+		if(atual != null){
+			lista.append(atual.getValor());
+			ordem(atual.getMenor(), lista);
+			ordem(atual.getMaior(), lista);
+		}
+	}
+	
+	private void posOrdem(No<T> atual, ListaEncadeadaSimples lista){
+		if(atual != null){
+			ordem(atual.getMenor(), lista);
+			ordem(atual.getMaior(), lista);
+			lista.append(atual.getValor());
+		}
+	}
+	
+	public boolean remove(T valor){
+		// buscar o No na árvore
+		No<T> atual = this.raiz;
+		No<T> paiAtual = null;
+		while(atual != null){
+			if(atual.getValor().equals(valor)){
+				break;
+			} else if(valor.compareTo(atual.getValor()) == -1){
+				// valor procurado é menor que o atual
+				paiAtual = atual;
+				atual = atual.getMenor();
+			} else{
+				// valor procurado é maior que o atual
+				paiAtual = atual;
+				atual = atual.getMaior();
+			}
+		}
+		
+		// verifica se existe o No
+		if(atual == null) return false;
+		
+		// No tem 2 filhos ou No tem somente filho à direita
+		if(atual.getMaior() != null){
+			No<T> substituto = atual.getMaior();
+			No<T> paiSubstituto = substituto.getMenor();
+			while(substituto.getMenor() != null){
+				paiSubstituto = substituto;
+				substituto = substituto.getMenor();
+			}
+			
+			substituto.setMenor(atual.getMenor());
+			if(paiAtual != null){
+				// verificar se é a raiz
+				if(atual.getValor().compareTo(paiAtual.getValor()) == -1){
+					paiAtual.setMenor(null);
+				} else{
+					paiAtual.setMaior(substituto);
+				}
+			} else{
+				// se não tem paiAtual, então é a raiz
+				this.raiz = substituto;
+				paiSubstituto.setMenor(null);
+				this.raiz.setMaior(paiSubstituto);
+				this.raiz.setMenor(atual.getMenor());
+			}
+			
+			// removeu o No da árvore
+			if(substituto.getValor().compareTo(paiSubstituto.getValor()) == -1){
+				paiSubstituto.setMenor(null);
+				substituto.setMaior(paiSubstituto);
+			} else{
+				paiSubstituto.setMaior(null);
+			}
+				
+		} else if(atual.getMenor() != null){
+			// tem filho só à esquerda
+			No<T> substituto = atual.getMenor();
+			No<T> paiSubstituto = atual;
+			while(substituto.getMaior() != null){
+				paiSubstituto = substituto;
+				substituto = substituto.getMaior();
+			}
+			
+			if(paiAtual != null){
+				if(atual.getValor().compareTo(paiAtual.getValor()) == -1){
+					// atual < paiAtual
+					paiAtual.setMenor(substituto);
+				} else{
+					// atual > paiAtual
+					paiAtual.setMaior(substituto);
+				}
+			} else{
+				 // se for a raiz
+				 this.raiz = substituto;
+			}
+			
+			// remove o No da arvore
+			if(substituto.getValor().compareTo(paiAtual.getValor()) == -1){
+				paiSubstituto.setMenor(null);
+			} else{
+				paiSubstituto.setMenor(null);
+			}
+		} else{
+			// não tem filho
+			if(paiAtual != null){
+				if(atual.getValor().compareTo(paiAtual.getValor()) == -1){
+					// atual < paiAtual
+					paiAtual.setMenor(null);
+				} else{
+					// atual > paiAtual
+					paiAtual.setMaior(null);
+				}
+			} else{
+				// é a raiz
+				this.raiz = null;
+			}
+		}
+		
+		return true;
+	}
+	
+}
