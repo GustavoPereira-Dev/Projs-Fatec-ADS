@@ -1,0 +1,19 @@
+package controller;
+
+import model.estrutura.arvore.ArvoreBinaria;
+import model.estrutura.lista.ListaEncadeadaSimples;
+
+public class ArvoreBinariaController{
+	public ArvoreBinariaController(){
+		super();
+	}
+	
+	public String teste() throws Exception{
+		ArvoreBinaria arvore = new ArvoreBinaria();
+		
+		arvore.addDepartamento("Diretor");
+		
+		return "";
+		
+	}
+}

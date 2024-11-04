@@ -1,0 +1,62 @@
+package model.estrutura.arvore;
+import model.estrutura.lista.ListaEncadeadaSimples;
+
+public class No<ListaEncadeadaSimples>{
+	private String nome;
+	private ListaEncadeadaSimples<String> lista = new ListaEncadeadaSimples<String>;
+	private int nivel;
+	private int tamanho;
+	private No<ListaEncadeadaSimples> proximoNivel;
+	
+	public No(String nome){
+		this.nome = nome;
+		this.nivel = 0;
+		this.proximoNivel = null;
+		this.tamanho = 0;
+	}
+	
+	
+	public void setTamanho(){
+		this.tamanho = this.tamanho++;
+	}
+	
+	public int getTamanho(){
+		return this.tamanho;
+	}
+	public String getNome(){
+		return this.nome;
+	}
+	
+	public void setNome(String nome){
+		this.nome = nome;
+	}
+	
+	public void setLista(ListaEncadeadaSimples lista){
+		this.lista = lista;
+	}
+	
+	public ListaEncadeadaSimples getLista(){
+		return lista;
+	}
+	
+	public void setNivel(int nivel){
+		this.nivel = nivel;
+	}
+	
+	public int getNivel(){
+		return nivel;
+	}
+	
+	public void setProximoNivel(No<ListaEncadeadaSimples> proximoNivel){
+		this.proximoNivel = proximoNivel;
+	}
+	
+	public No<ListaEncadeadaSimples> getProximoNivel(){
+		return proximoNivel;
+	}
+	
+	public String toString(){
+		return nome;
+	}
+	
+}
