@@ -1,0 +1,51 @@
+package controller;
+
+import model.estrutura.grafo.GrafoMatriz;
+import java.util.Arrays;
+public class GrafoMatrizController{
+	public GrafoMatrizController(){
+		super();
+	}
+
+	public String teste() throws Exception{
+		String[] routers = new String[]{"Belo Horizonte","Campinas","Campos dos Goytacazes",
+		"Colatina","Franca","Governador Valadares","Itabira","Juiz de Fora","Manhuacu","Patos de Minas",
+		"Ribeirao Preto","Rio de Janeiro","Sao Carlos","Sao Jose do Rio Preto",
+		"Sao Jose dos Campos", "Sao Paulo","Uberaba", "Uberlandia", "Vitoria"};
+		GrafoMatriz g = new GrafoMatriz(routers);
+
+		g.link("Patos de Minas","Uberlandia",122);
+		g.link("Uberlandia","Uberaba",105);
+		g.link("Uberaba","Ribeirao Preto",173);
+		g.link("Ribeirao Preto","Franca",89);
+		g.link("Sao Jose do Rio Preto","Uberaba",180);
+		g.link("Sao Jose do Rio Preto","Uberlandia",285);
+		g.link("Ribeirao Preto","Sao Carlos",99);
+		g.link("Sao Carlos","Campinas",99);
+		g.link("Campinas","Sao Paulo",111);
+		g.link("Sao Paulo","Sao Jose dos Campos",79);
+		g.link("Sao Jose dos Campos","Rio de Janeiro",341);
+		g.link("Rio de Janeiro","Campos dos Goytacazes",277);
+		g.link("Campos dos Goytacazes","Vitoria",240);
+		g.link("Vitoria","Manhuacu",233);
+		g.link("Manhuacu","Governador Valadares",198);
+		g.link("Governador Valadares","Colatina",216);
+		g.link("Governador Valadares","Belo Horizonte",313);
+		g.link("Belo Horizonte","Juiz de Fora",260);
+		g.link("Juiz de Fora","Rio de Janeiro",181);
+		g.link("Juiz de Fora","Manhuacu",290);
+		g.link("Itabira","Manhuacu",279);
+		g.link("Belo Horizonte","Uberaba",476);
+		
+	
+		 // Definir centros logísticos e as cidades que eles atendem
+        g.adicionarCentroLogistico("Uberaba", Arrays.asList("Franca", "Ribeirao Preto", "Patos de Minas", "Uberlandia"));
+        g.adicionarCentroLogistico("Rio de Janeiro", Arrays.asList("Campos dos Goytacazes", "Vitoria", "Juiz de Fora"));
+
+        // Testar a rota para uma cidade
+        String resposta = g.calcularRota("Sao Paulo");
+        System.out.println(resposta);
+		return g.toString();
+	}
+
+}
