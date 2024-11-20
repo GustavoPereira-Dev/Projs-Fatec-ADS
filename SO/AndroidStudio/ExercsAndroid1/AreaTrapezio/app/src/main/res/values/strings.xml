@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AreaTrapezio</string>
+    <string name="area_a">Área A</string>
+    <string name="area_b">Área B</string>
+    <string name="altura">Altura</string>
+    <string name="calcular">Calcular</string>
+    <string name="res">Resultado da área do trapézio é: </string>
+</resources>
+

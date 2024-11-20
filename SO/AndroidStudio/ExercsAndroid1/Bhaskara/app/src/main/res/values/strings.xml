@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bhaskara</string>
+    <string name="valor_a">Valor de A</string>
+    <string name="valor_b">Valor de B</string>
+    <string name="valor_c">Valor de C</string>
+    <string name="calc">Calcular</string>
+    <string name="res">Resultado</string>
+</resources>
