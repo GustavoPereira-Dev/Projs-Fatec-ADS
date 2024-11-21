@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NumerosPrimos</string>
+    <string name="num1">Num1</string>
+    <string name="num2">Num2</string>
+    <string name="calc">Ver Números Primos</string>
+    <string name="res"> Resultado:</string>
+</resources>

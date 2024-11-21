@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MaiorESomaImpar</string>
+    <string name="num1">Num1</string>
+    <string name="num2">Num2</string>
+    <string name="calcMaior">Maior</string>
+    <string name="somaImpar">Soma ímpar</string>
+    <string name="res">Resultado: </string>
+</resources>
