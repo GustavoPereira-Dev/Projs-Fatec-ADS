@@ -1,0 +1,5 @@
+# Matemática Discreta
+
+- [Operações com Conjuntos](./OperacoesConjuntos.py): Métodos em Python com a possibilidade de adicionar vários conjuntos (A,B, etc.), ter o conjunto Universo (U) e fazer equações de operações com eles, como união, intersecção, diferença, complementar e também a diferença Simétrica
+- [Equivalência de Conjunto](./EquivalenciaConjunto.py): Testa se um conjunto no formato "{(a,a),(c,a),(b,b)}" tem as propriedades que definem se ele é equivalente ou não (simetria, reflexividade e transitividade)
+- [Lógica Proporcicional](./LogicaProporcicional.py): Métodos que podem ser expressões para dois os mais tipos de proporcições (q,p,etc.) e operadores que são muito conhecidos na tabela verdade e também na análise de condicionais booleanas nas linguagens de programação no geral, como o e (&&), ou (||), não (not/!) ou exclusivo (xor/^) e também verificações de implicação (somente falso se a 1º proposição for verdadeira e a 2º falsa) e a bidirecional (verdadeiro se ambas forem 0 ou 1)
