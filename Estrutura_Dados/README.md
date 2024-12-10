@@ -30,3 +30,5 @@
   - /home/usuario/Downloads/Debian12.8.img
     - Seu trabalho é fazer um código em Java que recebe um array com valores semelhantes a esta lista (acima) e transforma em árvore.
 
+![Processos](image-3.png)
+
