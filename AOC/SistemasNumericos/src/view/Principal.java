@@ -1,6 +1,7 @@
 package view;
 
 import controller.ConversoesController;
+import controller.OperacoesController;
 
 public class Principal {
 	public static void main(String[] args) {
@@ -13,6 +14,11 @@ public class Principal {
 		System.out.println(cs.hexadecimalParaDecimal("3fd"));
 		System.out.println(cs.octalParaHexadecimal(127));
 	
-		
+		OperacoesController op = new OperacoesController();
+		System.out.println(op.soma("11101101", "10010110"));
+		System.out.println(op.subtracao("10000000", "100101"));
+		System.out.println(op.multiplicacao("1001", "1001"));
+		System.out.println(op.divisao("100011", "101"));
+	
 	}
 }
