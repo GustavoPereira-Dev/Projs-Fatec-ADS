@@ -35,7 +35,6 @@ public class PessoaController {
         return pessoas;
     }
 
-	// MergeSort com Idade
     private static int dividir(Pessoa[] pessoas, int inicio, int fim) {
         int ponteiroEsquerda = inicio + 1;
         int ponteiroDireita = fim;
@@ -67,6 +66,7 @@ public class PessoaController {
         pessoas[j] = auxiliar;
     }
     
+    // MergeSort com Idade
     public Pessoa[] ordenaIdade(Pessoa[] vetor, int inicio, int fim) {
 		
 		if(inicio < fim) {
