@@ -32,3 +32,4 @@
 
 ![Processos](image-3.png)
 
+- [Exercícios Extras](./Extra/): Um conjunto de projetos baseados em Estrutura de Dados revisando e aprimorando o conhecimento de tudo o que foi feito ao decorrer da disciplina (Recursividade, Ordenação, Listas, Stacks e FIFOs, Árvores e Grafos)

@@ -1,6 +1,5 @@
 package lista1.controller;
 
-import javax.swing.JOptionPane;
 public class UtilController {
 	
 	public int[] carregarVetor(int tam) {

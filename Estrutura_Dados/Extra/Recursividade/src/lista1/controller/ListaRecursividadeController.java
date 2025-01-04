@@ -59,7 +59,7 @@ public class ListaRecursividadeController {
 	}
 	
 	
-	  public static double somarSequencia(int n) {
+	  public double somarSequencia(int n) {
 	        // Condição de parada: quando n é igual a 1, a somatória é 1
 	        if (n == 1) {
 	            return 1.0;
