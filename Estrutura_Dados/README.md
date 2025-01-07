@@ -10,6 +10,7 @@
 - [Atividade Roteirização](./AtividadeRoteirizacao/): Projeto feito em Matriz de Adjancência de Grafo, em que, segundo o enunciado, "uma fábrica automotiva (peças de reparo para FIAT) se instalou em Belo Horizonte e pretende atender as cidades da tabela abaixo, para estas cidades serão montadas rotas de distribuição e serão atendidas tanto pela fábrica como por dois centros de distribuição, estes centros são usados para atendimento rápido."
 
 ![Mapa Roteirização](image.png)
+
 ![Tabela de ponderação por km](image-1.png) 
 
   - Deve-se montar a árvore de escoamento de produção da empresa para estas cidades, com linhas sempre ativas. O aluno também deve escolher 2 cidades para serem centros logísticos, e montar mais duas árvores baseadas neste centros logísticos (lembre-se que uma cidade não pode ser atendida por dois centros logísticos e nem a cidade que possui a fábrica).
