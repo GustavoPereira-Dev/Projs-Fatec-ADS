@@ -1,6 +1,6 @@
 package controller;
 
-import model.estrutura.arvore.ArvoreArquivos;
+import model.estrutura.arvorenaobinaria.ArvoreArquivos;
 
 public class ListaArvoreController {
     public String teste() {

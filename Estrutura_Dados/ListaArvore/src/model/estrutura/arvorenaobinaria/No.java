@@ -1,7 +1,7 @@
-package model.estrutura.arvore;
+package model.estrutura.arvorenaobinaria;
 import model.estrutura.lista.ListaEncadeadaSimples;
 
-class No<T> {
+public class No<T> {
     private T valor;
     private ListaEncadeadaSimples<No<T>> filhos;
 
