@@ -2,6 +2,8 @@ package lista3.model.lista.set;
 
 import java.lang.Exception;
 
+// Exercicio 4
+
 public class Set<T> {
     private No<T> inicio = null;
     private int total = 0;

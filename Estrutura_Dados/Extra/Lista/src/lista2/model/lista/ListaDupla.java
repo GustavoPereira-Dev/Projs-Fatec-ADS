@@ -35,22 +35,18 @@ public class ListaDupla<T extends Comparable>{
 		}
 	}
 	
-	public No<T> get(int index) throws IllegalArgumentException{
-		int i = 0;
-		if(this.inicio == null)
-			throw new IllegalArgumentException("Não existe item na lista.");
-		
-		No<T> buffer = this.inicio;
-		for(i = 0; i < index; i++){
-			if(buffer.getProximo() == null)
-				break;
-			buffer = buffer.getProximo();
-		}
-		
-		if(i < index)
-			throw new IllegalArgumentException("O indice informado nao existe");
-		return buffer;
+	public No<T> get(int index) throws IllegalArgumentException {
+	    if (index < 0 || index >= total) {
+	        throw new IllegalArgumentException("O índice informado não existe");
+	    }
+
+	    No<T> buffer = this.inicio;
+	    for (int i = 0; i < index; i++) {
+	        buffer = buffer.getProximo();
+	    }
+	    return buffer;
 	}
+
 	
 	public int index(T elemento) throws IllegalArgumentException{
 		if(this.inicio == null)
@@ -163,31 +159,30 @@ public class ListaDupla<T extends Comparable>{
 
 	}
 	
+	// Exercicio 2 pt 1
 	public void mesclar(ListaDupla<T> l1, ListaDupla<T> l2) {
-		No<T> lista1 = l1.fim;
-		No<T> lista2 = l2.inicio;
-		No<T> inicioLista1 = lista1;
-		No<T> fimLista2 = lista2;
-	
-		lista1.setProximo(lista2);
-		lista2.setAnterior(lista1);
-		
-		while(inicioLista1.getAnterior() != null) {
-			inicioLista1 = inicioLista1.getAnterior();
-		}
-		
-		while(fimLista2.getProximo() != null) {
-			fimLista2 = fimLista2.getProximo();
-		}
-		
-		fimLista2.setProximo(inicioLista1);
-		inicioLista1.setAnterior(fimLista2);
-		
-		this.inicio = inicioLista1;
-		this.fim = fimLista2;
-		total = l1.total + l2.total;
+	    if (l1.inicio == null && l2.inicio == null) {
+	        this.inicio = null;
+	        this.fim = null;
+	        return;
+	    } else if (l1.inicio == null) {
+	        this.inicio = l2.inicio;
+	        this.fim = l2.fim;
+	    } else if (l2.inicio == null) {
+	        this.inicio = l1.inicio;
+	        this.fim = l1.fim;
+	    } else {
+	        l1.fim.setProximo(l2.inicio);
+	        l2.inicio.setAnterior(l1.fim);
+	        
+	        this.inicio = l1.inicio;
+	        this.fim = l2.fim;
+	    }
+	    total = l1.total + l2.total;
 	}
+
 	
+	// Exercicio 2 pt 2
 	public void ordenar() {
         boolean trocado;
         for (int i = 0; i < total - 1; i++) {
@@ -207,27 +202,32 @@ public class ListaDupla<T extends Comparable>{
         }
     }
 	
+	// Exercicio 3
 	public String doisMaiores() {
-		No<T> buffer = this.inicio;
-		int segundoMaior = 0;
-		int primeiroMaior = 0;
-		boolean primeiroNumero = true;
-		
-		while(buffer.getValor() == null) {
-			
-			if(primeiroNumero) {
-				primeiroMaior = (int) buffer.getValor();
-				segundoMaior = (int) buffer.getValor();
-			} else if(buffer.getValor().compareTo(primeiroMaior) > 0) {
-				segundoMaior = primeiroMaior;
-				primeiroMaior = (int) buffer.getValor();
-			}
-			
-			buffer = buffer.getProximo();
-		}
-		
-		return "Primeiro número maior: " + primeiroMaior + "; " + "Segundo número maior: " + segundoMaior;
+	    if (this.inicio == null) {
+	        return "A lista está vazia.";
+	    }
+	    
+	    No<T> buffer = this.inicio;
+	    int segundoMaior = Integer.MIN_VALUE;
+	    int primeiroMaior = Integer.MIN_VALUE;
+	    
+	    while (buffer != null) {
+	        int valor = (int) buffer.getValor();
+	        
+	        if (valor > primeiroMaior) {
+	            segundoMaior = primeiroMaior;
+	            primeiroMaior = valor;
+	        } else if (valor > segundoMaior && valor < primeiroMaior) {
+	            segundoMaior = valor;
+	        }
+	        
+	        buffer = buffer.getProximo();
+	    }
+	    
+	    return "Primeiro número maior: " + primeiroMaior + "; " + "Segundo número maior: " + segundoMaior;
 	}
+
 	
 	public int getTotal(){
 		return total;

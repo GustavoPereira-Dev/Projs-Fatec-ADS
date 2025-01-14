@@ -2,49 +2,53 @@ package lista1;
 
 import java.util.LinkedList;
 
+import lista1.controller.Lista1Controller;
+import lista1.model.listaencadeada.ListaSimples;
+
 public class Principal {
 	
 
 	public static void main(String[] args) {
-		System.out.println("Lista A");
-		System.out.println(listaA());
+		Lista1Controller lc1 = new Lista1Controller();
 		
-		System.out.println("Lista B");
-		System.out.println(listaB());
-	}
-	
-	public static String listaA() {
-		LinkedList<Integer> lista = new LinkedList<Integer>();
-		for(int i = 0; i < 10; i++){
-			if(i % 2 == 0){
-				lista.addFirst(i * i);
-			} else if(i <= 6){
-				lista.addFirst(i);
-			} else{
-				System.out.println(lista.get(lista.size() - 1));
-				lista.removeLast();
-			}
-			System.out.println(lista.size());
+		System.out.println("-----------------Exercicio 1-----------------");
+		
+		System.out.println("--------Lista A--------");
+		lc1.listaA();
+		System.out.println("--------Lista B--------");
+		lc1.listaB();
+		
+		System.out.println("-----------------Exercicio 2-----------------");
+		
+		ListaSimples<String> lista1 = new ListaSimples<String>();
+		lista1.append("Item 1");
+		lista1.append("Item 0");
+		lista1.append("Item 2");
+		lista1.append("Item 3");
+		lista1.append("Item 4");
+		lista1.append("Item 5");
+		lista1.append("Item 6");
+		lista1.insert(3, "Item 3.1");
+		lista1.remove(1);
+		System.out.println("Index do Item 3: " + lista1.index("Item 3"));
+		System.out.println(lista1.toString());
+		
+		System.out.println("-----------------Exercicio 3-----------------");
+		int[] vetor = {3, 5, 18, 12, 9, 7, 6, 2, 13, 4, 16};
+		ListaSimples<Integer> lista2 = new ListaSimples<Integer>();
+		
+		for(int valor: vetor) {
+			lista2.append(valor);
 		}
 		
-		return lista.toString();
+		System.out.println(lista2.toString());
+		lista2.reverse();
+		System.out.println(lista2.toString());
+		
+		
 	}
 	
-	public static String listaB() {
-		LinkedList<Integer> lista = new LinkedList<Integer>();
-		for(int i = 0; i < 115; i++){
-			if(lista.isEmpty()){
-				lista.addFirst(i + 100);
-			} else if(lista.size() <= 4){
-				lista.addFirst(i + 50);
-			} else{
-				System.out.println(lista.get(0));
-				lista.removeFirst();
-			}
-			System.out.println(lista.size());
-		}
-		return lista.toString();
-	}
+	
 	
 }	
 

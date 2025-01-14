@@ -200,6 +200,8 @@ public class ListaCircular<T extends Comparable>{
 		remove(getLast());
 	}
 		
+	// Exercicio 1
+	
 	public void ordenar() {
         
 		boolean trocado;
@@ -220,62 +222,57 @@ public class ListaCircular<T extends Comparable>{
         }
     }
 	
-	public void uniao(ListaCircular<T> l1,ListaCircular<T> l2) {
-		No<T> lista1 = l1.ultimo_elemento.getProximo();
-		No<T> lista2 = l2.ultimo_elemento.getProximo();
-		
-		ListaCircular<T> uniao = new ListaCircular<T>();
-		uniao.append(lista1.getValor());
-		
-		int total = 0;
-		int nLista;
-		T elemento;
-		
-		for (int i = 0; i < 2; i++) {
-			total = i == 0 ? l1.total : l2.total; 
-			nLista = i == 0 ? 1 : 2; 
-			
-            for (int j = 0; j < total; j++) {
-            	elemento = nLista == 1 ? lista1.getValor() : lista2.getValor();
-            	
-            	if(!uniao.hasElement(elemento)) {
-            		uniao.append(elemento);
-            	}
-            	
-            	if(nLista == 1) lista1 = lista1.getProximo();
-            	else lista2 = lista2.getProximo();
-            	
-            }
-        }
-		
-		this.ultimo_elemento = uniao.get(total).getProximo();
+	// Exercicio 2 pt 1
+	public void uniao(ListaCircular<T> l1, ListaCircular<T> l2) {
+	    ListaCircular<T> uniao = new ListaCircular<>();
 
+	    if (l1.total > 0) {
+	        No<T> atual = l1.ultimo_elemento.getProximo();
+	        for (int i = 0; i < l1.total; i++) {
+	            if (!uniao.hasElement(atual.getValor())) {
+	                uniao.append(atual.getValor());
+	            }
+	            atual = atual.getProximo();
+	        }
+	    }
+
+	    if (l2.total > 0) {
+	        No<T> atual = l2.ultimo_elemento.getProximo();
+	        for (int i = 0; i < l2.total; i++) {
+	            if (!uniao.hasElement(atual.getValor())) {
+	                uniao.append(atual.getValor());
+	            }
+	            atual = atual.getProximo();
+	        }
+	    }
+
+	    this.ultimo_elemento = uniao.ultimo_elemento;
+	    this.total = uniao.total;
 	}
+
 	
-	public void interseccao(ListaCircular<T> l1,ListaCircular<T> l2) {
-		No<T> lista1 = l1.ultimo_elemento.getProximo();
-		No<T> lista2 = l2.ultimo_elemento.getProximo();
-		T elemento;
-		
-		ListaCircular<T> interseccao = new ListaCircular<T>();
-		
-		for(int i = 0; i < l1.total; i++) {
-			
-			for(int j = 0; j < l1.total; j++) {
-				
-				if(lista1.getValor() == lista2.getValor()) {
-					elemento = lista1.getValor();
-					if(!interseccao.hasElement(elemento)) interseccao.append(elemento);
-				}
-				lista2 = lista2.getProximo();
-			}
-			
-			lista1 = lista1.getProximo();
-			lista2 = lista2.getProximo();
-		}
-		
-		this.ultimo_elemento = interseccao.get(total).getProximo();
+	// Exercicio 2 pt 2
+	public void interseccao(ListaCircular<T> l1, ListaCircular<T> l2) {
+	    ListaCircular<T> interseccao = new ListaCircular<>();
+
+	    if (l1.total > 0) {
+	        No<T> atual1 = l1.ultimo_elemento.getProximo();
+	        for (int i = 0; i < l1.total; i++) {
+	            No<T> atual2 = l2.ultimo_elemento.getProximo();
+	            for (int j = 0; j < l2.total; j++) {
+	                if (atual1.getValor().compareTo(atual2.getValor()) == 0 && !interseccao.hasElement(atual1.getValor())) {
+	                    interseccao.append(atual1.getValor());
+	                }
+	                atual2 = atual2.getProximo();
+	            }
+	            atual1 = atual1.getProximo();
+	        }
+	    }
+
+	    this.ultimo_elemento = interseccao.ultimo_elemento;
+	    this.total = interseccao.total;
 	}
+
 	
 	@Override
 	public String toString(){

@@ -4,6 +4,7 @@ import lista3.model.Musica;
 import lista3.model.lista.circular.ListaCircular;
 import lista3.model.lista.circular.No;
 
+// Exercicio 5
 public class PlayerController {
 
     public void adicionaMusica(ListaCircular<Musica> lista, String musica) {

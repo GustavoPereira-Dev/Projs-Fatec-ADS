@@ -5,6 +5,9 @@ import lista1.model.listaencadeada.No;
 import lista1.model.pilha.Pilha;
 
 public class ListaSimples<T>{
+	
+	// Exercicio 2
+	
 	private No<T> inicio = null;
 	
 	// append	Adicionar elemento
@@ -130,30 +133,32 @@ public class ListaSimples<T>{
 		return total_elementos;
 	}
 	
+	// Exercicio 3
 	public void reverse() {
-		No<T> buffer = this.inicio;
-		No<T> lInvertida;
-		Pilha<T> pilha = new Pilha<T>();
-		
-		buffer = buffer.getProximo();
-		while(buffer != null) {
-			pilha.push(buffer.getValor());
-			buffer = buffer.getProximo();
-		}
-		lInvertida = new No<T>(pilha.pop().getValor());
-		
-		try {
-			
-			this.inicio = lInvertida;
-			while(true) {
-				lInvertida.setProximo(new No<T>(pilha.pop().getValor()));
-			}
-		} catch(IllegalArgumentException e) {
-		
-		}
-		this.fim = lInvertida;
-		System.out.println("Lista Revertida!");
+	    if (this.inicio == null) {
+	        return;
+	    }
+	    No<T> buffer = this.inicio;
+	    Pilha<T> pilha = new Pilha<T>(); // Usado para reverter (adicionar do ultimo elemento ate o primeiro para reverter)
+	    
+	    while (buffer != null) {
+	        pilha.push(buffer.getValor());
+	        buffer = buffer.getProximo();
+	    }
+	    
+	    this.inicio = new No<>(pilha.pop().getValor());
+	    buffer = this.inicio;
+	    
+	    while (!pilha.isEmpty()) {
+	        No<T> novo = new No<>(pilha.pop().getValor());
+	        buffer.setProximo(novo);
+	        buffer = novo;
+	    }
+	    buffer.setProximo(null);
+	    this.fim = buffer;
+	    System.out.println("Lista Revertida!");
 	}
+
 	
 	
 		
