@@ -5,16 +5,28 @@ evidente a Lista que sobrou na memória):
 
 ![Lt01_Ex01](image.png)
 
+Testes de mesas
+
+![alt text](image-11.png)
+
+![alt text](image-12.png)
+
 2. Em Java:
 
    - Ajustar o projeto de aula para criar uma biblioteca de Lista Genérica, gerando o JAR Lista
 
 3. Dada a Lista L abaixo, fazer:
 
-   - a) Determine a sequência de passos para inverter os leemntos da própria lista e fazer a exibição dos elementos
+![alt text](image-18.png)
+
+   - a) Determine a sequência de passos para inverter os elemntos da própria lista e fazer a exibição dos elementos
 
    - b) Fazer, em Java, um novo projeto qeu insira a lista L como acima e implemente operações que permite inverter os elementos da própria Lista e a exibição dos elementos
       * É permitida a utilização de TADs (Estrutura de Dados) auxiliares
+
+Teste de Mesa
+
+![alt text](image-13.png)
 
 [Lista 2](./lista2):
 
@@ -22,9 +34,21 @@ evidente a Lista que sobrou na memória):
 
 ![alt text](image-2.png)
 
+Teste de Mesa
+
+![alt text](image-14.png)
+
 ![alt text](image-3.png)
 
+Teste de Mesa
+
+![alt text](image-15.png)
+
 ![alt text](image-4.png)
+
+Teste de Mesa
+
+![alt text](image-16.png)
 
 4. Fazer o teste de mesa considerando o vetor
 
@@ -35,12 +59,18 @@ A partir de uma Lista L iniciada e para cada elemento do vetor:
   - Senão, se a lista tiver menos de 3 elementos, inserir, no fim, a metade do valor (Inteiro)
   - Senão, se a lista tiver mais de 10 elementos, inserir, na posição 5, o triplo do valor
   - Senão, inserir, na posição 1, o valor
+
 Ao terminar de percorrer o vetor, fazer:
 Enquanto a lista tiver elementos:
+
 - Se a lista tiver mais de 10 elementos, remover a posição 3 e exibir
   - Senão, se a lista tiver mais de 5 elementos, remover do fim e exibir
   - Senão, se a lista tiver mais de 3 elementos, remover a posição 1 e exibir
   - Senão, remover do início e exibir
+
+Teste de Mesa
+
+![alt text](image-17.png)
 
 5. A Empresa XYZ quer fazer um ajuste no seu cadastro de clientes trocando o que está em um único arquivo para
 diversos arquivos, a fim de facilitar a busca quando o Cliente fizer uma compra:
@@ -76,7 +106,7 @@ manualmente, também)
 - Obs.: Linhas que estejam no arquivo cadastro.csv e não forem contemplados nas condições serão desconsideradas pela
 empresa 
 
-<i>Cadastro.csv (CPF, Nome, Idade,LimiteCredito) </i>
+<i> [Cadastro.csv](Cadastro.csv) (CPF, Nome, Idade,LimiteCredito) </i>
 
 [Lista 3](./lista3):
 
@@ -84,7 +114,7 @@ empresa
 
 ![alt text](image-7.png)
 
-- a. Ordenar a lista (Usar outros TADs é permitido)
+- a) Ordenar a lista (Usar outros TADs é permitido)
 
 - b) Implementar, em Java, um projeto que inicie a Lista L como apresentada acima e, faça sua ordenação e
 exiba ordenada. Permitido usar bibliotecas de outras TADs
@@ -121,9 +151,9 @@ os métodos de adição e criar a biblioteca com o JAR Set.
 5. Considerando a biblioteca Lista Genérica criada, fazer uma aplicação Java que simule uma playlist de músicas em um aplicativo gratuito. O tal aplicativo Vitufy, por ser gratuito, a partir de uma lista, só permite a execução das músicas na ordem em que forem inseridas, não permitindo avançar nem retornar. Criar um objeto Musica (String nome; String nomeArtista; int duracao)
 - Criar uma classe PlayerController no Package controller, que tenha alguns métodos:
 
-  - adicionaMusica(Lista lista,String musica):void, que receberá uma String no formato:
-    - Nome_da_musica;nome_artista;duracao (obrigatoriamente dessa forma), fazer o split e gravar em um objeto Musica e, se a lista estiver vazia, adicione na primeira posição. A partir do segundo elemento, todas as outras músicas devem entrar no final da lista;
-  - removeMusica(Lista lista, int posição): void, permitindo que o usuário remova qualquer música da lista. Se a lista estiver vazia, uma exceção deve ser mostrada;
-  - executaPlaylist(Lista lista): void, que exibirá, do primeiro ao último elemento, no formato [Música: nome da música – Artista: nome artista – Duração: duracao]. Se a lista estiver vazia, uma exceção deverá ser lançada.
+  - <code> adicionaMusica(Lista lista,String musica):void</code>, que receberá uma String no formato:
+    - <code>Nome_da_musica;nome_artista;duracao</code> (obrigatoriamente dessa forma), fazer o split e gravar em um objeto Musica e, se a lista estiver vazia, adicione na primeira posição. A partir do segundo elemento, todas as outras músicas devem entrar no final da lista;
+  - <code>removeMusica(Lista lista, int posição): void</code>, permitindo que o usuário remova qualquer música da lista. Se a lista estiver vazia, uma exceção deve ser mostrada;
+  - <code>executaPlaylist(Lista lista)</code>: void, que exibirá, do primeiro ao último elemento, no formato [Música: nome da música – Artista: nome artista – Duração: duracao]. Se a lista estiver vazia, uma exceção deverá ser lançada.
 
-- Bônus: Gerar um sleep para simular a música tocando. Por não ser uma classe tipo Thread, deve-se usar Thread.sleep(tempo); para conseguir o mesmo efeito. No Package view, criar uma classe chamada Principal, e, na sua Main, inicialize uma Lista Encadeada e oferecer ao usuário a opção de inserir ou remover músicas na playlist e executar a playlist. No caso da inserção de músicas, deve-se pedir, ao usuário, que digite separadamente cada campo e monte uma String que será mandada ao método adicionaMusica na classe PlayerController. A aplicação deve ficar ativa até que o usuário digite uma opção de sair.
+- Bônus: Gerar um sleep para simular a música tocando. Por não ser uma classe tipo Thread, deve-se usar <code> Thread.sleep(tempo)</code>; para conseguir o mesmo efeito. No Package view, criar uma classe chamada Principal, e, na sua Main, inicialize uma Lista Encadeada e oferecer ao usuário a opção de inserir ou remover músicas na playlist e executar a playlist. No caso da inserção de músicas, deve-se pedir, ao usuário, que digite separadamente cada campo e monte uma String que será mandada ao método adicionaMusica na classe PlayerController. A aplicação deve ficar ativa até que o usuário digite uma opção de sair.
