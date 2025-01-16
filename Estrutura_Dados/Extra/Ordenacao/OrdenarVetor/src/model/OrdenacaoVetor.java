@@ -1,18 +1,15 @@
-package controller;
+package model;
 
-public class OrdenarVetorController {
+public class OrdenacaoVetor{
 	
-	// Exercicio 7 (Desenvolvimento do Bubble, Merge e Quick Sort em codigo (depois sera criado a biblioteca para uso)
-	// Bubble Sort
-	
-	// Crescente (de Menor para Maior)
+	// Classe que sera utilizada na biblioteca depois
 	
 	public int[] bubbleSortCrescente(int[] vetor) {
 		int aux;
 		
 		for(int i = 0; i < (vetor.length - 1); i++) {
 			for(int j = 0; j < (vetor.length - 1); j++) {
-				if(vetor[j] > vetor[j + 1]) { // Ordenação Crescente
+				if(vetor[j] > vetor[j + 1]) { 
 					aux = vetor[j];
 					vetor[j] = vetor[j + 1];
 					vetor[j + 1] = aux;
@@ -22,15 +19,13 @@ public class OrdenarVetorController {
 		
 		return vetor;
 	}
-	
-	// Decrescente (de Maior para Menor)
 	
 	public int[] bubbleSortDecrescente(int[] vetor) {
 		int aux;
 		
 		for(int i = 0; i < (vetor.length - 1); i++) {
 			for(int j = 0; j < (vetor.length - 1); j++) {
-				if(vetor[j] < vetor[j + 1]) { // Ordenação Decrescente
+				if(vetor[j] < vetor[j + 1]) { 
 					aux = vetor[j];
 					vetor[j] = vetor[j + 1];
 					vetor[j + 1] = aux;
@@ -41,23 +36,18 @@ public class OrdenarVetorController {
 		return vetor;
 	}
 	
-	
-	// Merge Sort
-	
-	
 	public int[] mergeSort(int[] vetor, int inicio, int fim) {
 		
 		if(inicio < fim) {
 			int meio = (inicio + fim) / 2;
-			mergeSort(vetor, inicio, meio); // Esquerda
-			mergeSort(vetor, meio + 1, fim); // Direita
+			mergeSort(vetor, inicio, meio); 
+			mergeSort(vetor, meio + 1, fim); 
 			intercalaCrescente(vetor, inicio, meio, fim);
 		}
 		
 		return vetor;
 	}
 	
-	// Crescente (de Menor para Maior)
 	private void intercalaCrescente(int[] vetor, int inicio, int meio, int fim) {
 		int novoVetor[] = new int[vetor.length];
 		for(int i = inicio; i <= fim; i++) {
@@ -74,7 +64,7 @@ public class OrdenarVetorController {
 			} else if(dir > fim) {
 				vetor[cont] = novoVetor[esq];
 				esq++;
-			} else if(novoVetor[esq] < novoVetor[dir]) { // Ordenação Crescente
+			} else if(novoVetor[esq] < novoVetor[dir]) { 
 				vetor[cont] = novoVetor[esq];
 				esq++;
 			} else {
@@ -85,7 +75,7 @@ public class OrdenarVetorController {
 		
 	}
 	
-	// Decrescente (de Maior para Menor)
+
 	@SuppressWarnings("unused")
 	private void intercalaDecrescente(int[] vetor, int inicio, int meio, int fim) {
 		int novoVetor[] = new int[vetor.length];
@@ -103,7 +93,7 @@ public class OrdenarVetorController {
 			} else if(dir > fim) {
 				vetor[cont] = novoVetor[esq];
 				esq++;
-			} else if(novoVetor[esq] > novoVetor[dir]) { // Ordenação Decrescente
+			} else if(novoVetor[esq] > novoVetor[dir]) { 
 				vetor[cont] = novoVetor[esq];
 				esq++;
 			} else {
@@ -114,7 +104,6 @@ public class OrdenarVetorController {
 		
 	}
 
-	// Quick Sort
 	public int[] quickSort(int[] vetor, int inicio, int fim) {
 	    if (inicio < fim) {
 	        int posicaoPivoFixo = dividirCrescente(vetor, inicio, fim);
@@ -124,19 +113,17 @@ public class OrdenarVetorController {
 	    return vetor;
 	}
 	
-	// Crescente (de Menor para Maior)
-
 	private int dividirCrescente(int[] vetor, int inicio, int fim) {
 	    int ponteiroEsquerda = inicio + 1;
 	    int ponteiroDireita = fim;
 	    int pivo = vetor[inicio];
 	    
 	    while (ponteiroEsquerda <= ponteiroDireita) {
-	        while (ponteiroEsquerda <= ponteiroDireita && vetor[ponteiroEsquerda] <= pivo) { // Ordenação Crescente
+	        while (ponteiroEsquerda <= ponteiroDireita && vetor[ponteiroEsquerda] <= pivo) { 
 	            ponteiroEsquerda++;
 	        }
 	        
-	        while (ponteiroDireita >= ponteiroEsquerda && vetor[ponteiroDireita] > pivo) { // Ordenação Crescente
+	        while (ponteiroDireita >= ponteiroEsquerda && vetor[ponteiroDireita] > pivo) { 
 	            ponteiroDireita--;
 	        }
 	        
@@ -151,7 +138,6 @@ public class OrdenarVetorController {
 	    return ponteiroDireita;
 	}
 
-	// Decrescente (de Maior para Menor)
 	@SuppressWarnings("unused")
 	private int dividirDecrescente(int[] vetor, int inicio, int fim) {
 	    int ponteiroEsquerda = inicio + 1;
@@ -159,11 +145,11 @@ public class OrdenarVetorController {
 	    int pivo = vetor[inicio];
 	    
 	    while (ponteiroEsquerda <= ponteiroDireita) {
-	        while (ponteiroEsquerda <= ponteiroDireita && vetor[ponteiroEsquerda] >= pivo) { // Ordenação Decrescente
+	        while (ponteiroEsquerda <= ponteiroDireita && vetor[ponteiroEsquerda] >= pivo) { 
 	            ponteiroEsquerda++;
 	        }
 	        
-	        while (ponteiroDireita >= ponteiroEsquerda && vetor[ponteiroDireita] < pivo) { // Ordenação Decrescente
+	        while (ponteiroDireita >= ponteiroEsquerda && vetor[ponteiroDireita] < pivo) { 
 	            ponteiroDireita--;
 	        }
 	        
