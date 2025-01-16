@@ -31,6 +31,10 @@
   - /home/usuario/Downloads/Debian12.8.img
     - Seu trabalho é fazer um código em Java que recebe um array com valores semelhantes a esta lista (acima) e transforma em árvore.
 
-![Processos](image-3.png)
+![Lista Árvore](image-3.png)
+
+- Conteúdo extra: Ordenação de extensões encontradas na árvore não binária em uma árvore binária (geral ou de um diretório em específico)
+
+![Ordenação Extensões](image-4.png)
 
 - [Exercícios Extras](./Extra/): Um conjunto de projetos baseados em Estrutura de Dados revisando e aprimorando o conhecimento de tudo o que foi feito ao decorrer da disciplina (Recursividade, Ordenação, Listas, Stacks e FIFOs, Árvores e Grafos)

@@ -33,17 +33,23 @@ public class ListaCircular<T extends Comparable>{
 		}
 	}
 	
-	public boolean hasElement(T elemento) throws IllegalArgumentException{
-		No<T> buffer = ultimo_elemento.getProximo();
-		
-		while(buffer.getValor() != ultimo_elemento) {
-			if(buffer.getValor() == elemento) return true;
-			
-			buffer = buffer.getProximo();
-		}
-		
-		return false;
+	public boolean hasElement(T elemento) throws IllegalArgumentException {
+	    if (ultimo_elemento == null) {
+	        return false;
+	    }
+
+	    No<T> buffer = ultimo_elemento.getProximo();
+	    
+	    do {
+	        if (buffer.getValor().equals(elemento)) {
+	            return true;
+	        }
+	        buffer = buffer.getProximo();
+	    } while (buffer != ultimo_elemento);
+
+	    return false;
 	}
+
 	
 	public boolean hasElement(int elemento) throws IllegalArgumentException{
 		No<T> buffer = ultimo_elemento.getProximo();
@@ -249,6 +255,7 @@ public class ListaCircular<T extends Comparable>{
 	    this.ultimo_elemento = uniao.ultimo_elemento;
 	    this.total = uniao.total;
 	}
+
 
 	
 	// Exercicio 2 pt 2

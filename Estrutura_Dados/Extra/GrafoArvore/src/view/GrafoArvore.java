@@ -12,7 +12,6 @@ public class GrafoArvore {
         No<Integer> node3 = new No<>(3);
         No<Integer> node4 = new No<>(4);
         No<Integer> node5 = new No<>(5);
-        No<Integer> node6 = new No<>(4);
 
         graph.addNode(node1);
         graph.addNode(node2);

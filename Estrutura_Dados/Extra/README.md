@@ -1,6 +1,6 @@
 # Extra
 
-- [Ordenacao](./Ordenacao/): Códigos e Exercícios referente a ordenação de vetores e objetos sobre o Bubble Sort, Merge Sort e Quick Sort
+- [Ordenacao](./Ordenacao/): Códigos e Exercícios referente a ordenação de vetores e objetos sobre o Bubble Sort, Merge Sort e Quick Sort e testes de mesas
 
 - [Recursividade](./Recursividade/): Atividades e Códigos sobre funções recursivas disponibilizadas pelo material original
   - Cada lista (sendo três no total) contém cerca de 6 exercícios sobre o uso de recursividade e funções recursivas
@@ -22,3 +22,13 @@
 - Exemplo (linhas pretas são chamadas ou o empilhamento e linhas cinzas o fim da procedure, retorno da função ou desempilhamento da mesma)
 
 ![Empilhamento e Desempilhamento](image-2.png)
+
+- [Listas Encadeadas](./Lista/): Conjunto de Atividades baseadas em 3 Listas (com códigos e testes de mesas), tendo o uso de Listas e estruturas de dados disponibilizados pela lib do Java (java.util) e respectivamente em cada uma delas, o uso exclusivo de cada uma dos tipos de Listas Encadeadas utilizadas no decorrer das aulas de ED (Encadeada Simples, Duplamente Encadeada e Duplamente Circular)
+
+- [Árvore de Nomes](./ArvoreNomes/): Uma árvore binária que mostra nomes de acordo com a ordenação de letras da árvore
+
+![alt text](image-3.png)
+
+- [Grafo para Árvore](./GrafoArvore/): Um projeto que serve de conversão de Grafos (de acordo com a "raiz" especificada e as conexões de elementos possíveis) para uma Árvore não Binária e Árvore não Binária para Grafo
+
+![alt text](image-4.png)
