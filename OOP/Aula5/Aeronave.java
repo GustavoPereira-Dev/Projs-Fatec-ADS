@@ -2,9 +2,9 @@ public class Aeronave{
 	String cor;
 	String empresa;
 	String marca;
-	tipo String;
+	String tipo;
 	
-	public Aeronave(String cor, String empresa, String marca, tipo String){
+	public Aeronave(String cor, String empresa, String marca, String tipo){
 		this.cor = cor;
 		this.empresa = empresa;
 		this.marca = marca;
@@ -16,7 +16,7 @@ public class Aeronave{
 	}
 	
 	public void pousar(){
-		System.out.println("O avião " + + empresa + " " + marca + " " + tipo + " " + cor + " esta pousando");
+		System.out.println("O avião " + empresa + " " + marca + " " + tipo + " " + cor + " esta pousando");
 	}
 
 	public void baliza(){

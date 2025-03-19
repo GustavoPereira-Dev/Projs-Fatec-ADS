@@ -10,7 +10,7 @@ public class Passageiro extends Pessoa{
 		this.horaVoo = horaVoo;
 	}
 	
-	public utilizarAviao(){
+	public void utilizarAviao(){
 		System.out.println("Passageiro " + this.nome + " esta utilizando o aviao para ir para o local y as " + horaVoo);
 	}
 }

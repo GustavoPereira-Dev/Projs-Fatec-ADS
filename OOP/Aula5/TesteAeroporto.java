@@ -1,4 +1,4 @@
-public class Teste{
+public class TesteAeroporto{
 	public static void main(String[] args){
 		Aeroporto ap1 = new Aeroporto("Congonhas","Washington Luis", 521342121);
 		Aeroporto ap2 = new Aeroporto("Guarulhos","Natalia Zarif", 241342121);
@@ -12,20 +12,20 @@ public class Teste{
 		Passageiro ps1 = new Passageiro("Claudio", "Masculino", 1214, 1892, 11, 12);
 		Passageiro ps2 = new Passageiro("Ana", "Feminino", 1242, 1254, 14, 15);
 		
-		Piloto plt1 = new Piloto("Carlos", 30, 124, an1, 10, 2141);
-		Piloto plt2 = new Piloto("Pedro", 34, 109, an2, 23, 2190);
+		Piloto plt1 = new Piloto("Carlos", "Masculino", 124, an1, 10, 2141);
+		Piloto plt2 = new Piloto("Pedro", "Masculino", 109, an2, 23, 2190);
 		
-		p1.caminhar();
-		p2.caminhar();
+		pe1.caminhar();
+		pe2.caminhar();
 		
-		ap1.informar();
+		ap1.informar(an1);
 		
 		ps1.utilizarAviao();
 		ps2.utilizarAviao();
 
 		plt1.utilizarAviao();
 		
-		ap2.informar();
+		ap2.informar(an2);
 		
 		plt2.utilizarAviao();
 	}
