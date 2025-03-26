@@ -1,6 +1,6 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID. PROGR0X6.
-       AUTHOR. GUSTAVO.
+       AUTHOR. GUSTAVO PEREIRA.
       ************************
       * CADASTRO DE AMIGOS   *
       ************************
