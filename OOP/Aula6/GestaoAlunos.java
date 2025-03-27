@@ -106,6 +106,7 @@ class GestaoAlunos {
                     break;
                 case 'S':
                     System.out.println("Saindo do sistema...");
+					System.exit(0);
                     return;
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
