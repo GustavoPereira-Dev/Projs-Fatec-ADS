@@ -36,8 +36,8 @@
        77 W-CONT        PIC 9(06) VALUE ZEROS.
        77 W-OPCAO       PIC X(01) VALUE SPACES.
        77 W-ACT         PIC 9(02) VALUE ZEROS.
-       77 MENS          PIC X(50) VALUE SPACES.
-       77 LIMPA         PIC X(50) VALUE SPACES. 
+       77 MENS          PIC X(40) VALUE SPACES.
+       77 LIMPA         PIC X(40) VALUE SPACES. 
        01 ST-ERRO       PIC X(02) VALUE "00".
        01 W-SEL         PIC 9(01) VALUE ZEROS.
        01 TXTCOR        PIC X(15) VALUE ZEROS.
@@ -68,106 +68,108 @@
           03 TXTMARCA1 PIC X(02) VALUE SPACES.
           03 TXTMARCA2 PIC X(13) VALUE SPACES. 
 
+
+
       *-----------------------------------------------------------------
        SCREEN SECTION. 
        01  TELAVEICULO.
 	   05  BLANK SCREEN.
            05  LINE 01  COLUMN 01 
-               VALUE  "                        ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤ".
+               VALUE  "                                        ".
            05  LINE 01  COLUMN 41 
-               VALUE  "ฤฤฤฤฤฤฟ".
+               VALUE  "     ฤฟ".
            05  LINE 02  COLUMN 01 
-               VALUE  "                        ณCADASTRO DE VEI".
+               VALUE  "                         CADASTRO DE VEI".
            05  LINE 02  COLUMN 41 
-               VALUE  "CULOS ณ".
+               VALUE  "CULOS  ".
            05  LINE 03  COLUMN 01 
-               VALUE  "                        ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤ".
+               VALUE  "                                        ".
            05  LINE 03  COLUMN 41 
-               VALUE  "ฤฤฤฤฤฤู".
+               VALUE  "       ".
            05  LINE 04  COLUMN 01 
-               VALUE  " ษออออออออออออออออออออออออออออออออออออออ".
+               VALUE  "                                        ".
            05  LINE 04  COLUMN 41 
-               VALUE  "ออออออออออออออป ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ".
+               VALUE  "             อป                      ฤฟ".
            05  LINE 05  COLUMN 01 
-               VALUE  " บ PLACA             :".
+               VALUE  "   PLACA             :".
            05  LINE 05  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 06  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 06  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 07  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 07  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 08  COLUMN 01 
-               VALUE  " บ NOME PROPRIETARIO :".
+               VALUE  "   NOME PROPRIETARIO :".
            05  LINE 08  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 09  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 09  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 10  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 10  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 11  COLUMN 01 
-               VALUE  " บ MARCA             :".
+               VALUE  "   MARCA             :".
            05  LINE 11  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 12  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 12  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 13  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 13  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 14  COLUMN 01 
-               VALUE  " บ ANO FABRICACAO    :".
+               VALUE  "   ANO FABRICACAO    :".
            05  LINE 14  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 15  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 15  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 16  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 16  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 17  COLUMN 01 
-               VALUE  " บ COR               :".
+               VALUE  "   COR               :".
            05  LINE 17  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 18  COLUMN 01 
-               VALUE  " บ".
+               VALUE  "  ".
            05  LINE 18  COLUMN 41 
-               VALUE  "              บ ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 19  COLUMN 01 
-               VALUE  " ศออออออออออออออออออออออออออออออออออออออ".
+               VALUE  "                                        ".
            05  LINE 19  COLUMN 41 
-               VALUE  "ออออออออออออออผ ณ                     ณ".
+               VALUE  "             อผ                        ".
            05  LINE 20  COLUMN 01 
-               VALUE  "ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤ".
+               VALUE  "                                        ".
            05  LINE 20  COLUMN 41 
-               VALUE  "ฤฤฤฤฤฤฤฤฤฤฤฤฤฟ  ณ                     ณ".
+               VALUE  "            ฤฟ                         ".
            05  LINE 21  COLUMN 01 
-               VALUE  "ณ".
+               VALUE  " ".
            05  LINE 21  COLUMN 41 
-               VALUE  "             ณ  ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 22  COLUMN 01 
-               VALUE  "ณMENSAGEM :".
+               VALUE  " MENSAGEM :".
            05  LINE 22  COLUMN 41 
-               VALUE  "             ณ  ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 23  COLUMN 01 
-               VALUE  "ณ".
+               VALUE  " ".
            05  LINE 23  COLUMN 41 
-               VALUE  "             ณ  ณ                     ณ".
+               VALUE  "                                       ".
            05  LINE 24  COLUMN 01 
-               VALUE  "ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤ".
+               VALUE  "                                        ".
            05  LINE 24  COLUMN 41 
-               VALUE  "ฤฤฤฤฤฤฤฤฤฤฤฤฤู  ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู".
+               VALUE  "                                       ".
            05  TPLACA
                LINE 05  COLUMN 24  PIC X(07)
                USING  PLACA
@@ -196,9 +198,10 @@
                LINE 17  COLUMN 27  PIC X(15)
                USING  TXTCOR
                HIGHLIGHT.
-
+ 
+      *
        01  TELACOR.
-           05  LINE 10 COLUMN  63 VALUE  "0-CINZA".
+           05  LINE 10  COLUMN  63 VALUE  "0-CINZA".
            05  LINE 11  COLUMN 63 VALUE  "1-BRANCO".
            05  LINE 12  COLUMN 63 VALUE  "2-AZUL".
            05  LINE 13  COLUMN 63 VALUE  "3-VERMELHO".
@@ -237,13 +240,15 @@
                  GO TO ROT-FIM
            ELSE
                  NEXT SENTENCE.
-
+      * 
+      *------------[ INICIALIZACAO DAS VARIAVEIS ]---------------------         
        R1.
            MOVE SPACES TO PLACA NOMEPROP MARCA
            MOVE SPACES TO TXTMARCA
-	   MOVE ZEROS TO COR ANOFABC
+	   MOVE ZEROS TO ANOFABC COR W-SEL.
+      *-------------[VISUALIZACAO DA TELA]--------------------------------  
            DISPLAY TELAVEICULO.
-        
+      
        R2.
            ACCEPT PLACA
            ACCEPT W-ACT FROM ESCAPE KEY
@@ -258,7 +263,7 @@
                 DISPLAY TELAVEICULO
                 MOVE "*** CARRO JA CADASTRAD0 ***" TO MENS
                 PERFORM ROT-MENS THRU ROT-MENS-FIM
-                GO TO R1
+                GO TO ACE-001
              ELSE
                 MOVE "ERRO NA LEITURA ARQUIVO CADCAR" TO MENS
                 PERFORM ROT-MENS THRU ROT-MENS-FIM
@@ -271,49 +276,57 @@
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 01
                    GO TO R2.
+	   IF PLACA = SPACES
+ 	    	   GO TO R3.
 
        R4.       
            ACCEPT TNOMEPROP
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 01
                    GO TO R2.
+	   IF NOMEPROP = SPACES
+ 	    	   GO TO R4.
        R5.
            MOVE 0 TO IND
            ACCEPT TMARCA.
+	   IF MARCA = SPACES
+ 	    	   GO TO R5.
        R5A.
            MOVE TBMARCA(IND) TO TXTMARCA
            IF TXTMARCA1 NOT = MARCA
               ADD 1 TO IND
-              IF IND < 10
+              IF IND < 14
                  GO TO R5A
               ELSE
                  MOVE "*** TIPO MARCA INCORRETO***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO R5
            ELSE
-               DISPLAY TTXTMARCA2.
+               DISPLAY TXTMARCA2.
 	
        R6.       
-           ACCEPT ANOFABC
+           ACCEPT TANOFABC
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 01
                    GO TO R2.
+	   IF ANOFABC = ZEROS
+ 	    	   GO TO R6.
 
        R7.
            DISPLAY TELACOR
            ACCEPT TCOR.
-           IF COR = 0 
-                 MOVE "*** DIGITE APENAS DE 0 ATE 9 ***" TO MENS
-                 PERFORM ROT-MENS THRU ROT-MENS-FIM
-                 GO TO R7.
+
        R7A.
-           MOVE TBCOR(COR) TO TXTCOR
+           MOVE TBCOR(COR + 1) TO TXTCOR
            DISPLAY TTXTCOR.
 	   DISPLAY TELAVEICULO.
+      * ------------- VERICAR SE E ALTERACAO -----------------
+           IF W-SEL = 1 
+                GO TO ALT-OPC.
        INC-OPC.
                 MOVE "S" TO W-OPCAO
-                DISPLAY (22, 59) "DADOS OK (S/N) : ".
-                ACCEPT (22, 76) W-OPCAO WITH UPDATE
+                DISPLAY (23, 35) "DADOS OK (S/N) : ".
+                ACCEPT (23, 54) W-OPCAO WITH UPDATE
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 01 GO TO R7.
                 IF W-OPCAO = "N" OR "n"
@@ -335,10 +348,75 @@
                   PERFORM ROT-MENS THRU ROT-MENS-FIM
                   GO TO R1
                 ELSE
-                      MOVE "ERRO NA GRAVACAO DO ARQUIVO DE PRODUTO"
-                                                       TO MENS
+                      MOVE "ERRO NA GRAVACAO DO ARQUIVO DE CARRO" 
+						       TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO ROT-FIM.
+
+      *
+      *****************************************
+      * ROTINA DE CONSULTA/ALTERACAO/EXCLUSAO *
+      *****************************************
+      *
+       ACE-001.
+                DISPLAY (23, 10)
+                     "N=NOVO REGISTRO   A=ALTERAR   E=EXCLUIR"
+                ACCEPT (23, 53) W-OPCAO
+                IF W-OPCAO NOT = "N" AND W-OPCAO NOT = "A" 
+                    AND W-OPCAO NOT = "E" GO TO ACE-001.
+                MOVE SPACES TO MENS
+                DISPLAY (23, 12) MENS
+                IF W-OPCAO = "N"
+                   GO TO R1  
+                ELSE
+                   IF W-OPCAO = "A"
+                      MOVE 1 TO W-SEL
+                      GO TO R3.
+      *
+       EXC-OPC.
+                DISPLAY (23, 35) "EXCLUIR   (S/N) : ".
+                ACCEPT (23, 53) W-OPCAO
+                IF W-OPCAO = "N" OR "n"
+                   MOVE "*** REGISTRO NAO EXCLUIDO ***" TO MENS
+                   PERFORM ROT-MENS THRU ROT-MENS-FIM
+                   GO TO R1.
+                IF W-OPCAO NOT = "S" AND "s"
+                   MOVE "* DIGITE APENAS S=SIM  e  N=NAO *" TO MENS
+                   PERFORM ROT-MENS THRU ROT-MENS-FIM
+                   GO TO EXC-OPC.
+       EXC-DL1.
+                DELETE CADCAR RECORD
+                IF ST-ERRO = "00"
+                   MOVE "*** REGISTRO CARRO EXCLUIDO ***" TO MENS
+                   PERFORM ROT-MENS THRU ROT-MENS-FIM
+                   GO TO R1.
+                MOVE "ERRO NA EXCLUSAO DO REGISTRO "   TO MENS
+                PERFORM ROT-MENS THRU ROT-MENS-FIM
+                GO TO ROT-FIM.
+      *
+       ALT-OPC.
+                DISPLAY (23, 36) "ALTERAR  (S/N) : ".
+                ACCEPT (23, 53) W-OPCAO
+                ACCEPT W-ACT FROM ESCAPE KEY
+                IF W-ACT = 01 GO TO R7.
+                IF W-OPCAO = "N" OR "n"
+                   MOVE "*** INFORMACOES NAO ALTERADAS *** " TO MENS
+                   PERFORM ROT-MENS THRU ROT-MENS-FIM
+                   GO TO R1.
+                IF W-OPCAO NOT = "S" AND "s"
+                   MOVE "*** DIGITE APENAS S=SIM  e  N=NAO ***" TO MENS
+                   PERFORM ROT-MENS THRU ROT-MENS-FIM
+                   GO TO ALT-OPC.
+       ALT-RW1.
+                REWRITE REGCAR
+                IF ST-ERRO = "00" OR "02"
+                   MOVE "*** REGISTRO ALTERADO ***         " TO MENS
+                   PERFORM ROT-MENS THRU ROT-MENS-FIM
+                   GO TO R1.
+                MOVE "ERRO NA EXCLUSAO DO REGISTRO CARRO"   TO MENS
+                PERFORM ROT-MENS THRU ROT-MENS-FIM
+                GO TO ROT-FIM.
+      *-------------------------------------------------------------------------------------------
 
        ROT-FIM.
            CLOSE CADCAR.
@@ -348,20 +426,20 @@
        ROT-MENS.
                 MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-               DISPLAY (23, 12) MENS.
+               DISPLAY (22, 13) MENS.
        ROT-MENS2.
                 ADD 1 TO W-CONT
                 IF W-CONT < 3000
                    GO TO ROT-MENS2
                 ELSE
                    MOVE SPACES TO MENS
-                   DISPLAY (23, 12) MENS.
+                   DISPLAY (22, 13) MENS.
        ROT-MENS-FIM.
                 EXIT.
        FIM-ROT-TEMPO.
 
       *    FILE STATUS
-      *    00 = OPERAวรO REALIZADO COM SUCESSO
-      *    22 = REGISTRO Jม CADASTRADO
-      *    23 = REGISTRO NรO ENCONTRADO
-      *    30 = ARQUIVO NรO ENCONTRADO
+      *    00 = OPERA  O REALIZADO COM SUCESSO
+      *    22 = REGISTRO J  CADASTRADO
+      *    23 = REGISTRO N O ENCONTRADO
+      *    30 = ARQUIVO N O ENCONTRADO
