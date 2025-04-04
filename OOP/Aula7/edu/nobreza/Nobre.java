@@ -1,16 +1,19 @@
 package edu.nobreza;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class Nobre{
-	private Conselheiro conselheiro;
-	private List<Soldado> soldados;
+	protected Conselheiro conselheiro;
+	protected List<Soldado> soldados = new LinkedList<Soldado>();
 	
-	public void Nobre(Conselheiro conselheiro){
+	public Nobre(Conselheiro conselheiro){
 		this.conselheiro = conselheiro;
 	}
 	
 	abstract public void gonvernar();
 	
-	public setSoldado(String soldado){
+	public void setSoldado(Soldado soldado){
 		soldados.add(soldado);
 	}
 	
@@ -18,12 +21,12 @@ public abstract class Nobre{
 		return soldados.toString();
 	}
 	
-	public setConselheiro(String conselheiro){
+	public void setConselheiro(Conselheiro conselheiro){
 		this.conselheiro = conselheiro;
 	}
 	
-	public String getSoldado(){
-		return conselheiro.toString();
+	public String getConselheiro(){
+		return this.conselheiro.toString();
 	}
 	
 	public String toString(){

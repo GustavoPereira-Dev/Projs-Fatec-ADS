@@ -4,13 +4,18 @@ public class Bispo extends Padre implements Fiel{
     private String diocese;
 
 	public Bispo(String ordemReligiosa, String diocese){
-		this.super(ordemReligiosa);
+		super(ordemReligiosa);
 		this.diocese = diocese;
 	}
 	
     @Override
     public void rezar() {
         System.out.println("O bispo da diocese " + diocese + " está rezando.");
+    }
+    
+    @Override
+    public void celebrarMissa() {
+        System.out.println("O bispo está celebrando uma missa.");
     }
 
     public void liderarCerimonia() {
@@ -26,7 +31,7 @@ public class Bispo extends Padre implements Fiel{
 	}
 	
 	public String toString(){
-		return "Diocese: " + this.diocese + "; Ordem Religiosa: " + this.ordemReligiosa;
+		return "Diocese: " + this.diocese + "; Ordem Religiosa: " + this.getOrdemReligiosa();
 	}
 
 }

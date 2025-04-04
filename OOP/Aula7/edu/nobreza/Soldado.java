@@ -16,12 +16,8 @@ public class Soldado{
 		return this.patente;
 	}
 	
-	public void setExperiencia(String experiencia){
+	public void setExperiencia(int experiencia){
 		this.experiencia = experiencia;
-	}
-	
-	public String getPatente(){
-		return this.experiencia;
 	}
 	
 	public String toString(){

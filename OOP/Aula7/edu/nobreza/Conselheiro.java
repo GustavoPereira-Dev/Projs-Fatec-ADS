@@ -1,24 +1,25 @@
 package edu.nobreza;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Conselheiro{
 	private String especialidade;
-	private List<Bispo> bispos;
+	private List<Bispo> bispos = new LinkedList<Bispo>();
 
 	public Conselheiro(String especialidade){
 		this.especialidade = especialidade;
-		this.bispos = null;
 	}
 	
 	public Conselheiro(){
 		super();
 	}
 		
-	
 	public void aconselhar() {
         System.out.println("O conselheiro está oferecendo sabedoria na área de " + especialidade + ".");
     }
 	
-	public void setEspecialidade(){
+	public void setEspecialidade(String especialidade){
 		this.especialidade = especialidade;
 	}
 	

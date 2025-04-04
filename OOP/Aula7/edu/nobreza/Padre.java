@@ -15,7 +15,7 @@ public class Padre{
 		return this.ordemReligiosa;
 	}
 	
-	public void setOrdemReligiosa(){
+	public void setOrdemReligiosa(String ordemReligiosa){
 		this.ordemReligiosa = ordemReligiosa;
 	}
 	

@@ -4,16 +4,18 @@ public class Conde extends Nobre{
 	private String dominio;
 
 	public Conde(Conselheiro conselheiro, String dominio){
-		this.super(conselheiro);
+		super(conselheiro);
 		this.dominio = dominio;
 	}
 	
-	public Conde(){
-		super();
+	@Override
+	public void gonvernar() {
+		System.out.println("Conde esta gonvernando");
+		
 	}
 	
     public void administrarDominio() {
-        System.out.println(nome + " administra seu domínio de " + dominio + " com eficiência.");
+        System.out.println("Conde administra seu domínio de " + dominio + " com eficiência.");
     }
 	
 	public void setDominio(String dominio){

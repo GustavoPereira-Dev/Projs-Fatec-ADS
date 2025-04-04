@@ -4,17 +4,22 @@ public class Principe extends Nobre implements Cavaleiro{
     private String reino;
 
 	public Principe(Conselheiro conselheiro, String reino){
-		this.super(Conselheiro conselheiro);
+		super(conselheiro);
 		this.reino = reino;
 	}
 	
+	@Override
+	public void gonvernar() {
+		System.out.println("Principe esta governando");
+	}
+	
     @Override
-    void duelar() {
-        System.out.println(nome + " está duelando bravamente pelo reino " + reino + "!");
+    public void duelar() {
+        System.out.println("Principe está duelando bravamente pelo reino " + reino + "!");
     }
 
-    void liderarGuerra() {
-        System.out.println(nome + " lidera os exércitos em batalha!");
+    public void liderarGuerra() {
+        System.out.println("Principe lidera os exércitos em batalha!");
     }
 	
 	public String getReino(){
@@ -23,10 +28,6 @@ public class Principe extends Nobre implements Cavaleiro{
 	
 	public void setReino(String reino){
 		this.reino = reino;
-	}
-
-	public String toString(){
-		return "Reino: " + this.reino;
 	}
 	
 	public String toString(){
