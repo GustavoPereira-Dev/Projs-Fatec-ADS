@@ -15,6 +15,8 @@ public class TesteAeroporto{
 		Piloto plt1 = new Piloto("Carlos", "Masculino", 124, an1, 10, 2141);
 		Piloto plt2 = new Piloto("Pedro", "Masculino", 109, an2, 23, 2190);
 		
+		Pessoa pe3 = new Passageiro("Claudio", "Masculino", 1214, 1892, 11, 12);
+		
 		pe1.caminhar();
 		pe2.caminhar();
 		

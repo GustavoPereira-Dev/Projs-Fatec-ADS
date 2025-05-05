@@ -2,7 +2,7 @@
 #include <fstream>
 #include <optional>
 
-std::optional<std::string> get_device_of_mount_point(std::string_view path)
+std::optional<std::string> devices(std::string_view path)
 {
 
    std::ifstream mounts{"/proc/mounts"};
@@ -22,7 +22,7 @@ std::optional<std::string> get_device_of_mount_point(std::string_view path)
 
 int main()
 {
-   if (const auto device = get_device_of_mount_point("/"))
+   if (const auto device = devices("/"))
       std::cout << *device << "\n";
    else
       std::cout << "Not found\n";

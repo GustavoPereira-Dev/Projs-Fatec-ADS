@@ -4,9 +4,7 @@
 namespace fs = std::filesystem;
 
 
-int main()
-{
-   std::string path = "/dev";
+void listarEspecial(std::string){
    for (const auto & entry : fs::directory_iterator(path))
    {
    
@@ -22,5 +20,10 @@ int main()
          continue;
       }
    }
-   
+}
+
+
+int main()
+{
+   listarEspecial("/dev");
 }

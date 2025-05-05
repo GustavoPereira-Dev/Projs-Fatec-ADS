@@ -10,6 +10,11 @@ public class Passageiro extends Pessoa{
 		this.horaVoo = horaVoo;
 	}
 	
+	@Override
+	public void caminhar(){
+		System.out.println("Passageiro " + nome + " está caminhando");
+	}
+	
 	public void utilizarAviao(){
 		System.out.println("Passageiro " + this.nome + " esta utilizando o aviao para ir para o local y as " + horaVoo);
 	}

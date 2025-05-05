@@ -8,6 +8,10 @@ int main(int argc, char *argv[]);
 
 int main(int argc, char *argv[])
 {
+   copiar(argc, *argv[]);
+}
+
+void copiar(int argc, char *argv[]){
    int in_fd, out_fd, rd_count, wt_count;
    char buffer[BUF_SIZE];
    if (argc != 3) exit(1); 
@@ -30,4 +34,4 @@ int main(int argc, char *argv[])
        exit(0);
    else
        exit(5);
- }
+}

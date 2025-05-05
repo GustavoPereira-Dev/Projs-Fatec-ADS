@@ -25,6 +25,6 @@ void demo_perms(std::filesystem::perms p)
 int main(int argc, char *argv[])
 {
    if (argc != 2) exit(1);
-      std::cout << "Permissão do arquivo: ";
+   std::cout << "Permissão do arquivo: ";
    demo_perms(std::filesystem::status( argv[1] ).permissions());
 }
