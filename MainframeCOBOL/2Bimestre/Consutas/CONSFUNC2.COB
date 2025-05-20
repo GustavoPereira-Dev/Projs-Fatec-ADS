@@ -1,8 +1,8 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. CONSVEN2.
+       PROGRAM-ID. PROGRAMA03.
       *AUTHOR. GUSTAVO PEREIRA.
       **************************************
-      *       CADASTRO DE VEICULOS         *
+      * MANUTENCAO DO CADASTRO DE AMIGOS   *
       **************************************
       *----------------------------------------------------------------
        ENVIRONMENT DIVISION.
@@ -11,94 +11,127 @@
              DECIMAL-POINT IS COMMA.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-       SELECT CADCAR ASSIGN TO DISK
+       SELECT CADFUNC ASSIGN TO DISK
                     ORGANIZATION IS INDEXED
                     ACCESS MODE  IS DYNAMIC
-                    RECORD KEY   IS PLACA
+                    RECORD KEY   IS CODFUNC
                     FILE STATUS  IS ST-ERRO
-                    ALTERNATE RECORD KEY IS NOMEPROP WITH DUPLICATES.					
+					ALTERNATE RECORD KEY IS NOME WITH DUPLICATES.
 
       *
       *-----------------------------------------------------------------
        DATA DIVISION.
        FILE SECTION.
-       FD CADCAR
+       FD CADFUNC
                LABEL RECORD IS STANDARD
-               VALUE OF FILE-ID IS "CADCAR.DAT".
-       01 REGCAR.
-          03 PLACA         PIC X(7).
-          03 NOMEPROP      PIC X(30).
-          03 MARCA         PIC X(2).
-          03 ANOFABC       PIC 9(4).
-          03 COR           PIC 9(1).
+               VALUE OF FILE-ID IS "CADFUNC.DAT".
+       01 REGFUNC.
+          03 CODFUNC       PIC 9(5).
+          03 NOME          PIC X(35).
+          03 CODCARGO      PIC 9(3).
+          03 NDEPS         PIC 9(2).		  
+          03 CODDEP        PIC 9(3).
+          03 CODAREA       PIC 9(3).		  
+          03 ENDERECO      PIC 9(8).
+          03 NENDRC        PIC 9(5).		  
+          03 COMPENDRC     PIC X(10).
+          03 EMAIL         PIC X(30).
+          03 TELEFONE.
+             05 DDD        PIC 9(2).
+             05 NUMERO     PIC 9(9).
+          03 SITFUNC       PIC X(1).
+          03 DTADMISSAO    PIC 9(8).
+          03 DTDEMISSAO    PIC 9(8).
+          03 DTAFAST       PIC 9(8).		  
       *
       *-----------------------------------------------------------------
        WORKING-STORAGE SECTION.
        77 W-CONT        PIC 9(06) VALUE ZEROS.
        77 W-OPCAO       PIC X(01) VALUE SPACES.
        77 W-ACT         PIC 9(02) VALUE ZEROS.
-       77 MENS          PIC X(40) VALUE SPACES.
-       77 LIMPA         PIC X(40) VALUE SPACES.
+       77 MENS          PIC X(50) VALUE SPACES.
+       77 LIMPA         PIC X(50) VALUE SPACES.
        01 ST-ERRO       PIC X(02) VALUE "00".
-       01 W-SEL         PIC 9(01) VALUE ZEROS.
-       01 SOLIC         PIC X(20) VALUE SPACES.
-       01 CONLIN        PIC 9(03) VALUE 001.	
-	   01 PLACAENTR 	PIC X(07) VALUE SPACES.
-	   01 NOMEPROPENTR  PIC X(30) VALUE SPACES.
-	   
+       01 W-SEL        	PIC 9(01) VALUE ZEROS.
+       01 IND          	PIC 9(02) VALUE ZEROS.
+       01 SOLIC        	PIC X(20) VALUE SPACES.
+       01 CONLIN       	PIC 9(03) VALUE 001.	   
+	   01 CODFUNCENTR  	PIC 9(05) VALUE ZEROS.
+	   01 NOMEENTR	   	PIC X(35) VALUE SPACES. 
+      *-----------------------------------------------------------------
+      *
+      ******************
+      * REPORT SECTION *
+      ******************
+      *
 	   01 DET2.
-          03 FILLER    	   	  PIC X(08) VALUE "PLACA : ". 
-		  03 DETPLACA         PIC X(07) VALUE SPACES.
-		  03 FILLER    	   	  PIC X(20) VALUE "NOME PROPRIETARIO : ".
-          03 DETNOMEPROP      PIC X(30) VALUE SPACES.
-	   01 DET3.
-		  03 FILLER    	   	  PIC X(08) VALUE "MARCA : .
-          03 DETMARCA         PIC X(02) VALUE SPACES.
-		  03 FILLER    	   	  PIC X(17) VALUE "ANO FABRICACAO : ".
-          03 DETANOFABC       PIC 9(04) VALUE ZEROS.
-		  03 FILLER    	   	  PIC X(15) VALUE "COR DO CARRO : ".
-          03 DETCOR           PIC 9(01) VALUE ZEROS.	
- 
+		  03 FILLER 		PIC X(20) VALUE "CODIGO FUNCIONARIO : ".
+	      03 DETCODFUNC    	PIC 9(05).
+		  03 FILLER 		PIC X(07) VALUE "NOME : ".
+          03 DETNOME       	PIC X(35).
+	   01 DET3.	  
+		  03 FILLER 		PIC X(19) VALUE "NUMERO DEPENDENTES : ".		  
+		  03 DETNDEPS       PIC 9(2).	   
+		  03 FILLER 		PIC X(14) VALUE "CODIGO CARGO : ".		  
+          03 DETCODCARGO   	PIC 9(3).
+		  03 FILLER 		PIC X(21) VALUE "CODIGO DEPARTAMENTO : ".		  
+          03 DETCODDEP     	PIC 9(3).
+	   01 DET4.		  
+		  03 FILLER 		PIC X(06) VALUE "CEP : ".
+          03 DETENDERECO   	PIC 9(8).
+		  03 FILLER 		PIC X(17) VALUE "NUMERO ENDERECO : ".
+          03 DETNENDRC     	PIC 9(5).
+		  03 FILLER 		PIC X(22) VALUE "COMPLEMENTO ENDERECO : ".		  
+          03 DETCOMPENDRC  	PIC X(10).		  
+	   01 DET5.		  
+	      03 FILLER 		PIC X(08) VALUE "EMAIL : ".
+          03 DETEMAIL      	PIC X(30).
+		  03 FILLER 		PIC X(12) VALUE "TELEFONE : ".		  
+          03 DETTELEFONE.  	PIC 99.99999.9999.
+	   01 DET6.		  
+		  03 FILLER 		PIC X(23) VALUE "SITUACAO FUNCIONARIO : ".		  
+          03 DETSITFUNC    	PIC X(1).	
+	   01 DET7.		  
+          03 FILLER 		PIC X(16) VALUE "DATA ADMISSAO : ".		  
+          03 DETDTADMISSAO  PIC X(8).		
+          03 FILLER 		PIC X(16) VALUE "DATA DEMISSAO : ".		  
+          03 DETDTDEMISSAO  PIC X(8).
+          03 FILLER 		PIC X(18) VALUE "DATA AFASTAMENTO : ".		  
+          03 DETDTAFAST     PIC X(8).		  
       *-----------------------------------------------------------------
        SCREEN SECTION.
-       01  TCONSVEN1.
-           05  BLANK SCREEN.
-           05  LINE 02  COLUMN 01 
-               VALUE  "                            *** CONSULTA".
-           05  LINE 02  COLUMN 41 
-               VALUE  " DE VEICULO ***".
-           05  LINE 04  COLUMN 01 
-               VALUE  "  PLACA         NOME PROPRIETARIO".
-           05  LINE 04  COLUMN 41 
-               VALUE  "MARCA      ANO FABRICACAO      COR".
-           05  LINE 22  COLUMN 01 
-               VALUE  "   MENSAGEM :".
+       01  TCONSFUNC.
+ 
+
       *-----------------------------------------------------------------
        PROCEDURE DIVISION.
        INICIO.
       *
        INC-OP1.
-           OPEN INPUT  CADCAR
+           OPEN INPUT  CADFUNC
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "30"
-                 MOVE "ARQUIVO DE CADCAR NAO EXISTE" TO MENS
+                 MOVE "ARQUIVO DE CADFUNC NAO EXISTE" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM2
               ELSE
-                 MOVE "ERRO ABERTURA DO ARQUIVO CADCAR"  TO MENS
+                 MOVE "ERRO ABERTURA DO ARQUIVO CADFUNC"  TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
-                 GO TO ROT-FIM2.
+                 GO TO ROT-FIM2
+           ELSE
+               NEXT SENTENCE.
       *
        INC-001.
-           MOVE SPACES TO PLACAENTR NOMEPROPENTR
-           DISPLAY  TCONSVEN1.
+           MOVE ZEROS TO CODFUNCENTR
+           MOVE SPACES TO NOMEENTR
+           DISPLAY  TCONSFUNC.
        INC-001A.
            DISPLAY (23, 13)
-            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/PROPRIETARIO."
-           ACCEPT TPLACA
+            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/NOME."
+           ACCEPT TCODFUNC
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADCAR
+                      CLOSE CADFUNC
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001B.
@@ -106,19 +139,19 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE PLACAENTR TO PLACA
-           START CADCAR KEY IS NOT LESS PLACA INVALID KEY
-                 MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
+           MOVE CODFUNCENTR TO CODFUNC
+           START CADCEP KEY IS NOT LESS CODFUNC INVALID KEY
+                 MOVE "*** FIM DE PROCESSAMENTO ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001.
            GO TO INC-RD2.
        INC-001B.
            DISPLAY (23, 13)
-            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO PLACA "
-           ACCEPT TNOMEPROP
+            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO FUNCIONARIO "
+           ACCEPT TNOME
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADCAR
+                      CLOSE CADFUNC
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001A.
@@ -126,31 +159,39 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE NOMEPROPENTR TO NOMEPROP
-           START CADCEP KEY IS NOT LESS NOMEPROP INVALID KEY
-                 MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
+           MOVE NOMEENTR TO NOME
+           START CADCEP KEY IS NOT LESS NOME INVALID KEY
+                 MOVE "*** FIM DE PROCESSAMENTO ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001B.
        INC-RD2.
            DISPLAY (23, 13) LIMPA
-           READ CADCAR NEXT
+           READ CADFUNC NEXT
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "10"
-                 MOVE "*** FIM DO ARQUIVO  ***" TO MENS
+                 MOVE "*** FIM DE PROCESSAMENTO ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO NOV-SOL
               ELSE
-                 MOVE "ERRO NA LEITURA DO ARQUIVO CADCAR"  TO MENS
+                 MOVE "ERRO NA LEITURA DO ARQUIVO CADFUNC"  TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM
            ELSE
               NEXT SENTENCE.
        ROT-MONTAR.
-           MOVE PLACA 		TO DETPLACA
-           MOVE NOMEPROP    TO DETNOMEPROP
-           MOVE MARCA   	TO DETMARCA
-           MOVE ANOFABC   	TO DETANOFABC
-		   MOVE COR   		TO DETCOR
+           MOVE NOME TO DETNOME
+		   MOVE CODCARGO TO DETCODCARGO
+		   MOVE NDEPS TO DETNDEPS
+		   MOVE CODDEP TO DETCODDEP
+		   MOVE ENDERECO TO DETENDERECO
+		   MOVE NENDRC TO DETNENDRC
+		   MOVE COMPENDRC TO DETCOMPENDRC
+		   MOVE EMAIL TO DETEMAIL
+		   MOVE TELEFONE TO DETTELEFONE
+		   MOVE SITFUNC TO DETSITFUNC
+		   MOVE DTADMISSAO TO DETDTADMISSAO
+		   MOVE DTDEMISSAO TO DETDTDEMISSAO		   
+		   MOVE DTAFAST	TO DETDTAFAST
 		   
            COMPUTE LIN = CONLIN + 3
            DISPLAY (LIN, 01) DET2
@@ -167,7 +208,7 @@
            ACCEPT  (23, 38) W-OPCAO  WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
-                  DISPLAY TCONSVEN1
+                  DISPLAY TELAFUNC
                   GO TO INC-RD2.
            IF W-OPCAO NOT = "N"
                   MOVE "*** DIGITE S=SIM   N=NAO ***" TO MENS
@@ -194,7 +235,7 @@
       *
        ROT-FIM.
            DISPLAY (01 01) ERASE.
-           CLOSE CADCAR.
+           CLOSE CADFUNC.
        ROT-FIM2.
            EXIT PROGRAM.
        ROT-FIM3.
@@ -210,7 +251,7 @@
            DISPLAY (23, 13) MENS.
        ROT-MENS2.
            ADD 1 TO W-CONT
-           IF W-CONT < 1000
+           IF W-CONT < 3000
               GO TO ROT-MENS2
            ELSE
               DISPLAY (23, 12) LIMPA.
