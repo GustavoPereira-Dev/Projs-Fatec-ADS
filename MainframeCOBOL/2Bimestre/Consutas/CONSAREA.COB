@@ -39,38 +39,48 @@
        77 W-ACT             PIC 9(02) VALUE ZEROS.
        77 MENS              PIC X(50) VALUE SPACES.
        77 LIMPA             PIC X(50) VALUE SPACES.
-       77 AREA-CODENTR		PIC 9(03) VALUE ZEROS.
-	   77 AREA-NOMEENTR     PIC X(20) VALUE SPACES.
+       01 SOLIC             PIC X(20) VALUE SPACES.
+       01 CONLIN            PIC 9(03) VALUE 001.
+       77 AREA-CODENTR      PIC 9(03) VALUE ZEROS.
+       77 AREA-NOMEENTR     PIC X(20) VALUE SPACES.
       *-----------------------------------------------------------------
       *
       ******************
       * REPORT SECTION *
       ******************
       *
-	   01 DET2.
-			03 FILLER 				PIC X(02) VALUE SPACES.
-			03 DETAREA-COD          PIC 9(03).
-			03 FILLER 				PIC X(02) VALUE SPACES.			
+       01 DET2.
+            03 FILLER                 PIC X(05) VALUE SPACES.
+            03 DETAREA-COD          PIC 9(03).
+            03 FILLER                 PIC X(07) VALUE SPACES.
             03 DETAREA-NOME         PIC X(20).
-			03 FILLER 				PIC X(02) VALUE SPACES.			
-            03 DETAREA-ESTRUTURA    PIC 9(1).		   
+            03 FILLER                 PIC X(14) VALUE SPACES.
+            03 DETAREA-ESTRUTURA    PIC 9(1).
       *-----------------------------------------------------------------
-       
- 
-	   SCREEN SECTION.
+
+
+       SCREEN SECTION.
 
        01  TCONSAREA1.
            05  BLANK SCREEN.
-           05  LINE 02  COLUMN 01 
-               VALUE  "                             *** CONSULT".
-           05  LINE 02  COLUMN 41 
-               VALUE  "A DE AREA ***".
-           05  LINE 04  COLUMN 01 
-               VALUE  "    AREA :      NOME :".
-           05  LINE 04  COLUMN 41 
-               VALUE  "       ESTRUTURA :".
-           05  LINE 22  COLUMN 01 
-               VALUE  "    MENSAGEM :".
+           05  LINE 02  COLUMN 01
+               VALUE  "                           *** CONSULTA".
+           05  LINE 02  COLUMN 41
+               VALUE  "DE AREA ***".
+           05  LINE 04  COLUMN 01
+               VALUE  "    CODIGO                NOME".
+           05  LINE 04  COLUMN 41
+               VALUE  "     ESTRUTURA".
+           05  LINE 22  COLUMN 01
+               VALUE  "   MENSAGEM :".
+           05  TAREA-CODENTR
+               LINE 06  COLUMN 06  PIC 9(03)
+               USING  AREA-CODENTR
+               HIGHLIGHT.
+           05  TAREA-NOMEENTR
+               LINE 06  COLUMN 17  PIC X(20)
+               USING  AREA-NOMEENTR
+               HIGHLIGHT.
       *-----------------------------------------------------------------
        PROCEDURE DIVISION.
        INICIO.
@@ -94,7 +104,7 @@
        INC-001A.
            DISPLAY (23, 13)
             "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/LOGRADOURO."
-           ACCEPT TAREA-COD
+           ACCEPT TAREA-CODENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
                       CLOSE CADAREA
@@ -105,8 +115,8 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE TAREA-CODENTR TO AREA-COD
-           START CADCEP KEY IS NOT LESS AREA-COD INVALID KEY
+           MOVE AREA-CODENTR TO AREA-COD
+           START CADAREA KEY IS NOT LESS AREA-COD INVALID KEY
                  MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001.
@@ -126,7 +136,7 @@
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
            MOVE AREA-NOMEENTR TO AREA-NOME
-           START CADCEP KEY IS NOT LESS AREA-NOME INVALID KEY
+           START CADAREA KEY IS NOT LESS AREA-NOME INVALID KEY
                  MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001B.
@@ -145,10 +155,10 @@
            ELSE
               NEXT SENTENCE.
        ROT-MONTAR.
-           MOVE AREA-COD 		TO DETAREA-COD
-           MOVE AREA-NOME    	TO DETAREA-NOME
+           MOVE AREA-COD         TO DETAREA-COD
+           MOVE AREA-NOME        TO DETAREA-NOME
            MOVE AREA-ESTRUTURA  TO DETAREA-ESTRUTURA
-		   
+
            COMPUTE LIN = CONLIN + 5
            DISPLAY (LIN, 01) DET2
            ADD 1 TO CONLIN

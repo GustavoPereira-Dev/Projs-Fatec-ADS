@@ -42,8 +42,9 @@
        01 ST-ERRO              PIC X(02) VALUE "00".
        01 W-SEL                PIC 9(01) VALUE ZEROS.
        01 IND                  PIC 9(02) VALUE ZEROS.
-	   01 CARGO-CODENTR		   PIC 9(5)	 VALUE ZEROS.
-	   01 CARGO-DNMNCENTR	   PIC X(20) VALUE ZEROS.
+       01 CONLIN       PIC 9(03) VALUE 001.
+       01 CARGO-CODENTR           PIC 9(5)     VALUE ZEROS.
+       01 CARGO-DNMNCENTR       PIC X(20) VALUE ZEROS.
       *-----------------------------------------------------------------
       *
       *************************
@@ -51,31 +52,39 @@
       *************************
       *
        01 DET2.
-			   03 FILLER 			  PIC X(09) VALUE "CODIGO : ".	
+               03 FILLER              PIC X(09) VALUE "CODIGO : ".
                03 DETCARGO-COD        PIC 9(05).
-			   03 FILLER 			  PIC X(14) VALUE "DENOMINACAO : ".
+               03 FILLER              PIC X(14) VALUE "DENOMINACAO : ".
                03 DETCARGO-DNMNC      PIC X(20).
-			   03 FILLER 			  PIC X(14) VALUE "CODIGO AREA : ".
+               03 FILLER              PIC X(14) VALUE "CODIGO AREA : ".
                03 DETCARGO-AREA       PIC 9(3).
-	   01 DET3.			   
-			   03 FILLER 			  PIC X(15) VALUE "TIPO SALARIO : ".			   
+       01 DET3.
+               03 FILLER              PIC X(15) VALUE "TIPO SALARIO : ".
                03 DETCARGO-TPSAL      PIC 9(1).
-			   03 FILLER 			  PIC X(15) VALUE "SALARIO BASE : ".			   
+               03 FILLER              PIC X(15) VALUE "SALARIO BASE : ".
                03 DETCARGO-SALBASE    PIC 9(6)V99.
-			   
+
       *-----------------------------------------------------------------
        SCREEN SECTION.
 
        01  TCONSCARGO2.
            05  BLANK SCREEN.
-           05  LINE 02  COLUMN 01 
+           05  LINE 02  COLUMN 01
                VALUE  "                           *** CONSULTA".
-           05  LINE 02  COLUMN 41 
+           05  LINE 02  COLUMN 41
                VALUE  "CARGO ***".
-           05  LINE 04  COLUMN 01 
+           05  LINE 04  COLUMN 01
                VALUE  "   CODIGO :        DENOMINACAO :".
-           05  LINE 22  COLUMN 01 
+           05  LINE 22  COLUMN 01
                VALUE  "    MENSAGEM :".
+           05  TCARGO-CODENTR
+               LINE 04  COLUMN 13  PIC 9(05)
+               USING  CARGO-CODENTR
+               HIGHLIGHT.
+           05  TCARGO-DNMNCENTR
+               LINE 04  COLUMN 34  PIC X(20)
+               USING  CARGO-DNMNCENTR
+               HIGHLIGHT.
 
 
       *-----------------------------------------------------------------
@@ -120,7 +129,7 @@
            GO TO INC-RD2.
        INC-001B.
            DISPLAY (23, 13)
-            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO CARGO "
+           "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO CARGO"
            ACCEPT TCARGO-DNMNCENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
@@ -152,12 +161,12 @@
            ELSE
               NEXT SENTENCE.
        ROT-MONTAR.
-           MOVE CARGO-COD 		TO DETCARGO-COD
-           MOVE CARGO-DNMNC    	TO DETCARGO-DNMNC
-           MOVE CARGO-AREA   	TO DETCARGO-AREA
-		   MOVE CARGO-TPSAL 	TO DETCARGO-TPSAL
-		   MOVE CARGO-SALBASE   TO DETCARGO-SALBASE
-		   
+           MOVE CARGO-COD         TO DETCARGO-COD
+           MOVE CARGO-DNMNC        TO DETCARGO-DNMNC
+           MOVE CARGO-AREA       TO DETCARGO-AREA
+           MOVE CARGO-TPSAL     TO DETCARGO-TPSAL
+           MOVE CARGO-SALBASE   TO DETCARGO-SALBASE
+
            COMPUTE LIN = CONLIN + 3
            DISPLAY (LIN, 01) DET2
            ADD 1 TO CONLIN
@@ -225,4 +234,4 @@
        FIM-ROT-MENS.
       *
 
-      *---------------------*** FIM DE PROGRAMA ***--------------------*	   
+      *---------------------*** FIM DE PROGRAMA ***--------------------*

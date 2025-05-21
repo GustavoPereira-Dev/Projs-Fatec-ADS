@@ -1,103 +1,119 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. SMP005.
-       AUTHOR. GUSTAVO PEREIRA.
-      ***********************************************
-      * MANUTENCAO DO CADASTRO AREA   *
-      ***********************************************
+       PROGRAM-ID. PROGCARGO.
+      *AUTHOR. GUSTAVO PEREIRA.
+      ********************************************************
+      * MANUTENCAO DO CADASTRO DE CARGOS   *
+      ********************************************************
       *----------------------------------------------------------------
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
        SPECIAL-NAMES.
-                     DECIMAL-POINT IS COMMA.
+             DECIMAL-POINT IS COMMA.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-       SELECT CADAREA ASSIGN TO DISK
-                    ORGANIZATION IS INDEXED
-                    ACCESS MODE  IS DYNAMIC
-                    RECORD KEY   IS AREA-COD
-                    FILE STATUS  IS ST-ERRO
-                    ALTERNATE RECORD KEY IS AREA-NOME
-                                   WITH DUPLICATES.
+           SELECT CADCARGO ASSIGN TO DISK
+                      ORGANIZATION IS INDEXED
+                      ACCESS MODE  IS DYNAMIC
+                      RECORD KEY   IS CARGO-COD
+                      ALTERNATE RECORD KEY IS CARGO-DNMNC
+                                   WITH DUPLICATES
+                      FILE STATUS  IS ST-ERRO.
+
       *
       *-----------------------------------------------------------------
        DATA DIVISION.
        FILE SECTION.
-       FD CADAREA
+       FD CADCARGO
                LABEL RECORD IS STANDARD
-               VALUE OF FILE-ID IS "CADAREA.DAT".
-       01 REGAREA.
-                03 AREA-COD          PIC 9(03).
-                03 AREA-NOME         PIC X(20).
-                03 AREA-ESTRUTURA    PIC 9(1).
-
+               VALUE OF FILE-ID IS "ARQCARGO.DAT".
+       01 REGCARGO.
+               03 CARGO-COD        PIC 9(5).
+               03 CARGO-DNMNC      PIC X(20).
+               03 CARGO-AREA       PIC 9(3).
+               03 CARGO-TPSAL      PIC 9(1).
+               03 CARGO-SALBASE    PIC 9(6)V99.
       *-----------------------------------------------------------------
        WORKING-STORAGE SECTION.
-       77 W-SEL             PIC 9(01) VALUE ZEROS.
-       77 W-CONT            PIC 9(06) VALUE ZEROS.
-       77 W-OPCAO           PIC X(01) VALUE SPACES.
-       77 ST-ERRO           PIC X(02) VALUE "00".
-       77 W-ACT             PIC 9(02) VALUE ZEROS.
-       77 MENS              PIC X(50) VALUE SPACES.
-       77 LIMPA             PIC X(50) VALUE SPACES.
-       77 AREA-CODENTR		PIC 9(03) VALUE ZEROS.
-	   77 AREA-NOMEENTR     PIC X(20) VALUE SPACES.
+       77 W-CONT               PIC 9(06) VALUE ZEROS.
+       77 W-OPCAO              PIC X(01) VALUE SPACES.
+       77 W-ACT                PIC 9(02) VALUE ZEROS.
+       77 MENS                 PIC X(50) VALUE SPACES.
+       77 LIMPA                PIC X(50) VALUE SPACES.
+       01 ST-ERRO              PIC X(02) VALUE "00".
+       01 W-SEL                PIC 9(01) VALUE ZEROS.
+       01 IND                  PIC 9(02) VALUE ZEROS.
+       01 CONLIN               PIC 9(03) VALUE 001.
+       01 CARGO-CODENTR        PIC 9(5)     VALUE ZEROS.
+       01 CARGO-DNMNCENTR      PIC X(20) VALUE ZEROS.
       *-----------------------------------------------------------------
       *
-      ******************
+      *************************
       * REPORT SECTION *
-      ******************
+      *************************
       *
-	   01 DET2.
-			03 FILLER 				PIC X(14) VALUE "CODIGO AREA : ".
-			03 DETAREA-COD          PIC 9(03).
-			03 FILLER 				PIC X(12) VALUE "NOME AREA : ".			
-            03 DETAREA-NOME         PIC X(20).
-			03 FILLER 				PIC X(12) VALUE "ESTRUTURA : ".			
-            03 DETAREA-ESTRUTURA    PIC 9(1).		   
-      *-----------------------------------------------------------------
-       
- 
-	   SCREEN SECTION.
+       01 DET2.
+               03 FILLER               PIC X(02) VALUE SPACES.
+               03 DETCARGO-COD        PIC 9(5).
+               03 FILLER               PIC X(02) VALUE SPACES.
+               03 DETCARGO-DNMNC      PIC X(20).
+               03 FILLER               PIC X(02) VALUE SPACES.
+               03 DETCARGO-AREA       PIC 9(3).
+               03 FILLER               PIC X(02) VALUE SPACES.
+               03 DETCARGO-TPSAL      PIC 9(1).
+               03 FILLER               PIC X(02) VALUE SPACES.
+               03 DETCARGO-SALBASE    PIC 9(6)V99.
 
-       01  TCONSAREA1.
-           05  BLANK SCREEN.
-           05  LINE 02  COLUMN 01 
-               VALUE  "                             *** CONSULT".
-           05  LINE 02  COLUMN 41 
-               VALUE  "A DE AREA ***".
-           05  LINE 04  COLUMN 01 
-               VALUE  "    AREA :      NOME :".
-           05  LINE 04  COLUMN 41 
-               VALUE  "       ESTRUTURA :".
-           05  LINE 22  COLUMN 01 
+      *-----------------------------------------------------------------
+       SCREEN SECTION.
+
+       01  TCONSCARGO1.
+           05  LINE 02  COLUMN 01
+               VALUE  "                            *** CONSULTA".
+           05  LINE 02  COLUMN 41
+               VALUE  " DE CARGO ***".
+           05  LINE 04  COLUMN 01
+               VALUE  "   CODIGO        DENOMINACAO     CARGO A".
+           05  LINE 04  COLUMN 41
+               VALUE  "REA    TIPO SALARIO   SALARIO BASE".
+           05  LINE 22  COLUMN 01
                VALUE  "    MENSAGEM :".
+           05  TCARGO-CODENTR
+               LINE 06  COLUMN 04  PIC 9(05)
+               USING  CARGO-CODENTR
+               HIGHLIGHT.
+           05  TCARGO-DNMNCENTR
+               LINE 06  COLUMN 12  PIC X(20)
+               USING  CARGO-DNMNCENTR
+               HIGHLIGHT.
+
+
       *-----------------------------------------------------------------
        PROCEDURE DIVISION.
        INICIO.
       *
        INC-OP1.
-           OPEN INPUT  CADAREA
+           OPEN INPUT  CADCARGO
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "30"
-                 MOVE "ARQUIVO DE CADAREA NAO EXISTE" TO MENS
+                 MOVE "ARQUIVO DE CADCARGO NAO EXISTE" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM2
               ELSE
-                 MOVE "ERRO ABERTURA DO ARQUIVO CADAREA"  TO MENS
+                 MOVE "ERRO ABERTURA DO ARQUIVO CADCARGO"  TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM2.
       *
        INC-001.
-           MOVE ZEROS TO AREA-CODENTR
-           MOVE SPACES TO AREA-NOMEENTR
-           DISPLAY  TCONSAREA1.
+           MOVE ZEROS TO CARGO-COD
+           MOVE SPACES TO CARGO-DNMNC
+           DISPLAY  TCONSCARGO1.
        INC-001A.
            DISPLAY (23, 13)
-            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/LOGRADOURO."
-           ACCEPT TAREA-COD
+            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/DENOMINACAO."
+           ACCEPT TCARGO-CODENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADAREA
+                      CLOSE CADCARGO
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001B.
@@ -105,19 +121,19 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE TAREA-CODENTR TO AREA-COD
-           START CADCEP KEY IS NOT LESS AREA-COD INVALID KEY
+           MOVE CARGO-CODENTR TO CARGO-COD
+           START CADCARGO KEY IS NOT LESS CARGO-COD INVALID KEY
                  MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001.
            GO TO INC-RD2.
        INC-001B.
            DISPLAY (23, 13)
-            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/NOME "
-           ACCEPT TAREA-NOMEENTR
+           "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO CARGO"
+           ACCEPT TCARGO-DNMNCENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADAREA
+                      CLOSE CADCARGO
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001A.
@@ -125,36 +141,35 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE AREA-NOMEENTR TO AREA-NOME
-           START CADCEP KEY IS NOT LESS AREA-NOME INVALID KEY
+           MOVE CARGO-DNMNCENTR TO CARGO-DNMNC
+           START CADCARGO KEY IS NOT LESS CARGO-DNMNC INVALID KEY
                  MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001B.
        INC-RD2.
            DISPLAY (23, 13) LIMPA
-           READ CADAREA NEXT
+           READ CADCARGO NEXT
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "10"
                  MOVE "*** FIM DO ARQUIVO  ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO NOV-SOL
               ELSE
-                 MOVE "ERRO NA LEITURA DO ARQUIVO CADAREA"  TO MENS
+                 MOVE "ERRO NA LEITURA DO ARQUIVO CADCARGO"  TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM
            ELSE
               NEXT SENTENCE.
        ROT-MONTAR.
-           MOVE AREA-COD 		TO DETAREA-COD
-           MOVE AREA-NOME    	TO DETAREA-NOME
-           MOVE AREA-ESTRUTURA  TO DETAREA-ESTRUTURA
-		   
-           COMPUTE LIN = CONLIN + 3
+           MOVE CARGO-COD         TO DETCARGO-COD
+           MOVE CARGO-DNMNC        TO DETCARGO-DNMNC
+           MOVE CARGO-AREA       TO DETCARGO-AREA
+           MOVE CARGO-TPSAL     TO DETCARGO-TPSAL
+           MOVE CARGO-SALBASE   TO DETCARGO-SALBASE
+
+           COMPUTE LIN = CONLIN + 5
            DISPLAY (LIN, 01) DET2
            ADD 1 TO CONLIN
-           COMPUTE LIN = CONLIN + 3
-           DISPLAY (LIN, 01) DET3
-           ADD 2 TO CONLIN
            IF CONLIN < 17
                   GO TO INC-RD2.
       *
@@ -164,7 +179,7 @@
            ACCEPT  (23, 38) W-OPCAO  WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
-                  DISPLAY TCONSAREA1
+                  DISPLAY TCONSCARGO1
                   GO TO INC-RD2.
            IF W-OPCAO NOT = "N"
                   MOVE "*** DIGITE S=SIM   N=NAO ***" TO MENS
@@ -191,7 +206,7 @@
       *
        ROT-FIM.
            DISPLAY (01 01) ERASE.
-           CLOSE CADAREA.
+           CLOSE CADCARGO.
        ROT-FIM2.
            EXIT PROGRAM.
        ROT-FIM3.
