@@ -65,39 +65,44 @@
       ******************
       *
        01 DET2.
-          03 FILLER         PIC X(21) VALUE "CODIGO FUNCIONARIO : ".
-          03 DETCODFUNC     PIC 9(05).
+          03 FILLER         PIC X(14) VALUE "CODIGO FUNC : ".
+          03 DETCODFUNC     PIC 9(06).
+          03 FILLER         PIC X(02) VALUE SPACES.
           03 FILLER         PIC X(07) VALUE "NOME : ".
-          03 DETNOME        PIC X(35).
+          03 DETNOME        PIC X(36).
        01 DET3.
           03 FILLER         PIC X(21) VALUE "NUMERO DEPENDENTES : ".
-          03 DETNDEPS       PIC 9(2).
+          03 DETNDEPS       PIC 9(3).
+          03 FILLER         PIC X(02) VALUE SPACES.
           03 FILLER         PIC X(15) VALUE "CODIGO CARGO : ".
-          03 DETCODCARGO    PIC 9(3).
-          03 FILLER         PIC X(22) VALUE "CODIGO DEPARTAMENTO : ".
-          03 DETCODDEP      PIC 9(3).
+          03 DETCODCARGO    PIC 9(03).
        01 DET4.
           03 FILLER         PIC X(06) VALUE "CEP : ".
-          03 DETENDERECO    PIC 9(8).
+          03 DETENDERECO    PIC 9(09).
           03 FILLER         PIC X(18) VALUE "NUMERO ENDERECO : ".
-          03 DETNENDRC      PIC 9(5).
+          03 FILLER    PIC X(02) VALUE SPACES.
+          03 DETNENDRC      PIC 9(06).
+          03 FILLER    PIC X(02) VALUE SPACES.
           03 FILLER         PIC X(23) VALUE "COMPLEMENTO ENDERECO : ".
-          03 DETCOMPENDRC   PIC X(10).
+          03 DETCOMPENDRC   PIC X(11).
        01 DET5.
           03 FILLER         PIC X(08) VALUE "EMAIL : ".
-          03 DETEMAIL       PIC X(30).
-          03 FILLER         PIC X(12) VALUE "TELEFONE : ".
+          03 DETEMAIL       PIC X(31).
+          03 FILLER    PIC X(02) VALUE SPACES.
+          03 FILLER         PIC X(13) VALUE "TELEFONE : ".
           03 DETTELEFONE    PIC 99.99999.9999.
        01 DET6.
           03 FILLER         PIC X(23) VALUE "SITUACAO FUNCIONARIO : ".
-          03 DETSITFUNC     PIC X(1).
+          03 DETSITFUNC     PIC X(2).
        01 DET7.
           03 FILLER         PIC X(16) VALUE "DATA ADMISSAO : ".
-          03 DETDTADMISSAO  PIC X(8).
+          03 DETDTADMISSAO  PIC X(08).
+          03 FILLER    PIC X(02) VALUE SPACES.
           03 FILLER         PIC X(16) VALUE "DATA DEMISSAO : ".
-          03 DETDTDEMISSAO  PIC X(8).
+          03 DETDTDEMISSAO  PIC X(08).
+          03 FILLER    PIC X(02) VALUE SPACES.
           03 FILLER         PIC X(19) VALUE "DATA AFASTAMENTO : ".
-          03 DETDTAFAST     PIC X(8).
+          03 DETDTAFAST     PIC X(08).
       *-----------------------------------------------------------------
        SCREEN SECTION.
        01  TCONSFUNC.
@@ -164,8 +169,8 @@
            GO TO INC-RD2.
        INC-001B.
            DISPLAY (23, 13)
-           "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO "
-           + "FUNCIONARIO "
+           "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/CODIGO FUNC"
+
            ACCEPT TNOMEENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
@@ -197,10 +202,10 @@
            ELSE
               NEXT SENTENCE.
        ROT-MONTAR.
+           MOVE CODFUNC TO DETCODFUNC
            MOVE NOME TO DETNOME
-           MOVE CODCARGO TO DETCODCARGO
            MOVE NDEPS TO DETNDEPS
-           MOVE CODDEP TO DETCODDEP
+           MOVE CODCARGO TO DETCODCARGO
            MOVE ENDERECO TO DETENDERECO
            MOVE NENDRC TO DETNENDRC
            MOVE COMPENDRC TO DETCOMPENDRC
@@ -212,13 +217,26 @@
            MOVE DTAFAST    TO DETDTAFAST
 
            COMPUTE LIN = CONLIN + 3
-           DISPLAY (LIN, 01) DET2
+           DISPLAY (LIN, 02) DET2
            ADD 1 TO CONLIN
            COMPUTE LIN = CONLIN + 3
-           DISPLAY (LIN, 01) DET3
+           DISPLAY (LIN, 02) DET3
+           ADD 1 TO CONLIN
+           COMPUTE LIN = CONLIN + 3
+           DISPLAY (LIN, 02) DET4
+           ADD 1 TO CONLIN
+           COMPUTE LIN = CONLIN + 3
+           DISPLAY (LIN, 02) DET5
+           ADD 1 TO CONLIN
+           COMPUTE LIN = CONLIN + 3
+           DISPLAY (LIN, 02) DET6
+           ADD 1 TO CONLIN
+           COMPUTE LIN = CONLIN + 3
+           DISPLAY (LIN, 02) DET7
            ADD 2 TO CONLIN
-           IF CONLIN < 17
+           IF CONLIN < 15
                   GO TO INC-RD2.
+
       *
        ROT-SOL.
            DISPLAY (23, 13) " *** CONTINUA CONSULTA : . ***"
