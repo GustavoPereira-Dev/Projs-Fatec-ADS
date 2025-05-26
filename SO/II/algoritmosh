@@ -287,11 +287,218 @@ read -p "Digite o terceiro número: " num3
 read -p "Digite o quarto número: " num4
 
 
-if [[ "$num4" -gt "$num3" ]] then
-  echo "A sequência dos números é na seguinte forma: ${num1} ${num2} ${num3} ${num4}
-elif [[ "$num4" -gt "$num2" && "$num4" -lt "$num3" ]] then
-   echo "A sequência dos números é na seguinte forma: ${num1} ${num2} ${num4} ${num3}
-elif [[ "$num4" -gt "$num1" && "$num4" -lt "$num2" ]] then
-    echo "A sequência dos números é na seguinte forma: ${num1} ${num4} ${num2} ${num3}
+if [ "$num4" -gt "$num3" ] then
+  echo "A sequência dos números é na seguinte forma: ${num1} ${num2} ${num3} ${num4} "
+elif [ "$num4" -gt "$num2" && "$num4" -lt "$num3" ] then
+   echo "A sequência dos números é na seguinte forma: ${num1} ${num2} ${num4} ${num3} "
+elif [ "$num4" -gt "$num1" && "$num4" -lt "$num2" ] then
+    echo "A sequência dos números é na seguinte forma: ${num1} ${num4} ${num2} ${num3}"
 else 
-    echo "A sequência dos números é na seguinte forma: ${num4} ${num1} ${num2} ${num3}
+    echo "A sequência dos números é na seguinte forma: ${num4} ${num1} ${num2} ${num3}"
+fi
+
+#!/bin/bash
+#estSeq24.sh
+
+read -p "Digite o número: " num
+
+if [ "$num" % 2 -eq 0 && "$num" % 3 -eq 0] ; then
+ echo "O valor é divisível por 2 e 3"
+else
+ echo "O valor não é divisível por 2 e 3"
+fi
+
+#!/bin/bash
+#estSeq25.sh
+
+read -p "Digite a hora de início do jogo: " horaInicio
+read -p "Digite os minutos de início do jogo: "  minInicio
+read -p "Digite a hora de fim do jogo: " horaFim
+read -p "Digite os minutos de fim do jogo: " minFim
+		
+if [ "$horaFim" - "$horaInicio" -lt 0 ] ; then
+ duracaoHor=$(( ($horaFim - $horaInicio) + 24 ))
+else
+ duracaoHor=$(( $horaFim - $horaInicio ))
+fi
+
+if [ "$minFim" - "$minInicio" -lt 0 ] ; then
+ duracaoMin=$(( ($minFim - $minInicio) + 60 ))
+else 
+ duracaoMin=$(($minFim - $minInicio))
+fi
+
+echo "A duração do jogo foi de ${duracaoHor} horas e ${duracaoMin} minutos"
+
+#!/bin/bash
+#estSeq26.sh
+
+read -p "Digite o primeiro número: " num1
+read -p "Digite o segundo número: " num2
+		
+if [ "$num1" -gt "$num2" && "$num1" % "$num2" -eq 0 || "$num2" -gt "$num1" && "$num2" % "$num1" -eq 0 ] ; then
+ echo "O maior número é múltiplo do menor"
+else
+ echo "O maior número não é múltiplo do menor"
+fi
+
+#!/bin/bash
+#estSeq27.sh
+
+read -p "Digite o número de voltas: " numVoltas
+read -p "Digite a extensão do circuito: " extCirc
+read -p "Digite o tempo de duração: " tempDur
+		
+distTotal=$(echo " ($extCirc * $numVoltas) / 1000) " | bc)
+velMed=$(echo "$distTotal / $tempDur" | bc);
+echo "A velocidade média pecorrida é: ${velMed} km/h"
+
+#!/bin/bash
+#estSeq28.sh
+
+read -p "Digite o preço atual do produto: " prAtual
+read -p "Digite a venda mensal do produto: " vendMen
+		
+if [ "$vendMen" -lt 500 && "$prAtual" -lt 30 ] ; then
+ prNovo=$(echo "$prAtual + ($prAtual * 0.10" | bc)
+elif [ "$vendMen" -gte 500 && "$vendMen" -lt 1000 && "$prAtual" -gt 30 && "$prAtual" -lt 80 ] ; then
+ prNovo=$(echo "$prAtual + ($prAtual * 0.15)" | bc)
+elif [ "$vendMen" -gte 1000 && "$prAtual" -gte 80 ] ; then
+ prNovo=$(echo "$prAtual - ($prAtual * 0.05)" | bc)
+else 
+ prNovo=$prAtual;
+fi
+		
+echo "O preço novo do produto é ${prNovo} reais "
+
+#!/bin/bash
+#estSeq29.sh
+
+read -p "Digite o tipo de investimento (1 = poupança e 2 = renda fixa): " tipo
+read -p "Digite o valor do investimento: " valor
+		
+case $tipo in
+ 1) investimento=$(echo "$valor + ($valor * 0.03)" | bc) ;;
+ 2) investimento=$(echo "$valor + ($valor * 0.05)" | bc) ;;
+ *) investimento=$valor ;;
+esac 
+		
+echo "O valor de investimento é ${investimento} reais "
+
+#!/bin/bash
+#estSeq30.sh
+
+read -p "Digite o ano de nascimento: " anoNasc
+read -p "Digite o mês de nascimento: " mesNasc
+read -p "Digite o dia de nascimento: " diaNasc
+read -p "Digite o ano atual: " anoAt
+read -p "Digite o mês atual: " mesAt
+read -p "Digite o dia atual: " diaAt
+		
+if [ $mesAt - $mesNasc -lt 0 ] ; then
+ mesRes=$(( (mesAt - mesNasc) + 12 ))
+ anoRes=$(( (anoAt - anoNasc) - 1 ))
+else 
+ mesRes=$(( (mesAt - mesNasc) ))
+ anoRes=$(( (anoAt - anoNasc) ))
+fi	
+		
+if [ "$diaAt" - "$diaNasc" -lt 0 ] ; then
+ if [ "$anoAt" % 4 -eq 0 && "$anoAt" % 100 -ne 0 && "$mesAt" - 1 -eq 2 || "$anoAt" % 400 -eq 0 && "$anoAt" % 100 -eq 0 && "$mesAt" - 1 -eq 2 ] ; then
+  diaRes=$(( ($diaAt - $diaNasc) + 29 ))
+ elif [ "$anoAt" % 4 -eq 0 && "$anoAt" % 100 -eq 0 && "$mesAt" - 1 -eq 2 || "$anoAt" % 400 -ne 0 && "$anoAt" % 100 -ne 0 && "$mesAt" - 1 -eq 2 ] ; then
+  diaRes=$(( ($diaAt - $diaNasc) + 28 ))
+ elif [ "$mesAt" % 2 -eq 1 && "$mesAt" -lt 8 || "$mesAt" % 2 -eq 0 && "$mesAt" > 7 ] ; then
+  diaRes=$(( ($diaAt - $diaNasc) + 30 ))
+ else
+  diaRes=$(( ($diaAt - $diaNasc) + 31 ))
+ fi			
+else
+ diaRes=$(( $diaAt - $diaNasc ))
+echo "O resultado de sua idade é de ${anoRes} anos, ${mesRes} mes(es) e ${diaRes} dia(s)"
+
+#!/bin/bash
+#estSeq31.sh
+
+num=10
+		
+for i in {$num..150}; do 
+ quadrado=$(( (num * num) ))
+ echo "O quadrado de ${i} ao quadro é: ${quadrado} "
+done
+
+#!/bin/bash
+#estSeq32.sh
+
+read -p "Digite o número de fatorial: " num
+		
+for i in {$num..1..-2}; do
+ fat=$(( $fat * (num * (num - 1)) ))
+done
+
+echo "O resultado do fatorial ${num}  é: ${fat} "
+
+#!/bin/bash
+#estSeq33.sh
+
+read -p "Digite o número para sequência: " num
+		
+while [ "$indx" -lt "$num" ]; do
+ indx=$(($indx + 1));
+ seq=$(echo " $seq + (1 / $indx)" | bc)
+done
+
+echo "O resultado da sequência ${num} é: ${seq} "
+
+#!/bin/bash
+#estSeq34.sh
+
+read -p "Digite o número para tabuada: " num
+		
+while [ "$indx" -lt 10 ]; do
+ indx=$(($indx + 1))
+ mult=$(($num * $indx));
+ echo "${num} x ${indx} = ${mult} "
+done
+
+#!/bin/bash
+#estSeq35.sh
+
+read -p "Digite o primeiro número: " num1
+read -p "Digite o segundo número: " num2
+		
+if [ "$num2" -gt "$num1" ] ; then
+ indx=$num2
+else
+ indx=$num1
+fi
+		
+while [ "$indx" -gte "$num1" || "$indx" -gte "$num2" ] ; then
+ if [ "$indx" % 2 -eq 1 ] ; then
+  res=$(( $res + $indx ))
+ fi
+ indx--;
+done
+		
+echo "A somatória de números ímpares entre os dois é: ${res} "
+
+#!/bin/bash
+#estSeq36.sh
+
+echo "Digite o número para sequência de fatorial: " num
+		
+if [ "$num" -lt 2 ] ; then
+ fat=1
+fi
+		
+while [ "$indx" -lt "$num" ] ; then
+ indx=$(($indx + 1))
+			
+ for indxFat in $(seq $indx 1 -1); do
+  fat=$(($fat + ($num * $num) ))
+ done
+ seq=$(echo "$seq + (1 / $fat) " | bc)
+ fat=0
+done
+		
+echo "O resultado da sequência de fatorial é: ${seq} "
