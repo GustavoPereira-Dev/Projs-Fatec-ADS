@@ -17,6 +17,8 @@ public class FichaMedicaControl {
     private FloatProperty peso = new SimpleFloatProperty(0f);
     private StringProperty alergias = new SimpleStringProperty("");
 
+    private FichaMedicaDAO fichaMedicaDAO = new FichaMedicaDAOImpl();
+
     public FichaMedicaControl() { 
         id.addListener( (observer, antigo, novo) -> { 
             System.out.println(novo);
@@ -25,34 +27,33 @@ public class FichaMedicaControl {
 
     public void cadastrar() { 
         FichaMedica fc = telaParaFichaMedica();
+        fichaMedicaDAO.guardar(fc);		
         lista.add(fc);
     }
 
     public void remover( FichaMedica c ) {
-        lista.remove( c );
+        fichaMedicaDAO.excluir(c.getId());		
+        lista.remove(c);
     }
     public void pesquisarFichaMedica() { 
-        for (FichaMedica fc : lista) { 
-            if ( fc.getId() == id.get()) { 
-                fichaMedicaParaTela(fc);
-            }
-        }
+    	lista.clear();
+        lista.addAll(fichaMedicaDAO.pesquisarPorTipoSanguineo(tipoSanguineo.get()));
     }
 
     public FichaMedica telaParaFichaMedica() { 
         FichaMedica fc = new FichaMedica();
-        fc.setId( id.get() );
-        fc.setTipoSanguineo( tipoSanguineo.get() );
-        fc.setPeso( peso.get() );
-        fc.setAlergias( alergias.get() );
+        fc.setId(id.get());
+        fc.setTipoSanguineo(tipoSanguineo.get());
+        fc.setPeso(peso.get());
+        fc.setAlergias(alergias.get());
         return fc;
     }
 
-    public void fichaMedicaParaTela( FichaMedica fc ) { 
-        id.set( fc.getId() );
-        tipoSanguineo.set( fc.getTipoSanguineo() );
-        peso.set( fc.getPeso() );
-        alergias.set( fc.getAlergias() );
+    public void fichaMedicaParaTela(FichaMedica fc) { 
+        id.set(fc.getId());
+        tipoSanguineo.set(fc.getTipoSanguineo());
+        peso.set(fc.getPeso());
+        alergias.set(fc.getAlergias());
     }
 
 
