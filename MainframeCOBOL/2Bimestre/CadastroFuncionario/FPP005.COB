@@ -1,8 +1,8 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. PROG03.
-      *AUTHOR. GUSTAVO PEREIRA.
+       PROGRAM-ID. FPP005.
+      * AUTHOR. GUSTAVO PEREIRA.
       **************************************
-      * MANUTENCAO DO CADASTRO DE AMIGOS   *
+      * MANUTENCAO DO CADASTRO DE FOLHA    *
       **************************************
       *----------------------------------------------------------------
        ENVIRONMENT DIVISION.
@@ -239,11 +239,11 @@
               IF ST-ERRO = "30"
                  OPEN OUTPUT CADPAG
                  CLOSE CADPAG
-                 MOVE "*** ARQUIVO CAFUNC FOI CRIADO **" TO MENS
+                 MOVE "*** ARQUIVO CADPAG FOI CRIADO **" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-OP1
               ELSE
-                 MOVE "ERRO NA ABERTURA DO ARQUIVO CADFUNC" TO MENS
+                 MOVE "ERRO NA ABERTURA DO ARQUIVO CADPAG" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM.
 
@@ -251,7 +251,7 @@
            OPEN INPUT  CADFUNC
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "30"
-                 MOVE "ARQUIVO DE CADCEP NAO EXISTE" TO MENS
+                 MOVE "ARQUIVO DE CADFUNC NAO EXISTE" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM
               ELSE
@@ -271,22 +271,22 @@
                  GO TO ROT-FIM.
       *
        R1.
-           MOVE ZEROS TO CODFUNC CODCARGO CODDEP NDEPS CODAREA
+           MOVE ZEROS TO FUNC-COD ANO MES CODCARGO CODDEP NDEPS CODAREA
            MOVE ZEROS TO ENDERECO NENDRC DDD NUMERO W-SEL CARGO-SALBASE
-           MOVE ZEROS TO DTADMISSAO DTDEMISSAO DTAFAST
-           MOVE ZEROS TO SALBRUTO INSS IR SALFAMILIA SALLIQ
+           MOVE ZEROS TO DTADMISSAO DTDEMISSAO DTAFAST ANO MES CODFUNC
+           MOVE ZEROS TO SALBRUTO INSS IR SALFAMILIA SALLIQ W-SEL
            DISPLAY TELAPAG.
        R2.
            ACCEPT TFUNC-COD
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
+           IF W-ACT = 02
                    GO TO ROT-FIM.
        R2A.
            MOVE FUNC-COD TO CODFUNC.
            READ CADFUNC
            IF ST-ERRO NOT = "00"
                IF ST-ERRO = "23"
-                   MOVE "*** FUNC DIGITAD NAO ENCONTRADA ***" TO MENS
+                   MOVE "*** FUNC DIGITADO NAO ENCONTRADO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO R2
                ELSE
@@ -303,20 +303,32 @@
        R3.
            ACCEPT TANO
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
-                   GO TO ROT-FIM.
+           IF W-ACT = 02
+                   GO TO R2.
+           IF ANO = ZEROS
+               MOVE "ANO INVALIDO" TO MENS
+               PERFORM ROT-MENS THRU ROT-MENS-FIM
+               GO TO R3.
        R4.
            ACCEPT TMES
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
-                   GO TO ROT-FIM.
+           IF W-ACT = 02
+              GO TO R3.
+           IF MES = ZEROS
+               MOVE "MES INVALIDO" TO MENS
+               PERFORM ROT-MENS THRU ROT-MENS-FIM
+               GO TO R4
+           ELSE IF MES < 1 OR MES > 12
+               MOVE "O MES E UM INTERVALO DE 1 A 12" TO MENS
+               PERFORM ROT-MENS THRU ROT-MENS-FIM
+               GO TO R4.
 
        LER-CADPAG.
            READ CADPAG
            IF ST-ERRO NOT = "23"
              IF ST-ERRO = "00"
                 DISPLAY TELAPAG
-                MOVE "*** FOLHA JA CADASTRADA ***" TO MENS
+                MOVE "*** FOLHA JA CADASTRADA, RECALCULANDO ***" TO MENS
                 PERFORM ROT-MENS THRU ROT-MENS-FIM
                 GO TO ACE-001
              ELSE
@@ -354,7 +366,7 @@
                MOVE 10 TO Y
            ELSE
                MOVE 9 TO Y.
-           COMPUTE SALBRUTO = (SALBRUTO * Y).
+           COMPUTE INSS = (SALBRUTO * Y).
        RSC.
            COMPUTE DESCINSS = (SALBRUTO - INSS).
            IF DESCINSS < 6000,01
@@ -365,12 +377,16 @@
                MOVE 15 TO Z
            COMPUTE IR = DESCINSS * Z.
        R5D.
-           COMPUTE SALFAMILIA = NDEPS * 10
+           IF NDEPS > 0
+               COMPUTE SALFAMILIA = NDEPS * 10
            COMPUTE SALLIQ = DESCINSS - (IR + SALFAMILIA)
 
+           DISPLAY TELAPAG
+
+           IF W-SEL = 1
+                GO TO ALT-OPC.
            MOVE "CRIACAO DA FOLHA DE PAGAMENTO CONCLUIDA" TO MENS
-           PERFORM ROT-MENS THRU ROT-MENS-FIM
-           GO TO ROT-FIM.
+           PERFORM ROT-MENS THRU ROT-MENS-FIM.
        INC-OPC.
                 MOVE "S" TO W-OPCAO
                 DISPLAY (23, 40) "DADOS OK (S/N) : "
@@ -407,40 +423,20 @@
       *
        ACE-001.
                 DISPLAY (23, 12)
-                     "N=NOVO REGISTRO   A=ALTERAR   E=EXCLUIR"
+                     "N=NOVA FOLHA  A=ALTERAR"
                 ACCEPT (23, 55) W-OPCAO
                 IF W-OPCAO NOT = "N" AND W-OPCAO NOT = "A"
                     AND W-OPCAO NOT = "E" GO TO ACE-001.
                 MOVE SPACES TO MENS
                 DISPLAY (23, 12) MENS
                 IF W-OPCAO = "N"
-                   GO TO R1
+                   GO TO R3
                 ELSE
                    IF W-OPCAO = "A"
                       MOVE 1 TO W-SEL
-                      GO TO R3.
+                      GO TO R5.
       *
-       EXC-OPC.
-                DISPLAY (23, 40) "EXCLUIR   (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO
-                IF W-OPCAO = "N" OR "n"
-                   MOVE "*** REGISTRO NAO EXCLUIDO ***" TO MENS
-                   PERFORM ROT-MENS THRU ROT-MENS-FIM
-                   GO TO R1.
-                IF W-OPCAO NOT = "S" AND "s"
-                   MOVE "* DIGITE APENAS S=SIM  e  N=NAO *" TO MENS
-                   PERFORM ROT-MENS THRU ROT-MENS-FIM
-                   GO TO EXC-OPC.
-       EXC-DL1.
-                DELETE CADPAG RECORD
-                IF ST-ERRO = "00"
-                   MOVE "*** REGISTRO AMIGO EXCLUIDO ***" TO MENS
-                   PERFORM ROT-MENS THRU ROT-MENS-FIM
-                   GO TO R1.
-                MOVE "ERRO NA EXCLUSAO DO REGISTRO "   TO MENS
-                PERFORM ROT-MENS THRU ROT-MENS-FIM
-                GO TO ROT-FIM.
-      *
+
        ALT-OPC.
                 DISPLAY (23, 40) "ALTERAR  (S/N) : ".
                 ACCEPT (23, 57) W-OPCAO
@@ -472,14 +468,14 @@
        ROT-MENS.
                 MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-               DISPLAY (22, 13) MENS.
+               DISPLAY (23, 13) MENS.
        ROT-MENS2.
                 ADD 1 TO W-CONT
                 IF W-CONT < 3000
                    GO TO ROT-MENS2
                 ELSE
                    MOVE SPACES TO MENS
-                   DISPLAY (22, 13) MENS.
+                   DISPLAY (23, 13) MENS.
        ROT-MENS-FIM.
                 EXIT.
        FIM-ROT-TEMPO.

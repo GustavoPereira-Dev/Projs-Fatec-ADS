@@ -1,6 +1,6 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. PROGRAMA02.
-       AUTHOR. GUSTAVO PEREIRA
+       PROGRAM-ID. FPP001.
+      * AUTHOR. GUSTAVO PEREIRA.
       ***********************************************
       * MANUTENCAO DO CADASTRO CEP   *
       ***********************************************
@@ -30,20 +30,20 @@
                 03 CEP-LOGRA         PIC X(30).
                 03 CEP-BAIRRO        PIC X(20).
                 03 CEP-CIDADE        PIC X(20).
-                03 CEP-UF            PIC X(02).				
+                03 CEP-UF            PIC X(02).
       *-----------------------------------------------------------------
        WORKING-STORAGE SECTION.
-       77 W-SEL          PIC 9(01) VALUE ZEROS.
-       77 W-CONT       PIC 9(06) VALUE ZEROS.
-       77 W-OPCAO    PIC X(01) VALUE SPACES.
-       77 ST-ERRO     PIC X(02) VALUE "00". 
-       77 W-ACT         PIC 9(02) VALUE ZEROS.
-       77 MENS           PIC X(50) VALUE SPACES.
-       77 LIMPA          PIC X(50) VALUE SPACES.
+       77 W-SEL            PIC 9(01) VALUE ZEROS.
+       77 W-CONT           PIC 9(06) VALUE ZEROS.
+       77 W-OPCAO          PIC X(01) VALUE SPACES.
+       77 ST-ERRO          PIC X(02) VALUE "00".
+       77 W-ACT            PIC 9(02) VALUE ZEROS.
+       77 MENS             PIC X(50) VALUE SPACES.
+       77 LIMPA            PIC X(50) VALUE SPACES.
       *
        01 TXUF.
-            03 UF-SIGLA     PIC X(02) VALUE SPACES.
-            03 UF-TEXTO   PIC X(20) VALUE SPACES.
+            03 UF-SIGLA    PIC X(02) VALUE SPACES.
+            03 UF-TEXTO    PIC X(20) VALUE SPACES.
       *
        01 TBUF.
              03 FILLER     PIC X(22) VALUE "ACACRE".
@@ -73,48 +73,110 @@
              03 FILLER     PIC X(22) VALUE "SPSAO PAULO".
              03 FILLER     PIC X(22) VALUE "SESERGIPE".
              03 FILLER     PIC X(22) VALUE "TOTOCANTINS".
-      *		   
+      *
        01 TBUFR REDEFINES TBUF.
-             03 TABUF    PIC X(22) OCCURS 27 TIMES.
-       01 IND            PIC 9(02) VALUE ZEROS.
+             03 TABUF      PIC X(22) OCCURS 27 TIMES.
+       01 IND              PIC 9(02) VALUE ZEROS.
       *-----------------------------------------------------------------
        SCREEN SECTION.
        01  SMT005.
            05  BLANK SCREEN.
-           05  LINE 03  COLUMN 01 
-               VALUE  "                               CADASTRO".
-           05  LINE 03  COLUMN 41 
-               VALUE  "DE CEP".
-           05  LINE 08  COLUMN 01 
-               VALUE  "        CEP :".
-           05  LINE 10  COLUMN 01 
-               VALUE  " LOGRADOURO :".
-           05  LINE 12  COLUMN 01 
-               VALUE  "     BAIRRO :".
-           05  LINE 14  COLUMN 01 
-               VALUE  "     CIDADE :".
-           05  LINE 16  COLUMN 01 
-               VALUE  "         UF :".
-           05  LINE 23  COLUMN 01 
-               VALUE  " MENSAGEM :".
+           05  LINE 03  COLUMN 01
+               VALUE  "                           CADASTRO DE C".
+           05  LINE 03  COLUMN 41
+               VALUE  "EP".
+           05  LINE 08  COLUMN 01
+               VALUE  "  CEP        :".
+           05  LINE 10  COLUMN 01
+               VALUE  "  LOGRADOURO :".
+           05  LINE 12  COLUMN 01
+               VALUE  "  BAIRRO     :".
+           05  LINE 14  COLUMN 01
+               VALUE  "  CIDADE     :".
+           05  LINE 16  COLUMN 01
+               VALUE  "  UF         :".
+           05  LINE 22  COLUMN 01
+               VALUE  "  MENSAGEM :".
            05  TCEP-NUMCEP
-               LINE 08  COLUMN 15  PIC 99999.999
-               USING  CEP-NUMCEP.
+               LINE 08  COLUMN 16  PIC 99999.999
+               USING  CEP-NUMCEP
+               HIGHLIGHT.
            05  TCEP-LOGRA
-               LINE 10  COLUMN 15  PIC X(35)
-               USING  CEP-LOGRA.
+               LINE 10  COLUMN 16  PIC X(35)
+               USING  CEP-LOGRA
+               HIGHLIGHT.
            05  TCEP-BAIRRO
-               LINE 12  COLUMN 15  PIC X(20)
-               USING  CEP-BAIRRO.
+               LINE 12  COLUMN 16  PIC X(20)
+               USING  CEP-BAIRRO
+               HIGHLIGHT.
            05  TCEP-CIDADE
-               LINE 14  COLUMN 15  PIC X(20)
-               USING  CEP-CIDADE.
+               LINE 14  COLUMN 16  PIC X(20)
+               USING  CEP-CIDADE
+               HIGHLIGHT.
            05  TCEP-UF
-               LINE 16  COLUMN 15  PIC X(02)
-               USING  CEP-UF.
+               LINE 16  COLUMN 16  PIC X(02)
+               USING  CEP-UF
+               HIGHLIGHT.
            05  TUF-TEXTO
-               LINE 16  COLUMN 18  PIC X(20)
-               USING  UF-TEXTO.
+               LINE 16  COLUMN 19  PIC X(20)
+               USING  UF-TEXTO
+               HIGHLIGHT.
+
+
+       01 TELAUF.
+           05  LINE 06  COLUMN 57
+               VALUE  "UNIDADES FEDERATIVAS".
+           05  LINE 07  COLUMN 55
+               VALUE  "AC-ACRE".
+           05  LINE 08  COLUMN 55
+               VALUE  "AM-AMAZONAS".
+           05  LINE 09  COLUMN 55
+               VALUE  "BA-BAHIA".
+           05  LINE 10  COLUMN 55
+               VALUE  "DF-DISTRITO FEDERAL".
+           05  LINE 11  COLUMN 55
+               VALUE  "ES-ESPIRITO SANTO".
+           05  LINE 12  COLUMN 55
+               VALUE  "GO-GOIAS".
+           05  LINE 13  COLUMN 55
+               VALUE  "MT-MATO GROSSO".
+           05  LINE 14  COLUMN 55
+               VALUE  "MS-MATO GROSSO DO SUL".
+           05  LINE 15  COLUMN 55
+               VALUE  "PA-PARA".
+           05  LINE 16  COLUMN 55
+               VALUE  "PE-PERNANBUCO".
+           05  LINE 17  COLUMN 55
+               VALUE  "RJ-RIO DE JANEIRO".
+           05  LINE 18  COLUMN 55
+               VALUE  "RN-RIO GRANDE DO NORTE".
+           05  LINE 19  COLUMN 55
+               VALUE  "RS-RIO GRANDE DO SUL".
+           05  LINE 20  COLUMN 55
+               VALUE  "RO-RONDONIA".
+           05  LINE 21  COLUMN 55
+               VALUE  "SC-SANTA CATARINA".
+           05  LINE 22  COLUMN 55
+               VALUE  "SP-SAO PAULO".
+           05  LINE 23  COLUMN 55
+               VALUE  "TO-TOCANTINS".
+           05  LINE 07  COLUMN 69
+               VALUE  "AL-ALAGOAS".
+           05  LINE 08  COLUMN 69
+               VALUE  "AP-AMAPA".
+           05  LINE 09  COLUMN 69
+               VALUE  "CE-CEARA".
+           05  LINE 12  COLUMN 69
+               VALUE  "MA-MARANHAO".
+           05  LINE 15  COLUMN 69
+               VALUE  "PB-PARAIBA".
+           05  LINE 16  COLUMN 69
+               VALUE  "PI-PIAUI".
+           05  LINE 20  COLUMN 69
+               VALUE  "RR-RORAIMA".
+           05  LINE 22  COLUMN 69
+               VALUE  "SE-SERGIPE".
+
       *-----------------------------------------------------------------
        PROCEDURE DIVISION.
        INICIO.
@@ -136,7 +198,7 @@
                     NEXT SENTENCE.
        INC-001.
                 MOVE SPACES TO TXUF CEP-UF CEP-LOGRA CEP-BAIRRO.
-                MOVE SPACES TO CEP-CIDADE. 
+                MOVE SPACES TO CEP-CIDADE.
                 MOVE ZEROS  TO CEP-NUMCEP.
                 DISPLAY SMT005.
        INC-002.
@@ -145,7 +207,7 @@
                 IF W-ACT = 02
                    CLOSE CADCEP
                    GO TO ROT-FIM.
-                IF CEP-NUMCEP = SPACES 
+                IF CEP-NUMCEP = SPACES
                    MOVE "*** CEP INVALIDO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO INC-002.
@@ -170,11 +232,10 @@
                 ACCEPT TCEP-LOGRA
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 02 GO TO INC-002.
-                IF CEP-LOGRA = SPACES 
+                IF CEP-LOGRA = SPACES
                    MOVE "LOGRA. DEVE SER DIFERENTE DE BRANCOS" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO INC-003.
-				  
        INC-004.
                 ACCEPT TCEP-BAIRRO
                 ACCEPT W-ACT FROM ESCAPE KEY
@@ -191,11 +252,13 @@
                    MOVE "CIDADE DEVER DIFERENTE DE BRANCO" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO INC-005.
-				
+
        INC-006.
+                DISPLAY TELAUF
                 ACCEPT TCEP-UF
                 ACCEPT W-ACT FROM ESCAPE KEY
-                IF W-ACT = 01 GO TO INC-005.
+                IF W-ACT = 01 GO TO INC-005
+                DISPLAY SMT005.
        INC-006A.
                MOVE 1 TO IND.
        INC-006B.
@@ -209,14 +272,16 @@
                       ELSE
                          GO TO INC-006B
                ELSE
-                     DISPLAY TUF-TEXTO.
+                     DISPLAY TUF-TEXTO
+
+               DISPLAY SMT005.
       *
                 IF W-SEL = 1
-                              GO TO ALT-OPC. 
+                              GO TO ALT-OPC.
        INC-OPC.
                 MOVE "S" TO W-OPCAO
-                DISPLAY (23, 40) "DADOS OK (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO WITH UPDATE
+                DISPLAY (22, 15) "DADOS OK (S/N) : ".
+                ACCEPT (22, 32) W-OPCAO WITH UPDATE
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 02 GO TO INC-004.
                 IF W-OPCAO = "N" OR "n"
@@ -248,14 +313,14 @@
       *****************************************
       *
        ACE-001.
-                DISPLAY (23, 12)
+                DISPLAY (22, 15)
                      "F1=NOVO REGISTRO   F2=ALTERAR   F3=EXCLUIR"
-                ACCEPT (23, 55) W-OPCAO
+                ACCEPT (22, 58) W-OPCAO
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT NOT = 02 AND W-ACT NOT = 03 AND W-ACT NOT = 04
                    GO TO ACE-001.
                 MOVE SPACES TO MENS
-                DISPLAY (23, 12) MENS
+                DISPLAY (22, 15) MENS
                 IF W-ACT = 02
                    MOVE 02 TO W-SEL
                    GO TO INC-001.
@@ -263,8 +328,8 @@
                    GO TO INC-003.
       *
        EXC-OPC.
-                DISPLAY (23, 40) "EXCLUIR   (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO
+                DISPLAY (22, 15) "EXCLUIR   (S/N) : ".
+                ACCEPT (22, 32) W-OPCAO
                 IF W-OPCAO = "N" OR "n"
                    MOVE "*** REGISTRO NAO EXCLUIDO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
@@ -284,8 +349,8 @@
                 GO TO ROT-FIM.
       *
        ALT-OPC.
-                DISPLAY (23, 40) "ALTERAR  (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO
+                DISPLAY (22, 15) "ALTERAR  (S/N) : ".
+                ACCEPT (22, 32) W-OPCAO
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 02 GO TO INC-004.
                 IF W-OPCAO = "N" OR "n"
@@ -326,13 +391,13 @@
        ROT-MENS.
                 MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-               DISPLAY (23, 12) MENS.
+               DISPLAY (22, 15) MENS.
        ROT-MENS2.
                 ADD 1 TO W-CONT
                 IF W-CONT < 3000
                    GO TO ROT-MENS2
                 ELSE
-                   DISPLAY (23, 12) LIMPA.
+                   DISPLAY (22, 15) LIMPA.
        ROT-MENS-FIM.
                 EXIT.
        FIM-ROT-TEMPO.

@@ -1,6 +1,6 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. PROGCARGO.
-      *AUTHOR. GUSTAVO PEREIRA.
+       PROGRAM-ID. FPP003.
+      * AUTHOR. GUSTAVO PEREIRA.
       ********************************************************
       * MANUTENCAO DO CADASTRO DE CARGOS   *
       ********************************************************
@@ -253,9 +253,17 @@
            DISPLAY TELACARGO.
        R2.
            ACCEPT TCARGO-COD
+
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
-                   GO TO ROT-FIM.
+           IF W-ACT = 02 GO TO ROT-FIM.
+
+           IF CARGO-COD = ZEROS
+               MOVE "*** CODIGO INVALIDO  ***" TO MENS
+               PERFORM ROT-MENS THRU ROT-MENS-FIM
+               GO TO R1.
+
+
+
        LER-CADMCARGO.
            READ CADCARGO
            IF ST-ERRO NOT = "23"
@@ -275,30 +283,39 @@
                 PERFORM ROT-MENS THRU ROT-MENS-FIM.
        R3.
            ACCEPT TCARGO-DNMNC
+
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
-                   GO TO R2.
+           IF W-ACT = 02 GO TO R2.
+
+           IF CARGO-DNMNC = SPACES
+               MOVE "*** DENOMINACAO NAO INFORMADA  ***" TO MENS
+               PERFORM ROT-MENS THRU ROT-MENS-FIM
+               GO TO R3.
+
 
        R4.
            ACCEPT TCARGO-AREA
+
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
+           IF W-ACT = 02
                    DISPLAY TELACARGO
-                   GO TO R3.
+                   GO TO R3
+
            IF CARGO-AREA = ZEROS
-                 MOVE "*** CARGO NÃO INFORMADO  ***" TO MENS
+                 MOVE "*** AREA NAO INFORMADA  ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO R4.
+
        R4A.
            MOVE CARGO-AREA TO AREA-COD.
            READ CADAREA
            IF ST-ERRO NOT = "00"
                IF ST-ERRO = "23"
-                   MOVE "*** CARGO DIGITADO NAO ENCONTRADO ***" TO MENS
+                   MOVE "*** AREA DIGITADA NAO ENCONTRADO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO R4
                ELSE
-                  MOVE "ERRO NA LEITURA ARQUIVO CADASTRO CARGO" TO MENS
+                  MOVE "ERRO NA LEITURA ARQUIVO CADASTRO AREA" TO MENS
                   PERFORM ROT-MENS THRU ROT-MENS-FIM
                   GO TO ROT-FIM
            ELSE
@@ -310,7 +327,7 @@
            ACCEPT W-ACT FROM ESCAPE KEY
 
            DISPLAY TELACARGO
-           IF W-ACT = 01
+           IF W-ACT = 02
                    GO TO R4.
            IF CARGO-TPSAL > 3 OR CARGO-TPSAL = 0
                 MOVE "*** DIGITE APENAS DE 1 ATE 3***" TO MENS
@@ -321,18 +338,23 @@
            DISPLAY TTXTCARGO-TPSAL.
        R6.
            ACCEPT TCARGO-SALBASE
+
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
+           IF W-ACT = 02
                    GO TO R5.
 
+           IF CARGO-SALBASE = ZEROS
+                 MOVE "*** SALARIO BASE NAO INFORMADO  ***" TO MENS
+                 PERFORM ROT-MENS THRU ROT-MENS-FIM
+                 GO TO R6.
 
       * ------------- VERICAR SE E ALTERACAO -----------------
            IF W-SEL = 1
                 GO TO ALT-OPC.
        INC-OPC.
                 MOVE "S" TO W-OPCAO
-                DISPLAY (23, 40) "DADOS OK (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO WITH UPDATE
+                DISPLAY (21, 17) "DADOS OK (S/N) : ".
+                ACCEPT (21, 34) W-OPCAO WITH UPDATE
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 01 GO TO R6.
                 IF W-OPCAO = "N" OR "n"
@@ -365,13 +387,13 @@
       *****************************************
       *
        ACE-001.
-                DISPLAY (23, 12)
+                DISPLAY (21, 17)
                      "N=NOVO REGISTRO   A=ALTERAR   E=EXCLUIR"
-                ACCEPT (23, 55) W-OPCAO
+                ACCEPT (21, 60) W-OPCAO
                 IF W-OPCAO NOT = "N" AND W-OPCAO NOT = "A"
                     AND W-OPCAO NOT = "E" GO TO ACE-001.
                 MOVE SPACES TO MENS
-                DISPLAY (23, 12) MENS
+                DISPLAY (21, 17) MENS
                 IF W-OPCAO = "N"
                    GO TO R1
                 ELSE
@@ -380,8 +402,8 @@
                       GO TO R3.
       *
        EXC-OPC.
-                DISPLAY (23, 40) "EXCLUIR   (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO
+                DISPLAY (21, 17) "EXCLUIR   (S/N) : ".
+                ACCEPT (21, 34) W-OPCAO
                 IF W-OPCAO = "N" OR "n"
                    MOVE "*** REGISTRO NAO EXCLUIDO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
@@ -401,8 +423,8 @@
                 GO TO ROT-FIM.
       *
        ALT-OPC.
-                DISPLAY (23, 40) "ALTERAR  (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO
+                DISPLAY (21, 17) "ALTERAR  (S/N) : ".
+                ACCEPT (21, 34) W-OPCAO
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 01 GO TO R6.
                 IF W-OPCAO = "N" OR "n"
@@ -431,14 +453,14 @@
        ROT-MENS.
                 MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-               DISPLAY (23, 12) MENS.
+               DISPLAY (21, 17) MENS.
        ROT-MENS2.
                 ADD 1 TO W-CONT
                 IF W-CONT < 3000
                    GO TO ROT-MENS2
                 ELSE
                    MOVE SPACES TO MENS
-                   DISPLAY (23, 12) MENS.
+                   DISPLAY (21, 17) MENS.
        ROT-MENS-FIM.
                 EXIT.
        FIM-ROT-TEMPO.

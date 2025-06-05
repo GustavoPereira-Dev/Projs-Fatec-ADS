@@ -1,6 +1,6 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. SMP005.
-       AUTHOR. GUSTAVO PEREIRA.
+       PROGRAM-ID. FPP002.
+      * AUTHOR. GUSTAVO PEREIRA.
       ***********************************************
       * MANUTENCAO DO CADASTRO AREA   *
       ***********************************************
@@ -200,13 +200,13 @@
        INC-002.
                 ACCEPT TAREA-COD
                 ACCEPT W-ACT FROM ESCAPE KEY
-                IF W-ACT = 02
-                   CLOSE CADAREA
-                   GO TO ROT-FIM.
-                IF AREA-COD = SPACES
+                IF AREA-COD = ZEROS
                    MOVE "*** AREA INVALIDO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO INC-002.
+                IF W-ACT = 02
+                   CLOSE CADAREA
+                   GO TO ROT-FIM.
        LER-AREA01.
                 MOVE 0 TO W-SEL
                 READ CADAREA
@@ -237,20 +237,22 @@
            DISPLAY TELAEST
            ACCEPT TAREA-ESTRUTURA.
            ACCEPT W-ACT FROM ESCAPE KEY
-           IF W-ACT = 01
-                   GO TO R0.
+           IF W-ACT = 02 GO TO R0
            IF AREA-ESTRUTURA = 0 OR AREA-ESTRUTURA > 5
                  MOVE "*** DIGITE APENAS DE 1 ATE 5 ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO R1.
        R1A.
            MOVE TBESTRUTURA(AREA-ESTRUTURA) TO TXTAREA-ESTRUTURA
-           DISPLAY TTXTAREA-ESTRUTURA.
-           DISPLAY TELAAREA.
+           DISPLAY TTXTAREA-ESTRUTURA
+           DISPLAY TELAAREA
+
+           IF W-SEL = 02
+                   GO TO ALT-OPC.
        INC-OPC.
                 MOVE "S" TO W-OPCAO
-                DISPLAY (23, 40) "DADOS OK (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO WITH UPDATE
+                DISPLAY (21, 15) "DADOS OK (S/N) : ".
+                ACCEPT (21, 32) W-OPCAO WITH UPDATE
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 02 GO TO R1.
                 IF W-OPCAO = "N" OR "n"
@@ -282,22 +284,25 @@
       *****************************************
       *
        ACE-001.
-                DISPLAY (23, 12)
+                DISPLAY (21, 15)
                      "F1=NOVO REGISTRO   F2=ALTERAR   F3=EXCLUIR"
-                ACCEPT (23, 55) W-OPCAO
+                ACCEPT (21, 55) W-OPCAO
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT NOT = 02 AND W-ACT NOT = 03 AND W-ACT NOT = 04
                    GO TO ACE-001.
                 MOVE SPACES TO MENS
-                DISPLAY (23, 12) MENS
+                DISPLAY (21, 15) MENS
                 IF W-ACT = 02
-                   MOVE 02 TO W-SEL
                    GO TO INC-001.
+                IF W-ACT = 03
+                   MOVE 02 TO W-SEL
+                   GO TO R0.
+
 
       *
        EXC-OPC.
-                DISPLAY (23, 40) "EXCLUIR   (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO
+                DISPLAY (21, 40) "EXCLUIR   (S/N) : ".
+                ACCEPT (21, 57) W-OPCAO
                 IF W-OPCAO = "N" OR "n"
                    MOVE "*** REGISTRO NAO EXCLUIDO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
@@ -317,8 +322,8 @@
                 GO TO ROT-FIM.
       *
        ALT-OPC.
-                DISPLAY (23, 40) "ALTERAR  (S/N) : ".
-                ACCEPT (23, 57) W-OPCAO
+                DISPLAY (21, 15) "ALTERAR  (S/N) : ".
+                ACCEPT (21, 32) W-OPCAO
                 IF W-OPCAO = "N" OR "n"
                    MOVE "*** INFORMACOES NAO ALTERADAS *** " TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
@@ -333,7 +338,7 @@
                    MOVE "*** REGISTRO ALTERADO ***         " TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO INC-001.
-                MOVE "ERRO NA ALTERACAO DO REGISTRO NOTAS"   TO MENS
+                MOVE "ERRO NA ALTERACAO DO REGISTRO AREA"   TO MENS
                 PERFORM ROT-MENS THRU ROT-MENS-FIM
                 GO TO ROT-FIM.
       *
@@ -357,13 +362,13 @@
        ROT-MENS.
                 MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-               DISPLAY (23, 12) MENS.
+               DISPLAY (21, 15) MENS.
        ROT-MENS2.
                 ADD 1 TO W-CONT
                 IF W-CONT < 3000
                    GO TO ROT-MENS2
                 ELSE
-                   DISPLAY (23, 12) LIMPA.
+                   DISPLAY (21, 15) LIMPA.
        ROT-MENS-FIM.
                 EXIT.
        FIM-ROT-TEMPO.
