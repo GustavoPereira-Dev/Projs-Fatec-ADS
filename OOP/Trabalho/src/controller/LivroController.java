@@ -31,10 +31,10 @@ public class LivroController {
         }
 
         public String readLivro() {
-                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do livro"));
+                int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do livro"));
                 for(Livro l: livros){
-                    if(p.getId() == id){
-                        return p.toString();
+                    if(l.getId() == id){
+                        return l.toString();
                     }
                 }    
                 return "Livro não encontrado";
@@ -94,9 +94,9 @@ public class LivroController {
         }
 
         public boolean deleteLivro(int id) {
-                int cont;
+                int cont = 0;
                 for(Livro l: livros){
-                    if(p.getId() == id){
+                    if(l.getId() == id){
                         livros.remove(cont);
                         return true;
                     }

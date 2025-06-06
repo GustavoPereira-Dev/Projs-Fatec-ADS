@@ -1,7 +1,7 @@
 package model;
 
 public class Livro {
-	private int id;
+	private long id;
 	private String titulo;
 	private String autor;
 	private String editora;
@@ -11,7 +11,7 @@ public class Livro {
 	
 	
 	
-	public Livro(int id, String titulo, String autor, String editora, String categoria, float preco, int quantidade) {
+	public Livro(long id, String titulo, String autor, String editora, String categoria, float preco, int quantidade) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -21,10 +21,10 @@ public class Livro {
 		this.preco = preco;
 		this.quantidade = quantidade;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getTitulo() {

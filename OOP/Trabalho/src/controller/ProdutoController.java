@@ -96,7 +96,7 @@ public class ProdutoController {
         }
 
         public boolean deleteProduto(int id) {
-                int cont;
+                int cont = 0;
                 for(Produto p: produtos){
                     if(p.getId() == id){
                         produtos.remove(cont);
