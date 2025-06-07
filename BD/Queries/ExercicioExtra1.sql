@@ -1,25 +1,25 @@
 create database exercicio13 
-go
+GO
 use exercicio13
-go
+GO
 create table empresa(
 id int identity not null primary key,
 nome varchar(50))
-go
+GO
 create table carro(
 id int identity(1001,1) not null primary key,
 marca varchar(50),
 modelo varchar(50), 
 idEmpresa int
 foreign key (idEmpresa) references empresa(id))
-go
+GO
 create table viagem(
 idCarro int not null,
 distanciaPercorrida decimal(7,2),
 data datetime not null
 primary key (idCarro, data)
 foreign key (idCarro) references carro(id))
-go
+GO
 insert into empresa(nome) values
 ('Empresa 1'),
 ('Empresa 2'),
@@ -27,7 +27,7 @@ insert into empresa(nome) values
 ('Empresa 4'),
 ('Empresa 5'),
 ('Empresa 6')
-go
+GO
 insert into carro(idEmpresa, marca, modelo) values
 (1,'Fiat', 'Uno'),
 (1,'Renault', 'Sandero'),
@@ -42,7 +42,7 @@ insert into carro(idEmpresa, marca, modelo) values
 (6,'Chevrolet','Celta'),
 (6,'Fiat', 'Doblo'),
 (6,'Volksvagen', 'Jetta')
-go
+GO
 INSERT INTO viagem VALUES
 (1006,97,CAST(N'2022-05-01' AS Date)),
 (1005,2090,CAST(N'2022-05-02' AS Date)),
@@ -300,7 +300,8 @@ INSERT INTO viagem VALUES
 (1011,1632,CAST(N'2022-12-07' AS Date)),
 (1010,3253,CAST(N'2022-12-08' AS Date)),
 (1010,265,CAST(N'2022-12-09' AS Date))		
-go
+GO
+
 select * from carro
 select * from empresa
 select * from viagem
