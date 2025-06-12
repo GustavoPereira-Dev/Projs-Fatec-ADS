@@ -1,6 +1,6 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID. FPP002.
-      * AUTHOR. GUSTAVO PEREIRA.
+       AUTHOR. GUSTAVO PEREIRA.
       ***********************************************
       * MANUTENCAO DO CADASTRO AREA   *
       ***********************************************
@@ -200,13 +200,13 @@
        INC-002.
                 ACCEPT TAREA-COD
                 ACCEPT W-ACT FROM ESCAPE KEY
+                IF W-ACT = 02
+                   CLOSE CADAREA
+                   GO TO ROT-FIM.
                 IF AREA-COD = ZEROS
                    MOVE "*** AREA INVALIDO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
                    GO TO INC-002.
-                IF W-ACT = 02
-                   CLOSE CADAREA
-                   GO TO ROT-FIM.
        LER-AREA01.
                 MOVE 0 TO W-SEL
                 READ CADAREA

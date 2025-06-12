@@ -1,6 +1,6 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID. FPP001.
-      * AUTHOR. GUSTAVO PEREIRA.
+       AUTHOR. GUSTAVO PEREIRA.
       ***********************************************
       * MANUTENCAO DO CADASTRO CEP   *
       ***********************************************
@@ -82,99 +82,93 @@
        01  SMT005.
            05  BLANK SCREEN.
            05  LINE 03  COLUMN 01
-               VALUE  "                           CADASTRO DE C".
+               VALUE  "                               CADASTRO".
            05  LINE 03  COLUMN 41
-               VALUE  "EP".
+               VALUE  "DE CEP".
            05  LINE 08  COLUMN 01
-               VALUE  "  CEP        :".
+               VALUE  "        CEP :".
            05  LINE 10  COLUMN 01
-               VALUE  "  LOGRADOURO :".
+               VALUE  " LOGRADOURO :".
            05  LINE 12  COLUMN 01
-               VALUE  "  BAIRRO     :".
+               VALUE  "     BAIRRO :".
            05  LINE 14  COLUMN 01
-               VALUE  "  CIDADE     :".
+               VALUE  "     CIDADE :".
            05  LINE 16  COLUMN 01
-               VALUE  "  UF         :".
-           05  LINE 22  COLUMN 01
-               VALUE  "  MENSAGEM :".
+               VALUE  "         UF :".
+           05  LINE 23  COLUMN 01
+               VALUE  " MENSAGEM :".
            05  TCEP-NUMCEP
-               LINE 08  COLUMN 16  PIC 99999.999
-               USING  CEP-NUMCEP
-               HIGHLIGHT.
+               LINE 08  COLUMN 15  PIC 99999.999
+               USING  CEP-NUMCEP.
            05  TCEP-LOGRA
-               LINE 10  COLUMN 16  PIC X(35)
-               USING  CEP-LOGRA
-               HIGHLIGHT.
+               LINE 10  COLUMN 15  PIC X(35)
+               USING  CEP-LOGRA.
            05  TCEP-BAIRRO
-               LINE 12  COLUMN 16  PIC X(20)
-               USING  CEP-BAIRRO
-               HIGHLIGHT.
+               LINE 12  COLUMN 15  PIC X(20)
+               USING  CEP-BAIRRO.
            05  TCEP-CIDADE
-               LINE 14  COLUMN 16  PIC X(20)
-               USING  CEP-CIDADE
-               HIGHLIGHT.
+               LINE 14  COLUMN 15  PIC X(20)
+               USING  CEP-CIDADE.
            05  TCEP-UF
-               LINE 16  COLUMN 16  PIC X(02)
-               USING  CEP-UF
-               HIGHLIGHT.
+               LINE 16  COLUMN 15  PIC X(02)
+               USING  CEP-UF.
            05  TUF-TEXTO
-               LINE 16  COLUMN 19  PIC X(20)
-               USING  UF-TEXTO
-               HIGHLIGHT.
+               LINE 16  COLUMN 18  PIC X(20)
+               USING  UF-TEXTO.
 
 
        01 TELAUF.
-           05  LINE 06  COLUMN 57
+           05  LINE 05  COLUMN 57
                VALUE  "UNIDADES FEDERATIVAS".
-           05  LINE 07  COLUMN 55
+           05  LINE 06  COLUMN 55
                VALUE  "AC-ACRE".
-           05  LINE 08  COLUMN 55
+           05  LINE 07  COLUMN 55
                VALUE  "AM-AMAZONAS".
-           05  LINE 09  COLUMN 55
+           05  LINE 08  COLUMN 55
                VALUE  "BA-BAHIA".
-           05  LINE 10  COLUMN 55
+           05  LINE 09  COLUMN 55
                VALUE  "DF-DISTRITO FEDERAL".
-           05  LINE 11  COLUMN 55
+           05  LINE 10  COLUMN 55
                VALUE  "ES-ESPIRITO SANTO".
-           05  LINE 12  COLUMN 55
+           05  LINE 11  COLUMN 55
                VALUE  "GO-GOIAS".
-           05  LINE 13  COLUMN 55
+           05  LINE 12  COLUMN 55
                VALUE  "MT-MATO GROSSO".
-           05  LINE 14  COLUMN 55
+           05  LINE 13  COLUMN 55
                VALUE  "MS-MATO GROSSO DO SUL".
-           05  LINE 15  COLUMN 55
+           05  LINE 14  COLUMN 55
                VALUE  "PA-PARA".
-           05  LINE 16  COLUMN 55
+           05  LINE 15  COLUMN 55
                VALUE  "PE-PERNANBUCO".
-           05  LINE 17  COLUMN 55
+           05  LINE 16  COLUMN 55
                VALUE  "RJ-RIO DE JANEIRO".
-           05  LINE 18  COLUMN 55
+           05  LINE 17  COLUMN 55
                VALUE  "RN-RIO GRANDE DO NORTE".
-           05  LINE 19  COLUMN 55
+           05  LINE 18  COLUMN 55
                VALUE  "RS-RIO GRANDE DO SUL".
-           05  LINE 20  COLUMN 55
+           05  LINE 19  COLUMN 55
                VALUE  "RO-RONDONIA".
-           05  LINE 21  COLUMN 55
+           05  LINE 20  COLUMN 55
                VALUE  "SC-SANTA CATARINA".
-           05  LINE 22  COLUMN 55
+           05  LINE 21  COLUMN 55
                VALUE  "SP-SAO PAULO".
-           05  LINE 23  COLUMN 55
+           05  LINE 22  COLUMN 55
                VALUE  "TO-TOCANTINS".
-           05  LINE 07  COLUMN 69
-               VALUE  "AL-ALAGOAS".
            05  LINE 08  COLUMN 69
-               VALUE  "AP-AMAPA".
+               VALUE  "AL-ALAGOAS".
            05  LINE 09  COLUMN 69
+               VALUE  "AP-AMAPA".
+           05  LINE 10  COLUMN 69
                VALUE  "CE-CEARA".
-           05  LINE 12  COLUMN 69
+           05  LINE 11  COLUMN 69
                VALUE  "MA-MARANHAO".
-           05  LINE 15  COLUMN 69
+           05  LINE 14  COLUMN 69
                VALUE  "PB-PARAIBA".
-           05  LINE 16  COLUMN 69
+           05  LINE 15  COLUMN 69
                VALUE  "PI-PIAUI".
-           05  LINE 20  COLUMN 69
+           05  LINE 19  COLUMN 69
                VALUE  "RR-RORAIMA".
-           05  LINE 22  COLUMN 69
+           05  LINE 21  COLUMN 69
                VALUE  "SE-SERGIPE".
 
       *-----------------------------------------------------------------
@@ -272,16 +266,14 @@
                       ELSE
                          GO TO INC-006B
                ELSE
-                     DISPLAY TUF-TEXTO
-
-               DISPLAY SMT005.
+                     DISPLAY TUF-TEXTO.
       *
                 IF W-SEL = 1
                               GO TO ALT-OPC.
        INC-OPC.
                 MOVE "S" TO W-OPCAO
-                DISPLAY (22, 15) "DADOS OK (S/N) : ".
-                ACCEPT (22, 32) W-OPCAO WITH UPDATE
+                DISPLAY (23, 40) "DADOS OK (S/N) : ".
+                ACCEPT (23, 57) W-OPCAO WITH UPDATE
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 02 GO TO INC-004.
                 IF W-OPCAO = "N" OR "n"
@@ -313,14 +305,14 @@
       *****************************************
       *
        ACE-001.
-                DISPLAY (22, 15)
+                DISPLAY (23, 12)
                      "F1=NOVO REGISTRO   F2=ALTERAR   F3=EXCLUIR"
-                ACCEPT (22, 58) W-OPCAO
+                ACCEPT (23, 55) W-OPCAO
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT NOT = 02 AND W-ACT NOT = 03 AND W-ACT NOT = 04
                    GO TO ACE-001.
                 MOVE SPACES TO MENS
-                DISPLAY (22, 15) MENS
+                DISPLAY (23, 12) MENS
                 IF W-ACT = 02
                    MOVE 02 TO W-SEL
                    GO TO INC-001.
@@ -328,8 +320,8 @@
                    GO TO INC-003.
       *
        EXC-OPC.
-                DISPLAY (22, 15) "EXCLUIR   (S/N) : ".
-                ACCEPT (22, 32) W-OPCAO
+                DISPLAY (23, 40) "EXCLUIR   (S/N) : ".
+                ACCEPT (23, 57) W-OPCAO
                 IF W-OPCAO = "N" OR "n"
                    MOVE "*** REGISTRO NAO EXCLUIDO ***" TO MENS
                    PERFORM ROT-MENS THRU ROT-MENS-FIM
@@ -349,8 +341,8 @@
                 GO TO ROT-FIM.
       *
        ALT-OPC.
-                DISPLAY (22, 15) "ALTERAR  (S/N) : ".
-                ACCEPT (22, 32) W-OPCAO
+                DISPLAY (23, 40) "ALTERAR  (S/N) : ".
+                ACCEPT (23, 57) W-OPCAO
                 ACCEPT W-ACT FROM ESCAPE KEY
                 IF W-ACT = 02 GO TO INC-004.
                 IF W-OPCAO = "N" OR "n"
@@ -391,13 +383,13 @@
        ROT-MENS.
                 MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-               DISPLAY (22, 15) MENS.
+               DISPLAY (23, 12) MENS.
        ROT-MENS2.
                 ADD 1 TO W-CONT
                 IF W-CONT < 3000
                    GO TO ROT-MENS2
                 ELSE
-                   DISPLAY (22, 15) LIMPA.
+                   DISPLAY (23, 12) LIMPA.
        ROT-MENS-FIM.
                 EXIT.
        FIM-ROT-TEMPO.
