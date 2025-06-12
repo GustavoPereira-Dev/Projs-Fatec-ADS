@@ -1,8 +1,8 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID. CONSCEP.
-      *******************************
-      * CONSULTA DE ENDERECAMENTO CEP *
-      *******************************
+      ************************************
+      * CONSULTA DE FOLHA DE PAGAMENTO 2 *
+      ************************************
       *----------------------------------------------------------------
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
@@ -11,41 +11,44 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
       *
-       SELECT CADCEP ASSIGN TO DISK
+           SELECT CADPAG ASSIGN TO DISK
                     ORGANIZATION IS INDEXED
                     ACCESS MODE  IS DYNAMIC
-                    RECORD KEY   IS CEP-NUMCEP
+                    RECORD KEY   IS CHAVEPGTO
                     FILE STATUS  IS ST-ERRO
-                    ALTERNATE RECORD KEY IS CEP-LOGRA
-                                   WITH DUPLICATES.
+                    ALTERNATE RECORD KEY IS SALBRUTO WITH DUPLICATES.
       *
       *-----------------------------------------------------------------
        DATA DIVISION.
        FILE SECTION.
       *
-       FD CADCEP
+       FD CADPAG
                LABEL RECORD IS STANDARD
-               VALUE OF FILE-ID IS "CADCEP.DAT".
-       01 REGCEP.
-                03 CEP-NUMCEP        PIC 9(08).
-                03 CEP-LOGRA         PIC X(35).
-                03 CEP-BAIRRO        PIC X(20).
-                03 CEP-CIDADE        PIC X(20).
-                03 CEP-UF            PIC X(02).
+               VALUE OF FILE-ID IS "CADPAG.DAT".
+       01 REGPAG.
+          03 CHAVEPGTO.
+               05 FUNC-COD PIC 9(5).
+               05 ANO      PIC 9(4).
+               05 MES      PIC 9(2).
+          03 SALBRUTO      PIC 9(06)V99.
+          03 INSS          PIC 9(06)V99.
+          03 IR            PIC 9(06)V99.
+          03 SALFAMILIA    PIC 9(06)V99.
+          03 SALLIQ        PIC 9(06)V99.
       *
       *-----------------------------------------------------------------
        WORKING-STORAGE SECTION.
-       01 W-SEL        PIC 9(01) VALUE ZEROS.
-       01 W-CONT       PIC 9(04) VALUE ZEROS.
-       01 W-OPCAO      PIC X(01) VALUE SPACES.
-       01 ST-ERRO      PIC X(02) VALUE "00".
-       01 W-ACT        PIC 9(02) VALUE ZEROS.
-       01 MENS         PIC X(50) VALUE SPACES.
-       01 LIMPA        PIC X(55) VALUE SPACES.
-       01 SOLIC        PIC X(20) VALUE SPACES.
-       01 CONLIN       PIC 9(03) VALUE 001.
-       01 CEPENTR      PIC 9(09) VALUE ZEROS.
-       01 LOGRENTR     PIC X(35) VALUE SPACES.
+       01 W-SEL            PIC 9(01)    VALUE ZEROS.
+       01 W-CONT           PIC 9(04)    VALUE ZEROS.
+       01 W-OPCAO          PIC X(01)    VALUE SPACES.
+       01 ST-ERRO          PIC X(02)    VALUE "00".
+       01 W-ACT            PIC 9(02)    VALUE ZEROS.
+       01 MENS             PIC X(60)    VALUE SPACES.
+       01 LIMPA            PIC X(60)    VALUE SPACES.
+       01 SOLIC            PIC X(20)    VALUE SPACES.
+       01 CONLIN           PIC 9(03)    VALUE 001.
+       01 CODENTR          PIC 9(05)    VALUE ZEROS.
+       01 SALBRUTOENTR     PIC 9(06)V99 VALUE ZEROS.
       *-----------------------------------------------------------------
       *
       ******************
@@ -53,20 +56,32 @@
       ******************
       *
        01 DET2.
-          03 FILLER    PIC X(06) VALUE "CEP : ".
-          03 DETCEP    PIC 99999.999.
-          03 FILLER    PIC X(02) VALUE SPACES.
-          03 FILLER    PIC X(13) VALUE "LOGRADOURO : ".
-          03 DETLOGRA  PIC X(35) VALUE SPACES.
-      *
+          03 FILLER       PIC X(21)    VALUE "CODIGO FUNCIONARIO : ".
+          03 DETCOD       PIC 9(05)    VALUE ZEROS.
+          03 FILLER       PIC X(02)    VALUE SPACES.
+          03 FILLER       PIC X(16)    VALUE "SALARIO BRUTO : ".
+          03 DETSALBRUTO  PIC 9(06)V99 VALUE ZEROS.
+          03 FILLER       PIC X(02)    VALUE SPACES.
+          03 FILLER       PIC X(06)    VALUE "ANO : ".
+          03 DETANO       PIC 9(04)    VALUE ZEROS.
+          03 FILLER       PIC X(02)    VALUE SPACES.
+          03 FILLER       PIC X(06)    VALUE "MES : ".
+          03 DETMES       PIC 9(02)    VALUE ZEROS.
+          03 FILLER       PIC X(02)    VALUE SPACES.
        01 DET3.
-          03 FILLER    PIC X(09) VALUE "BAIRRO : ".
-          03 DETBAIRRO PIC X(20).
-          03 FILLER    PIC X(02) VALUE SPACES.
-          03 FILLER    PIC X(09) VALUE "CIDADE : ".
-          03 DETCIDADE PIC X(20).
-          03 FILLER    PIC X(07) VALUE "  UF : ".
-          03 DETUF     PIC X(02) VALUE SPACES.
+          03 FILLER       PIC X(07)    VALUE "INSS : ".
+          03 DETINSS      PIC 9(06)V99 VALUE ZEROS.
+          03 FILLER       PIC X(02)    VALUE SPACES.
+          03 FILLER       PIC X(16)    VALUE "IMPOSTO RENDA : ".
+          03 DETIR        PIC 9(06)V99 VALUE ZEROS.
+          03 FILLER       PIC X(02)    VALUE SPACES.
+          03 FILLER       PIC X(18)    VALUE "SALARIO FAMILIA : ".
+          03 DETSALFAM    PIC 9(06)V99 VALUE ZEROS.
+       01 DET4.
+          03 FILLER       PIC X(18)    VALUE "SALARIO LIQUIDO : ".
+          03 DETSALLIQ    PIC 9(06)V99 VALUE ZEROS.
+      *
+
 
       ******************
       * ROTINA DE TELA *
@@ -74,28 +89,31 @@
       *
        SCREEN SECTION.
 
-       01  TELACEP.
+       01  TELAFO2.
            05  BLANK SCREEN.
            05  LINE 02  COLUMN 01
-               VALUE  " FATEC ZONA LESTE         ***   CONSULTA".
+               VALUE  "                         *** CONSULTA DE".
            05  LINE 02  COLUMN 41
-               VALUE  " DE CEP  ***".
+               VALUE  " FOLHA ***".
            05  LINE 04  COLUMN 01
-               VALUE  " CEP :               LOGRADOURO : ".
-           05  LINE 23  COLUMN 01
+               VALUE  "   CODIGO :        SALARIO BRUTO :".
+           05  LINE 22  COLUMN 01
                VALUE  "  MENSAGEM :".
-           05  TCEPENTR
-               LINE 04  COLUMN 09  PIC 99999.999
-               USING  CEPENTR.
-           05  TLOGRENTR
-               LINE 04  COLUMN 35  PIC X(35)
-               USING  LOGRENTR.
+           05  TCODENTR
+               LINE 04  COLUMN 13  PIC 9(05)
+               USING  CODENTR
+               HIGHLIGHT.
+           05  TSALBRUTOENTR
+               LINE 04  COLUMN 36  PIC 9(06),99
+               USING  SALBRUTOENTR
+               HIGHLIGHT.
+
       *-----------------------------------------------------------------
        PROCEDURE DIVISION.
        INICIO.
       *
        INC-OP1.
-           OPEN INPUT  CADCEP
+           OPEN INPUT  CADPAG
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "30"
                  MOVE "ARQUIVO DE CADCEP NAO EXISTE" TO MENS
@@ -109,16 +127,15 @@
                NEXT SENTENCE.
       *
        INC-001.
-           MOVE ZEROS TO CEPENTR
-           MOVE SPACES TO LOGRENTR
-           DISPLAY  TELACEP.
+           MOVE ZEROS TO CODENTR SALBRUTOENTR
+           DISPLAY  TELAFO2.
        INC-001A.
-           DISPLAY (23, 13)
-            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/LOGRADOURO."
-           ACCEPT TCEPENTR
+           DISPLAY (22, 16)
+            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/SAL. BRUTO"
+           ACCEPT TCODENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADCEP
+                      CLOSE CADPAG
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001B.
@@ -126,19 +143,19 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE CEPENTR TO CEP-NUMCEP
-           START CADCEP KEY IS NOT LESS CEP-NUMCEP INVALID KEY
+           MOVE CODENTR TO FUNC-COD
+           START CADPAG KEY IS NOT LESS FUNC-COD INVALID KEY
                  MOVE "*** FIM DE PROCESSAMENTO ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001.
            GO TO INC-RD2.
        INC-001B.
-           DISPLAY (23, 13)
-            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO CEP "
-           ACCEPT TLOGRENTR
+           DISPLAY (22, 16)
+            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO FUNC"
+           ACCEPT TSALBRUTOENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADCEP
+                      CLOSE CADPAG
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001A.
@@ -146,47 +163,54 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE LOGRENTR TO CEP-LOGRA
-           START CADCEP KEY IS NOT LESS CEP-LOGRA INVALID KEY
+           MOVE SALBRUTOENTR TO SALBRUTO
+           START CADPAG KEY IS NOT LESS SALBRUTO INVALID KEY
                  MOVE "*** FIM DE PROCESSAMENTO ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001B.
        INC-RD2.
-           DISPLAY (23, 13) LIMPA
-           READ CADCEP NEXT
+           DISPLAY (22, 16) LIMPA
+           READ CADPAG NEXT
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "10"
                  MOVE "*** FIM DE PROCESSAMENTO ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO NOV-SOL
               ELSE
-                 MOVE "ERRO NA LEITURA DO ARQUIVO CADCEP"  TO MENS
+                 MOVE "ERRO NA LEITURA DO ARQUIVO CADPAG"  TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM
            ELSE
               NEXT SENTENCE.
        ROT-MONTAR.
-           MOVE CEP-NUMCEP TO DETCEP
-           MOVE CEP-LOGRA  TO DETLOGRA
-           MOVE CEP-BAIRRO TO DETBAIRRO
-           MOVE CEP-CIDADE TO DETCIDADE
-           MOVE CEP-UF     TO DETUF
+           MOVE FUNC-COD   TO DETCOD
+           MOVE ANO        TO DETANO
+           MOVE MES        TO DETMES
+           MOVE SALBRUTO   TO DETSALBRUTO
+           MOVE INSS       TO DETINSS
+           MOVE IR         TO DETIR
+           MOVE SALFAMILIA TO DETSALFAM
+           MOVE SALLIQ     TO DETSALLIQ
+
            COMPUTE LIN = CONLIN + 3
            DISPLAY (LIN, 01) DET2
            ADD 1 TO CONLIN
            COMPUTE LIN = CONLIN + 3
            DISPLAY (LIN, 01) DET3
+           ADD 1 TO CONLIN
+           COMPUTE LIN = CONLIN + 3
+           DISPLAY (LIN, 01) DET4
            ADD 2 TO CONLIN
-           IF CONLIN < 17
+           IF CONLIN < 16
                   GO TO INC-RD2.
       *
        ROT-SOL.
-           DISPLAY (23, 13) " *** CONTINUA CONSULTA : . ***"
+           DISPLAY (22, 16) " *** CONTINUA CONSULTA : . ***"
            MOVE "S" TO W-OPCAO
-           ACCEPT  (23, 38) W-OPCAO  WITH UPDATE
+           ACCEPT  (22, 41) W-OPCAO  WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
-                  DISPLAY TELACEP
+                  DISPLAY TELAFO2
                   GO TO INC-RD2.
            IF W-OPCAO NOT = "N"
                   MOVE "*** DIGITE S=SIM   N=NAO ***" TO MENS
@@ -196,9 +220,9 @@
            GO TO INC-001.
       *
        NOV-SOL.
-           DISPLAY (23, 13) " *** NOVA CONSULTA : . ***"
+           DISPLAY (22, 16) " *** NOVA CONSULTA : . ***"
            MOVE "S" TO W-OPCAO
-           ACCEPT  (23, 34) W-OPCAO WITH UPDATE
+           ACCEPT  (22, 37) W-OPCAO WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
                   GO TO INC-001.
@@ -213,7 +237,7 @@
       *
        ROT-FIM.
            DISPLAY (01 01) ERASE.
-           CLOSE CADCEP.
+           CLOSE CADPAG.
        ROT-FIM2.
            EXIT PROGRAM.
        ROT-FIM3.
@@ -226,13 +250,13 @@
        ROT-MENS.
            MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-           DISPLAY (23, 13) MENS.
+           DISPLAY (22, 15) MENS.
        ROT-MENS2.
            ADD 1 TO W-CONT
            IF W-CONT < 3000
               GO TO ROT-MENS2
            ELSE
-              DISPLAY (23, 12) LIMPA.
+              DISPLAY (22, 15) LIMPA.
        ROT-MENS-FIM.
            EXIT.
        FIM-ROT-MENS.

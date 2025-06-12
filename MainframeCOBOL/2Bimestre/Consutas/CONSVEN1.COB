@@ -2,7 +2,7 @@
        PROGRAM-ID. CONSVEN1.
       *AUTHOR. GUSTAVO PEREIRA.
       **************************************
-      *       CADASTRO DE VEICULOS         *
+      *  CONSULTA DE VENDA DE CARROS 1     *
       **************************************
       *----------------------------------------------------------------
        ENVIRONMENT DIVISION.
@@ -37,14 +37,15 @@
        77 W-CONT        PIC 9(06) VALUE ZEROS.
        77 W-OPCAO       PIC X(01) VALUE SPACES.
        77 W-ACT         PIC 9(02) VALUE ZEROS.
-       77 MENS          PIC X(40) VALUE SPACES.
-       77 LIMPA         PIC X(40) VALUE SPACES.
+       77 MENS          PIC X(60) VALUE SPACES.
+       77 LIMPA         PIC X(60) VALUE SPACES.
        01 ST-ERRO       PIC X(02) VALUE "00".
        01 W-SEL         PIC 9(01) VALUE ZEROS.
        01 SOLIC         PIC X(20) VALUE SPACES.
        01 CONLIN        PIC 9(03) VALUE 001.
        01 PLACAENTR     PIC X(07) VALUE SPACES.
        01 NOMEPROPENTR  PIC X(30) VALUE SPACES.
+       01 W-PROGR       PIC X(15) VALUE SPACES.
 
        01 DET2.
           03 FILLER                 PIC X(02) VALUE SPACES.
@@ -97,11 +98,13 @@
                  GO TO ROT-FIM2.
       *
        INC-001.
-           MOVE SPACES TO PLACAENTR NOMEPROPENTR
+           MOVE SPACES TO PLACAENTR NOMEPROPENTR W-PROGR
            DISPLAY  TCONSVEN1.
        INC-001A.
-           DISPLAY (23, 13)
+           DISPLAY (22, 16)
             "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/PROPRIETARIO."
+           DISPLAY (23, 16)
+            "F3 = CONSULTA 2."
            ACCEPT TPLACAENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
@@ -109,7 +112,14 @@
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001B.
-           IF W-ACT > 03
+           IF W-ACT = 04
+               MOVE "CONSVEN2" TO W-PROGR
+               CALL W-PROGR ON OVERFLOW
+                  MOVE "* ERRO NA CHAMADA DO PROGRAMA *" TO MENS
+                  PERFORM ROT-MENS THRU ROT-MENS-FIM
+                  GO TO INC-001.
+               CANCEL W-PROGR.
+           IF W-ACT > 04
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
@@ -120,7 +130,7 @@
                  GO TO INC-001.
            GO TO INC-RD2.
        INC-001B.
-           DISPLAY (23, 13)
+           DISPLAY (22, 16)
            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO PLACA"
            ACCEPT TNOMEPROPENTR
            ACCEPT W-ACT FROM ESCAPE KEY
@@ -139,7 +149,7 @@
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001B.
        INC-RD2.
-           DISPLAY (23, 13) LIMPA
+           DISPLAY (22, 16) LIMPA
            READ CADCAR NEXT
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "10"
@@ -166,9 +176,9 @@
                   GO TO INC-RD2.
       *
        ROT-SOL.
-           DISPLAY (23, 13) " *** CONTINUA CONSULTA : . ***"
+           DISPLAY (22, 16) " *** CONTINUA CONSULTA : . ***"
            MOVE "S" TO W-OPCAO
-           ACCEPT  (23, 38) W-OPCAO  WITH UPDATE
+           ACCEPT  (22, 41) W-OPCAO  WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
                   DISPLAY TCONSVEN1
@@ -181,9 +191,9 @@
            GO TO INC-001.
       *
        NOV-SOL.
-           DISPLAY (23, 13) " *** NOVA CONSULTA : . ***"
+           DISPLAY (22, 16) " *** NOVA CONSULTA : . ***"
            MOVE "S" TO W-OPCAO
-           ACCEPT  (23, 34) W-OPCAO WITH UPDATE
+           ACCEPT  (22, 37) W-OPCAO WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
                   GO TO INC-001.
@@ -211,13 +221,13 @@
        ROT-MENS.
            MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-           DISPLAY (23, 13) MENS.
+           DISPLAY (22, 16) MENS.
        ROT-MENS2.
            ADD 1 TO W-CONT
            IF W-CONT < 1000
               GO TO ROT-MENS2
            ELSE
-              DISPLAY (23, 12) LIMPA.
+              DISPLAY (22, 16) LIMPA.
        ROT-MENS-FIM.
            EXIT.
        FIM-ROT-MENS.

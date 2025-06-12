@@ -37,8 +37,8 @@
        77 W-OPCAO           PIC X(01) VALUE SPACES.
        77 ST-ERRO           PIC X(02) VALUE "00".
        77 W-ACT             PIC 9(02) VALUE ZEROS.
-       77 MENS              PIC X(50) VALUE SPACES.
-       77 LIMPA             PIC X(50) VALUE SPACES.
+       77 MENS              PIC X(60) VALUE SPACES.
+       77 LIMPA             PIC X(60) VALUE SPACES.
        01 SOLIC             PIC X(20) VALUE SPACES.
        01 CONLIN            PIC 9(03) VALUE 001.
        77 AREA-CODENTR      PIC 9(03) VALUE ZEROS.
@@ -102,7 +102,7 @@
            MOVE SPACES TO AREA-NOMEENTR
            DISPLAY  TCONSAREA1.
        INC-001A.
-           DISPLAY (23, 13)
+           DISPLAY (22, 15)
             "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/LOGRADOURO."
            ACCEPT TAREA-CODENTR
            ACCEPT W-ACT FROM ESCAPE KEY
@@ -122,7 +122,7 @@
                  GO TO INC-001.
            GO TO INC-RD2.
        INC-001B.
-           DISPLAY (23, 13)
+           DISPLAY (22, 15)
             "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/NOME "
            ACCEPT TAREA-NOMEENTR
            ACCEPT W-ACT FROM ESCAPE KEY
@@ -141,7 +141,7 @@
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001B.
        INC-RD2.
-           DISPLAY (23, 13) LIMPA
+           DISPLAY (23, 15) LIMPA
            READ CADAREA NEXT
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "10"
@@ -166,9 +166,9 @@
                   GO TO INC-RD2.
       *
        ROT-SOL.
-           DISPLAY (23, 13) " *** CONTINUA CONSULTA : . ***"
+           DISPLAY (22, 15) " *** CONTINUA CONSULTA : . ***"
            MOVE "S" TO W-OPCAO
-           ACCEPT  (23, 38) W-OPCAO  WITH UPDATE
+           ACCEPT  (22, 40) W-OPCAO  WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
                   DISPLAY TCONSAREA1
@@ -181,9 +181,9 @@
            GO TO INC-001.
       *
        NOV-SOL.
-           DISPLAY (23, 13) " *** NOVA CONSULTA : . ***"
+           DISPLAY (22, 15) " *** NOVA CONSULTA : . ***"
            MOVE "S" TO W-OPCAO
-           ACCEPT  (23, 34) W-OPCAO WITH UPDATE
+           ACCEPT  (22, 36) W-OPCAO WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
                   GO TO INC-001.
@@ -211,13 +211,13 @@
        ROT-MENS.
            MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-           DISPLAY (23, 13) MENS.
+           DISPLAY (22, 15) MENS.
        ROT-MENS2.
            ADD 1 TO W-CONT
            IF W-CONT < 1000
               GO TO ROT-MENS2
            ELSE
-              DISPLAY (23, 12) LIMPA.
+              DISPLAY (22, 15) LIMPA.
        ROT-MENS-FIM.
            EXIT.
        FIM-ROT-MENS.

@@ -1,8 +1,8 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. CONSVEN2.
-      *AUTHOR. GUSTAVO PEREIRA.
+       PROGRAM-ID. FPP005.
+      * AUTHOR. GUSTAVO PEREIRA.
       **************************************
-      *  CONSULTA DE VENDA DE CARROS 2     *
+      * CONSULTA DE FOLHA DE PAGAMENTO 1   *
       **************************************
       *----------------------------------------------------------------
        ENVIRONMENT DIVISION.
@@ -11,100 +11,118 @@
              DECIMAL-POINT IS COMMA.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-       SELECT CADCAR ASSIGN TO DISK
+           SELECT CADPAG ASSIGN TO DISK
                     ORGANIZATION IS INDEXED
                     ACCESS MODE  IS DYNAMIC
-                    RECORD KEY   IS PLACA
+                    RECORD KEY   IS CHAVEPGTO
                     FILE STATUS  IS ST-ERRO
-                    ALTERNATE RECORD KEY IS NOMEPROP WITH DUPLICATES.
-
+                    ALTERNATE RECORD KEY IS SALBRUTO WITH DUPLICATES.
       *
       *-----------------------------------------------------------------
        DATA DIVISION.
        FILE SECTION.
-       FD CADCAR
+       FD CADPAG
                LABEL RECORD IS STANDARD
-               VALUE OF FILE-ID IS "CADCAR.DAT".
-       01 REGCAR.
-          03 PLACA         PIC X(7).
-          03 NOMEPROP      PIC X(30).
-          03 MARCA         PIC X(2).
-          03 ANOFABC       PIC 9(4).
-          03 COR           PIC 9(1).
-      *
+               VALUE OF FILE-ID IS "CADPAG.DAT".
+       01 REGPAG.
+          03 CHAVEPGTO.
+               05 FUNC-COD PIC 9(5).
+               05 ANO      PIC 9(4).
+               05 MES      PIC 9(2).
+          03 SALBRUTO      PIC 9(06)V99.
+          03 INSS          PIC 9(06)V99.
+          03 IR            PIC 9(06)V99.
+          03 SALFAMILIA    PIC 9(06)V99.
+          03 SALLIQ        PIC 9(06)V99.
       *-----------------------------------------------------------------
        WORKING-STORAGE SECTION.
-       77 W-CONT        PIC 9(06) VALUE ZEROS.
-       77 W-OPCAO       PIC X(01) VALUE SPACES.
-       77 W-ACT         PIC 9(02) VALUE ZEROS.
-       77 MENS          PIC X(60) VALUE SPACES.
-       77 LIMPA         PIC X(60) VALUE SPACES.
-       01 ST-ERRO       PIC X(02) VALUE "00".
-       01 W-SEL         PIC 9(01) VALUE ZEROS.
-       01 SOLIC         PIC X(20) VALUE SPACES.
-       01 CONLIN        PIC 9(03) VALUE 001.
-       01 PLACAENTR     PIC X(07) VALUE SPACES.
-       01 NOMEPROPENTR  PIC X(30) VALUE SPACES.
-
+       77 W-CONT        PIC 9(06)    VALUE ZEROS.
+       77 W-OPCAO       PIC X(01)    VALUE SPACES.
+       77 W-ACT         PIC 9(02)    VALUE ZEROS.
+       77 MENS          PIC X(60)    VALUE SPACES.
+       77 LIMPA         PIC X(60)    VALUE SPACES.
+       01 ST-ERRO       PIC X(02)    VALUE "00".
+       01 W-SEL         PIC 9(01)    VALUE ZEROS.
+       01 IND           PIC 9(02)    VALUE ZEROS.
+       01 SOLIC         PIC X(20)    VALUE SPACES.
+       01 CONLIN        PIC 9(03)    VALUE 001.
+       01 CODENTR       PIC 9(5)     VALUE ZEROS.
+       01 SALBRUTOENTR  PIC 9(06)V99 VALUE ZEROS.
+      *
+      *************************
+      * REPORT SECTION *
+      *************************
+      *
        01 DET2.
-          03 FILLER           PIC X(08) VALUE "PLACA : ".
-          03 DETPLACA         PIC X(08) VALUE SPACES.
-          03 FILLER           PIC X(20) VALUE "NOME PROPRIETARIO : ".
-          03 DETNOMEPROP      PIC X(30) VALUE SPACES.
-       01 DET3.
-          03 FILLER           PIC X(08) VALUE "MARCA : ".
-          03 DETMARCA         PIC X(03) VALUE SPACES.
-          03 FILLER           PIC X(17) VALUE "ANO FABRICACAO : ".
-          03 DETANOFABC       PIC 9(04) VALUE ZEROS.
-          03 FILLER           PIC X(15) VALUE "COR DO CARRO : ".
-          03 DETCOR           PIC 9(01) VALUE ZEROS.
-
-      *-----------------------------------------------------------------
+          03 FILLER        PIC X(02)    VALUE SPACES.
+          03 DETCOD        PIC X(05)    VALUE SPACES.
+          03 FILLER        PIC X(02)    VALUE SPACES.
+          03 DETANO        PIC X(04)    VALUE SPACES.
+          03 FILLER        PIC X(02)    VALUE SPACES.
+          03 DETMES        PIC X(02)    VALUE SPACES.
+          03 FILLER        PIC X(06)    VALUE SPACES.
+          03 DETSALBRUTO   PIC 9(06)V99 VALUE ZEROS.
+          03 FILLER        PIC X(04)    VALUE SPACES.
+          03 DETINSS       PIC 9(06)V99 VALUE ZEROS.
+          03 FILLER        PIC X(02)    VALUE SPACES.
+          03 DETIR         PIC 9(06)V99 VALUE ZEROS.
+          03 FILLER        PIC X(02)    VALUE SPACES.
+          03 DETSALFAMILIA PIC 9(06)V99 VALUE ZEROS.
+          03 FILLER        PIC X(04)    VALUE SPACES.
+          03 DETSALLIQ     PIC 9(06)V99 VALUE ZEROS.
+      *
+      ******************
+      * ROTINA DE TELA *
+      ******************
+      *
        SCREEN SECTION.
-       01  TCONSVEN2.
+       01  TFOLHA.
            05  BLANK SCREEN.
            05  LINE 02  COLUMN 01
-               VALUE  "                            *** CONSULTA".
+               VALUE  "                          *** CONSULTA D".
            05  LINE 02  COLUMN 41
-               VALUE  " DE VEICULO ***".
+               VALUE  "A FOLHA ***".
            05  LINE 04  COLUMN 01
-               VALUE  "   PLACA :         NOME PROPRIETARIO :".
+               VALUE  " CODIGO  ANO   MES  SALARIO BRUTO    INS".
+           05  LINE 04  COLUMN 41
+               VALUE  "S      IR     SAL.FAMILIA  SAL.LIQUIDO".
            05  LINE 22  COLUMN 01
-               VALUE  "   MENSAGEM :".
-           05  TPLACAENTR
-               LINE 04  COLUMN 12  PIC X(07)
-               USING  PLACAENTR
+               VALUE  "  MENSAGEM :".
+           05  TCODENTR
+               LINE 06  COLUMN 02  PIC X(05)
+               USING  CODENTR
                HIGHLIGHT.
-           05  TNOMEPROPENTR
-               LINE 04  COLUMN 40  PIC X(30)
-               USING  NOMEPROPENTR
+           05  TSALBRUTOENTR
+               LINE 06  COLUMN 22  PIC 9(06),99
+               USING  SALBRUTOENTR
                HIGHLIGHT.
+
       *-----------------------------------------------------------------
        PROCEDURE DIVISION.
        INICIO.
       *
        INC-OP1.
-           OPEN INPUT  CADCAR
+           OPEN INPUT CADPAG
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "30"
-                 MOVE "ARQUIVO DE CADCAR NAO EXISTE" TO MENS
+                 MOVE "ARQUIVO DE CADPAG NAO EXISTE" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM2
               ELSE
-                 MOVE "ERRO ABERTURA DO ARQUIVO CADCAR"  TO MENS
+                 MOVE "ERRO ABERTURA DO ARQUIVO CADPAG"  TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM2.
       *
        INC-001.
-           MOVE SPACES TO PLACAENTR NOMEPROPENTR
-           DISPLAY  TCONSVEN2.
+           MOVE ZEROS TO CODENTR SALBRUTOENTR
+           DISPLAY TFOLHA.
        INC-001A.
-           DISPLAY (22, 16)
-            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/PROPRIETARIO."
-           ACCEPT TPLACAENTR
+           DISPLAY (22, 13)
+            "SOLIC.=> F1=ENCERRA CONSULTA   F2=CONSULTA P/SAL. BRUTO"
+           ACCEPT TCODENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADCAR
+                      CLOSE CADPAG
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001B.
@@ -112,19 +130,19 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE PLACAENTR TO PLACA
-           START CADCAR KEY IS NOT LESS PLACA INVALID KEY
+           MOVE CODENTR TO FUNC-COD
+           START CADPAG KEY IS NOT LESS FUNC-COD INVALID KEY
                  MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001.
            GO TO INC-RD2.
        INC-001B.
-           DISPLAY (22, 16)
-           "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO PLACA"
-           ACCEPT TNOMEPROPENTR
+           DISPLAY (22, 15)
+            "SOLIC.=> F1=ENCERRA CONSULTA     F2=CONSULTA P/CODIGO FUNC"
+           ACCEPT TSALBRUTOENTR
            ACCEPT W-ACT FROM ESCAPE KEY
            IF W-ACT = 02
-                      CLOSE CADCAR
+                      CLOSE CADPAG
                       GO TO ROT-FIM.
            IF W-ACT = 03
                       GO TO INC-001A.
@@ -132,48 +150,48 @@
                       MOVE "*** FUNCAO NAO DEFINIDA ***" TO MENS
                       PERFORM ROT-MENS THRU ROT-MENS-FIM
                       GO TO INC-001A.
-           MOVE NOMEPROPENTR TO NOMEPROP
-           START CADCAR KEY IS NOT LESS NOMEPROP INVALID KEY
+           MOVE SALBRUTOENTR TO SALBRUTO
+           START CADPAG KEY IS NOT LESS SALBRUTO INVALID KEY
                  MOVE "*** CHAVE NAO ENCONTRADA ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO INC-001B.
        INC-RD2.
-           DISPLAY (22, 16) LIMPA
-           READ CADCAR NEXT
+           DISPLAY (22, 15) LIMPA
+           READ CADPAG NEXT
            IF ST-ERRO NOT = "00"
               IF ST-ERRO = "10"
                  MOVE "*** FIM DO ARQUIVO  ***" TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO NOV-SOL
               ELSE
-                 MOVE "ERRO NA LEITURA DO ARQUIVO CADCAR"  TO MENS
+                 MOVE "ERRO NA LEITURA DO ARQUIVO CADCEP"  TO MENS
                  PERFORM ROT-MENS THRU ROT-MENS-FIM
                  GO TO ROT-FIM
            ELSE
               NEXT SENTENCE.
        ROT-MONTAR.
-           MOVE PLACA         TO DETPLACA
-           MOVE NOMEPROP    TO DETNOMEPROP
-           MOVE MARCA       TO DETMARCA
-           MOVE ANOFABC       TO DETANOFABC
-           MOVE COR           TO DETCOR
+           MOVE FUNC-COD   TO DETCOD
+           MOVE ANO        TO DETANO
+           MOVE MES        TO DETMES
+           MOVE SALBRUTO   TO DETSALBRUTO
+           MOVE INSS       TO DETINSS
+           MOVE IR         TO DETIR
+           MOVE SALFAMILIA TO DETSALFAMILIA
+           MOVE SALLIQ     TO DETSALLIQ
 
-           COMPUTE LIN = CONLIN + 3
+           COMPUTE LIN = CONLIN + 5
            DISPLAY (LIN, 01) DET2
            ADD 1 TO CONLIN
-           COMPUTE LIN = CONLIN + 3
-           DISPLAY (LIN, 01) DET3
-           ADD 2 TO CONLIN
            IF CONLIN < 17
                   GO TO INC-RD2.
       *
        ROT-SOL.
            DISPLAY (22, 16) " *** CONTINUA CONSULTA : . ***"
            MOVE "S" TO W-OPCAO
-           ACCEPT  (22, 41) W-OPCAO  WITH UPDATE
+           ACCEPT  (22, 40) W-OPCAO  WITH UPDATE
            IF W-OPCAO = "S"
                   MOVE 01 TO CONLIN
-                  DISPLAY TCONSVEN2
+                  DISPLAY TFOLHA
                   GO TO INC-RD2.
            IF W-OPCAO NOT = "N"
                   MOVE "*** DIGITE S=SIM   N=NAO ***" TO MENS
@@ -193,6 +211,7 @@
                   MOVE "*** DIGITE S=SIM   N=NAO ***" TO MENS
                   PERFORM ROT-MENS THRU ROT-MENS-FIM
                   GO TO NOV-SOL.
+
       *
       **********************
       * ROTINA DE FIM      *
@@ -200,7 +219,7 @@
       *
        ROT-FIM.
            DISPLAY (01 01) ERASE.
-           CLOSE CADCAR.
+           CLOSE CADPAG.
        ROT-FIM2.
            EXIT PROGRAM.
        ROT-FIM3.
@@ -213,16 +232,16 @@
        ROT-MENS.
            MOVE ZEROS TO W-CONT.
        ROT-MENS1.
-           DISPLAY (22, 16) MENS.
+           DISPLAY (22, 13) MENS.
        ROT-MENS2.
            ADD 1 TO W-CONT
            IF W-CONT < 1000
               GO TO ROT-MENS2
            ELSE
-              DISPLAY (22, 15) LIMPA.
+              DISPLAY (22, 12) LIMPA.
        ROT-MENS-FIM.
            EXIT.
        FIM-ROT-MENS.
       *
 
-      *---------------------*** FIM DE PROGRAMA ***--------------------*
+      *---------------------*** FIM DE PROGRAMA ***--------------------*
