@@ -25,8 +25,8 @@ CREATE TABLE Disciplinas(
 	Codigo int IDENTITY,
 	Nome varchar(60),
 	CargaHoraria int,
-	Turno varchar(10)
-	Semestre int
+	Turno varchar(10),
+	Semestre int,
 	PRIMARY KEY(Codigo)
 );
 
@@ -45,19 +45,19 @@ VALUES ('Informática',	2800,	'Tarde'),
 	   ('Plásticos',	2500,	'Tarde'),
 	   ('Plásticos',	2500,	'Noite');
 
-INSERT INTO Disciplinas(Nome, CargaHoraria,	Turno, Semestre)
+INSERT INTO Disciplinas(Nome, CargaHoraria, Turno, Semestre)
 VALUES
-('Informática',	4,	'Tarde',	1),
-('Informática',	4,	'Noite',	1),
-('Quimica',	4,	'Tarde',	1),
-('Quimica',	4,	'Noite',	1),
-('Banco de Dados I',	2,	'Tarde',	3),
-('Banco de Dados I',	2,	'Noite',	3,
-('Estrutura de Dados',	4,	'Tarde',	4),
-('Estrutura de Dados',	4,	'Noite',	4);
+('Informática', 4, 'Tarde', 1),
+('Informática', 4, 'Noite', 1),
+('Quimica', 4, 'Tarde', 1),
+('Quimica', 4, 'Noite', 1),
+('Banco de Dados I', 2, 'Tarde', 3),
+('Banco de Dados I', 2, 'Noite', 3),
+('Estrutura de Dados', 4, 'Tarde', 4),
+('Estrutura de Dados', 4, 'Noite', 4);
 
 SELECT Nome + ' ' + Sobrenome AS NomeCompleto FROM Aluno;
-SELECT Rua + ' ' + N + ' ' + Bairro + ' ' + CEP AS Endereco FROM Aluno WHERE Telefone IS NULL; 
+SELECT Rua + ' ' + CAST(N AS VARCHAR) + ' ' + Bairro + ' ' + CEP AS Endereco FROM Aluno WHERE Telefone IS NULL;
 SELECT Telefone FROM Aluno WHERE RA = 12348;
 SELECT Nome, Turno FROM Cursos WHERE CargaHoraria > 2800;
-SELECT Semestre FROM Disciplina WHERE Nome LIKE 'Banco de Dados I' AND Turno LIKE 'noite';
+SELECT Semestre FROM Disciplinas WHERE Nome = 'Banco de Dados I' AND Turno = 'Noite';
