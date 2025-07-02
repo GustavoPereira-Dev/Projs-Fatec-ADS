@@ -1,0 +1,7 @@
+# Programação para Mainframe
+
+Atividades desenvolvidas referente a uso da linguagem do COBOL (COmum Business Oriented Language)
+
+[1º Bimestre](./1Bimestre/): Primeiros códigos e algoritmos utilizando COBOL. Possuí conhecimentos básicos como Input ou Output de textos/variáveis, uso de labels, tópicos/divisões existentes em um código do COBOL, declaração de variáveis e vetores temporários (WORKING-STORAGE SECTION), configuração de leitura e escrita de arquivos (ENVIRONMENT DIVISION - FILE-CONTROL e DATA DIVISION - FILE SECTION) com chaves primárias (RECORD KEY), estrangeiras (ALTERNATE RECORD KEY) e modos de acesso e organização dos arquivos dinâmicos, indexados e sequenciais, PERFORMS, atributos/variáveis compostas e/ou redefinições/atualizações, interfaces de telas mais complexas (usando o GTC - Gerador de Telas para Programas COBOL) e FILE STATUS
+
+[2º Bimestre](./2Bimestre/): Códigos mais complexos de COBOL que incluem o desenvolvimento e continuação do projeto do Cadastro de Funcionário (iniciado no primeiro semestre), leitura de múltiplos arquivos de apoio para a base de escrita de um arquivo em específico, métodos de consultas para arquivos pelas chaves primárias e estrangeiras com pequena paginação, chaves compostas e mudanças de telas/códigos na execução,
