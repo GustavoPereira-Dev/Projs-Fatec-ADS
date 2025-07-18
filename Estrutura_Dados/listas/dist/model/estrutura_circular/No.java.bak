@@ -1,0 +1,6 @@
+package model.estrutura_circular;
+
+public class No<T>{
+	
+	private T valor
+}
