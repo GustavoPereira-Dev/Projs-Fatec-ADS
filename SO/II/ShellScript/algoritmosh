@@ -307,3 +307,255 @@ while [ "$indx" -lt "$num" ] ; then
 done
 		
 echo "O resultado da sequência de fatorial é: ${seq} "
+
+
+
+
+
+#!/bin/bash
+# estSeq37.sh
+# Descrição: Recebe um número inteiro e mostra a série de Fibonacci até o n-ésimo termo
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+read -p "Digite o número para Fibonacci: " num
+
+ant1=1
+ant2=0
+indx=1
+fib=0
+
+if [ "$num" -gt 1 ]; then
+    while [ "$indx" -lt "$num" ]; do
+        fib=$((ant1 + ant2))
+        ant2=$ant1
+        ant1=$fib
+        indx=$((indx + 1))
+    done
+else
+    fib=$num
+fi
+
+echo "O resultado da Fibonacci é: ${fib}"
+
+
+
+#!/bin/bash
+# estSeq38.sh
+# Descrição: Recebe 100 números reais positivos e mostra o maior e o menor valor
+# Data: 05/03/2024
+# Programador: Gustavo Henrique
+# Versão: 0.1
+
+indx=1
+maior=0
+menor=0
+first=1  # Flag para detectar o primeiro número válido
+
+while [ "$indx" -le 100 ]; do
+    read -p "Digite o número ($indx/100): " num
+
+    # Verifica se é positivo
+    if (( $(echo "$num >= 0" | bc -l) )); then
+        if [ "$first" -eq 1 ]; then
+            maior=$num
+            menor=$num
+            first=0
+        else
+            maior=$(echo "$num > $maior" | bc -l)
+            if [ "$maior" -eq 1 ]; then
+                maior=$num
+            fi
+
+            menor=$(echo "$num < $menor" | bc -l)
+            if [ "$menor" -eq 1 ]; then
+                menor=$num
+            fi
+        fi
+        indx=$((indx + 1))
+    else
+        echo "Somente valores positivos são permitidos."
+    fi
+done
+
+echo "O maior número entre os 100 é: $maior"
+echo "O menor número entre os 100 é: $menor"
+
+
+
+#!/bin/bash
+# estSeq39.sh
+# Descrição: Calcula a quantidade de grãos contidos em um tabuleiro de xadrez
+#            Casa: 1 2 4 8 ... até a 64ª casa (2^0 até 2^63)
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+graos=1  # Começa com 1 grão na primeira casa
+
+for ((casa=2; casa<=64; casa++)); do
+    graos=$(echo "$graos * 2" | bc)
+done
+
+echo "O total de grãos no tabuleiro é: $graos"
+
+
+
+#!/bin/bash
+# estSeq40.sh
+# Descrição: Recebe dois números inteiros e mostra todos os primos entre eles
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+read -p "Digite o primeiro número: " num1
+read -p "Digite o segundo número: " num2
+
+# Determina os limites corretos
+if [ "$num1" -gt "$num2" ]; then
+    ini=$num2
+    fim=$num1
+else
+    ini=$num1
+    fim=$num2
+fi
+
+echo "Números primos entre $ini e $fim:"
+
+for ((i=ini; i<=fim; i++)); do
+    if [ "$i" -lt 2 ]; then
+        continue
+    fi
+
+    primo=1
+    for ((j=2; j<=i/2; j++)); do
+        if [ $((i % j)) -eq 0 ]; then
+            primo=0
+            break
+        fi
+    done
+
+    if [ "$primo" -eq 1 ]; then
+        echo "$i"
+    fi
+done
+
+
+
+
+
+
+#!/bin/bash
+# estSeq41.sh
+# Descrição: Mostra todas as possibilidades de dois dados cuja soma é 7
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+pos=0
+
+for ((num1=1; num1<=6; num1++)); do
+    for ((num2=1; num2<=6; num2++)); do
+        if [ $((num1 + num2)) -eq 7 ]; then
+            echo "(${num1}, ${num2})"
+            pos=$((pos + 1))
+        fi
+    done
+done
+
+echo "Total de possibilidades cuja soma é 7: $pos"
+
+
+
+
+#!/bin/bash
+# estSeq42.sh
+# Descrição: Calcula e mostra a série 1 + 2/3 + 3/5 + ... + 50/99
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+num1=1
+num2=1
+res=0
+
+while [ "$num1" -le 50 ]; do
+    termo=$(echo "scale=8; $num1 / $num2" | bc -l)
+    res=$(echo "scale=8; $res + $termo" | bc -l)
+
+    num1=$((num1 + 1))
+    num2=$((num2 + 2))
+done
+
+echo "O resultado da sequência até 50 é: $res"
+
+
+
+
+#!/bin/bash
+# estSeq43.sh
+# Descrição: Calcula quantos anos são necessários para que Ana seja maior que Maria
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+ana=1.10    # Altura inicial de Ana (em metros)
+maria=1.50  # Altura inicial de Maria (em metros)
+anos=0
+
+while (( $(echo "$ana <= $maria" | bc -l) )); do
+    ana=$(echo "$ana + 0.03" | bc)
+    maria=$(echo "$maria + 0.02" | bc)
+    anos=$((anos + 1))
+done
+
+echo "Serão necessários ${anos} ano(s) para que Ana seja maior que Maria."
+
+
+
+
+#!/bin/bash
+# estSeq44.sh
+# Descrição: Recebe a base e o expoente e calcula a potência (base^expoente)
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+read -p "Digite o valor da base: " base
+read -p "Digite o valor do expoente: " exp
+
+pot=1
+for ((i=1; i<=exp; i++)); do
+    pot=$((pot * base))
+done
+
+echo "O resultado de ${base} elevado à ${exp} é: ${pot}"
+
+
+
+
+#!/bin/bash
+# estSeq45.sh
+# Descrição: Calcula a série 1^2/4 + 3/9^4/16 + ... até 15/225 com lógica baseada em expressão exponencial
+# Data: 05/03/2024
+# Programador: Gustavo Pereira
+# Versão: 0.1
+
+res=0
+num2=0
+
+for ((num1=1; num1<=15; num1++)); do
+    num2=$((num2 + 1))
+
+    # Prepara os componentes da expressão
+    num2_plus_1=$(echo "$num2 + 1" | bc)
+    num2_squared=$(echo "$num2 * $num2" | bc)
+    num1_squared=$(echo "$num1 * $num1" | bc)
+
+    # Calcula: exp(((num2 + 1) / num2²) * ln(num1) / num1²)
+    termo=$(echo "scale=8; e(($num2_plus_1 / $num2_squared) * (l($num1) / $num1_squared))" | bc -l)
+    res=$(echo "scale=8; $res + $termo" | bc -l)
+done
+
+echo "O resultado da sequência até 15 é: $res"
