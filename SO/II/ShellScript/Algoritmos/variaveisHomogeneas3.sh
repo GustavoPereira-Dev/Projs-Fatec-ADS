@@ -1,9 +1,6 @@
 #!/bin/bash
 # variaveisHomogeneas3.sh
 # Descrição: Coleta valores dos vetores VT1[3] e VT2[3], concatena em VT3[6] e exibe
-# Data: 26/03/2024
-# Programador: Gustavo Pereira
-# Versão: 0.1
 
 declare -a vt1 vt2 vt3
 

@@ -1,9 +1,6 @@
 #!/bin/bash
 # variaveisHomogeneas2.sh
 # Descrição: Coleta quantidade e preço de 5 produtos, calcula o total de vendas e a comissão de 5%
-# Data: 26/03/2024
-# Programador: Gustavo Pereira
-# Versão: 0.1
 
 declare -a qtd preco
 totGeral=0

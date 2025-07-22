@@ -1,9 +1,6 @@
 #!/bin/bash
 # recursividade3.sh
 # Descrição: Calcula a soma da série harmônica (1/1 + 1/2 + ... + 1/N) de forma recursiva
-# Data: 19/03/2024
-# Programador: Gustavo Pereira
-# Versão: 0.1
 
 somarHarmonica() {
     local n=$1

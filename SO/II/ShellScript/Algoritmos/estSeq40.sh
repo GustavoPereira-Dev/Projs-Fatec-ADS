@@ -4,7 +4,6 @@
 read -p "Digite o primeiro número: " num1
 read -p "Digite o segundo número: " num2
 
-# Determina os limites corretos
 if [ "$num1" -gt "$num2" ]; then
     ini=$num2
     fim=$num1

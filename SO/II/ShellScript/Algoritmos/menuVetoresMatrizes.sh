@@ -1,10 +1,9 @@
 #!/bin/bash
 # menuVetoresMatrizes.sh
 # Descrição: Simula menu interativo com vetores e matrizes (adaptando auxiliarvarhomogenias de instancia classes de Java)
-# Programador: Gustavo Pereira
 
 declare -a vetor
-declare -A matriz  # simulação bidimensional
+declare -A matriz
 lin=3
 col=4
 

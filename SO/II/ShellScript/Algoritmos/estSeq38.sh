@@ -4,12 +4,11 @@
 indx=1
 maior=0
 menor=0
-first=1  # Flag para detectar o primeiro número válido
+first=1
 
 while [ "$indx" -le 100 ]; do
     read -p "Digite o número ($indx/100): " num
 
-    # Verifica se é positivo
     if (( $(echo "$num >= 0" | bc -l) )); then
         if [ "$first" -eq 1 ]; then
             maior=$num

@@ -1,9 +1,6 @@
 #!/bin/bash
 # recursividade4.sh
 # Descrição: Calcula a série (N/1) + (N-1/2) + ... + (1/N) de forma recursiva
-# Data: 19/03/2024
-# Programador: Gustavo Pereira
-# Versão: 0.1
 
 somarSerie() {
     local n=$1

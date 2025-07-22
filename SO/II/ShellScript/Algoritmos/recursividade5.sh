@@ -1,9 +1,6 @@
 #!/bin/bash
 # recursividade5.sh
 # Descrição: Calcula a série (N)! + (N-1)! + ... + (1)! de forma recursiva
-# Data: 19/03/2024
-# Programador: Gustavo Pereira
-# Versão: 0.1
 
 fatorial() {
     local n=$1
@@ -26,7 +23,6 @@ somarFatoriais() {
     fi
 }
 
-# Entrada do usuário
 read -p "Digite o número para a série (N)! + (N-1)! + ... + 1!: " num
 resultado=$(somarFatoriais "$num")
 

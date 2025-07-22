@@ -1,8 +1,8 @@
 #!/bin/bash
 # estSeq43.sh
 
-ana=1.10    # Altura inicial de Ana (em metros)
-maria=1.50  # Altura inicial de Maria (em metros)
+ana=1.10
+maria=1.50 
 anos=0
 
 while (( $(echo "$ana <= $maria" | bc -l) )); do

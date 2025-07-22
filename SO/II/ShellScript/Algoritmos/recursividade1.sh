@@ -1,9 +1,6 @@
 #!/bin/bash
 # recursividade1.sh
 # Descrição: Faz a soma de 1 até N usando recursão
-# Data: 19/03/2024
-# Programador: Gustavo Pereira
-# Versão: 0.1
 
 somaNumeros() {
     local n=$1

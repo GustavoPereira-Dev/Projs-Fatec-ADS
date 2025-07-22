@@ -1,11 +1,8 @@
 #!/bin/bash
 # variaveisHomogeneas1.sh
 # Descrição: Coleta valores de 5 índices de um vetor e retorna a soma total
-# Data: 26/03/2024
-# Programador: Gustavo Pereira
-# Versão: 0.1
 
-declare -a vet  # Declara um array
+declare -a vet
 soma=0
 
 for ((i=0; i<5; i++)); do
