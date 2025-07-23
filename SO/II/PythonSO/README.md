@@ -1,4 +1,4 @@
-### Python em SOs
+# Python em SOs
 
 1. Nesta prática o aluno deverá configurar o ambiente python com um módulo necessário.
 - Instale o pip3 para o python3;
