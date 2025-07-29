@@ -108,7 +108,7 @@ public:
 
 // Main
 
-int main() {
+void teste() {
     Hotel hotel;
 
     // Adicionar quartos ao hotel
@@ -131,6 +131,102 @@ int main() {
 
     // Imprimir fatura
     hotel.imprimirFatura(0);
+
+    return 0;
+}
+
+int main() {
+    Hotel hotel;
+    int opcao;
+
+    // Quartos padrão
+    hotel.quartos.push_back(Quarto(101, 200.0));
+    hotel.quartos.push_back(Quarto(102, 250.0));
+
+    do {
+        cout << "\n=== HOTELARIA ===\n";
+        cout << "1. Cadastrar hóspede\n";
+        cout << "2. Alugar quarto\n";
+        cout << "3. Adicionar serviço\n";
+        cout << "4. Registrar consumo frigobar\n";
+        cout << "5. Imprimir fatura\n";
+        cout << "6. Teste de sistema\n";
+        cout << "0. Sair\n";
+        cout << "Escolha: ";
+        cin >> opcao;
+        cin.ignore();
+
+        switch (opcao) {
+            case 1: {
+                string nome, cpf, endereco, telefone;
+                cout << "Nome: "; getline(cin, nome);
+                cout << "CPF: "; getline(cin, cpf);
+                cout << "Endereço: "; getline(cin, endereco);
+                cout << "Telefone: "; getline(cin, telefone);
+                hotel.cadastrarHospede(Hospede(nome, cpf, endereco, telefone));
+                cout << "Hóspede cadastrado!\n";
+                break;
+            }
+
+            case 2: {
+                if (hotel.hospedes.empty()) {
+                    cout << "Cadastre um hóspede primeiro.\n";
+                    break;
+                }
+                int idx;
+                cout << "Hóspedes:\n";
+                for (size_t i = 0; i < hotel.hospedes.size(); i++)
+                    cout << i << " - " << hotel.hospedes[i].nome << "\n";
+                cout << "Escolha o índice do hóspede: ";
+                cin >> idx;
+                int num;
+                cout << "Número do quarto: "; cin >> num;
+                Fatura f;
+                hotel.alugarQuarto(num, hotel.hospedes[idx], f);
+                break;
+            }
+
+            case 3: {
+                int faturaIdx;
+                string desc;
+                double preco;
+                cout << "Número da fatura: "; cin >> faturaIdx;
+                cin.ignore();
+                cout << "Descrição do serviço: "; getline(cin, desc);
+                cout << "Preço: "; cin >> preco;
+                hotel.adicionarServico(faturaIdx, Servico(desc, preco));
+                break;
+            }
+
+            case 4: {
+                int faturaIdx;
+                double valor;
+                cout << "Número da fatura: "; cin >> faturaIdx;
+                cout << "Valor do consumo: "; cin >> valor;
+                hotel.consumoFrigobar(faturaIdx, valor);
+                break;
+            }
+
+            case 5: {
+                int faturaIdx;
+                cout << "Número da fatura: "; cin >> faturaIdx;
+                hotel.imprimirFatura(faturaIdx);
+                break;
+            }
+
+            case 6:{
+                cout << "Executando teste de sistema...\n";
+                teste();
+                break;
+            }
+            case 0:
+                cout << "Até logo!\n";
+                break;
+
+            default:
+                cout << "Opção inválida.\n";
+        }
+    } while (opcao != 0);
 
     return 0;
 }

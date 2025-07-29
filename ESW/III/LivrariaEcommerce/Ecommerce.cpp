@@ -411,7 +411,7 @@ int main0() {
 
 // Teste com uso de Pagamento
 
-int main() {
+void teste() {
     Estoque estoque;
     Funcionario f1("Carlos", "carlos@livraria.com", "111.222.333-44", "11999999999", "MAT123");
     estoque.adicionarAssinante(&f1);
@@ -440,6 +440,169 @@ int main() {
 
     C_OperacoesCliente opCliente;
     opCliente.exibirHistorico(cli);
+
+    return 0;
+}
+
+int main() {
+    Estoque estoque;
+    C_PesquisaLivro catalogo;
+    C_ManterCliente cCliente;
+    C_EfetuarPedidoAvancado cPedido(&estoque);
+    C_OperacoesCliente cOperacoes;
+
+    // Notificação
+    Funcionario f1("Carlos", "carlos@livraria.com", "111.222.333-44", "11999999999", "MAT123");
+    estoque.adicionarAssinante(&f1);
+
+    int opcao;
+    Cliente* clienteLogado = nullptr;
+    CarrinhoAvancado carrinho;
+
+    do {
+        cout << "\n=== ECOMMERCE LIVROS ===\n";
+        cout << "1. Cadastrar cliente\n";
+        cout << "2. Autenticar cliente\n";
+        cout << "3. Cadastrar livro\n";
+        cout << "4. Adicionar livro ao carrinho\n";
+        cout << "5. Exibir carrinho\n";
+        cout << "6. Escolher pagamento e finalizar pedido\n";
+        cout << "7. Consultar histórico\n";
+        cout << "8. Consultar estoque\n";
+        cout << "9. Teste de sistema\n";
+        cout << "0. Sair\n";
+        cout << "Escolha: ";
+        cin >> opcao;
+        cin.ignore();
+
+        switch (opcao) {
+            case 1: {
+                string nome, email, cpf, tel;
+                cout << "Nome: "; getline(cin, nome);
+                cout << "Email: "; getline(cin, email);
+                cout << "CPF: "; getline(cin, cpf);
+                cout << "Telefone: "; getline(cin, tel);
+                clienteLogado = cCliente.cadastrarCliente(nome, email, cpf, tel);
+                cout << "Cliente cadastrado!\n";
+                break;
+            }
+
+            case 2: {
+                string cpf;
+                cout << "CPF para login: "; getline(cin, cpf);
+                clienteLogado = cCliente.autenticarCliente(cpf);
+                if (clienteLogado)
+                    cout << "Cliente autenticado: " << clienteLogado->nome << endl;
+                else
+                    cout << "CPF não encontrado.\n";
+                break;
+            }
+
+            case 3: {
+                string isbn, titulo, autor, editora, categoria;
+                int paginas, tipo, qtd;
+                double preco;
+                cout << "ISBN: "; getline(cin, isbn);
+                cout << "Título: "; getline(cin, titulo);
+                cout << "Autor: "; getline(cin, autor);
+                cout << "Editora: "; getline(cin, editora);
+                cout << "Categoria: "; getline(cin, categoria);
+                cout << "Páginas: "; cin >> paginas;
+                cout << "Preço: "; cin >> preco;
+                cout << "Tipo (1-Brochura, 2-Digital, 3-Capa Dura): "; cin >> tipo;
+                cout << "Quantidade estoque: "; cin >> qtd;
+                cin.ignore();
+
+                Livro* livro = nullptr;
+                if (tipo == 1)
+                    livro = new Brochura(isbn, titulo, autor, editora, categoria, paginas, preco);
+                else if (tipo == 2)
+                    livro = new Digital(isbn, titulo, autor, editora, categoria, paginas, preco);
+                else
+                    livro = new CapaDura(isbn, titulo, autor, editora, categoria, paginas, preco);
+
+                catalogo.cadastrarLivro(livro);
+                estoque.adicionarLivro(livro, qtd);
+                cout << "Livro cadastrado e estoque atualizado.\n";
+                break;
+            }
+
+            case 4: {
+                string busca;
+                cout << "Título do livro: "; getline(cin, busca);
+                auto resultados = catalogo.pesquisarLivro(busca);
+                if (resultados.empty()) {
+                    cout << "Livro não encontrado.\n";
+                    break;
+                }
+
+                int qtd;
+                cout << "Quantidade desejada: "; cin >> qtd;
+                carrinho.adicionarLivro(resultados[0], qtd);
+                cout << "Livro adicionado ao carrinho.\n";
+                break;
+            }
+
+            case 5:
+                carrinho.exibirCarrinho();
+                break;
+
+            case 6: {
+                if (!clienteLogado) {
+                    cout << "Você precisa estar autenticado.\n";
+                    break;
+                }
+                int pag;
+                cout << "Forma de pagamento:\n1 - Cartão à vista\n2 - Cartão parcelado\n3 - Pix\nEscolha: ";
+                cin >> pag;
+
+                Pagavel* metodo = nullptr;
+                if (pag == 1)
+                    metodo = new PagamentoCartao(false, 1);
+                else if (pag == 2) {
+                    int parcelas;
+                    cout << "Número de parcelas: "; cin >> parcelas;
+                    metodo = new PagamentoCartao(true, parcelas);
+                } else
+                    metodo = new PagamentoPix();
+
+                PedidoAvancado* pedido = cPedido.confirmarPedidoComPagamento(clienteLogado, carrinho, metodo);
+                pedido->exibirItens();
+                pedido->atualizarStatus("em transporte");
+                pedido->atualizarStatus("finalizado");
+                carrinho.limparCarrinho();
+                break;
+            }
+
+            case 7:
+                if (clienteLogado)
+                    cOperacoes.exibirHistorico(clienteLogado);
+                else
+                    cout << "Cliente não autenticado.\n";
+                break;
+
+            case 8: {
+                cout << "\nEstoque:\n";
+                for (auto& par : estoque.livros)
+                    cout << "- " << par.first->getTitulo() << ": " << par.second << " unidades\n";
+                break;
+            }
+
+            case 9:{
+                cout << "Executando teste de sistema...\n";
+                teste();
+                break;
+            }
+            
+            case 0:
+                cout << "Encerrando sistema...\n";
+                break;
+
+            default:
+                cout << "Opção inválida.\n";
+        }
+
+    } while (opcao != 0);
 
     return 0;
 }

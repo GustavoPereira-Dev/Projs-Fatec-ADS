@@ -98,7 +98,7 @@ public:
 
 // Main
 
-int main() {
+void teste() {
     Clube clube;
 
     // Cadastrar revistas
@@ -133,3 +133,106 @@ int main() {
     return 0;
 }
 
+int main() {
+    Clube clube;
+    int opcao;
+
+    do {
+        cout << "\n=== MENU CLUBE DAS REVISTAS ===\n";
+        cout << "1. Cadastrar revista\n";
+        cout << "2. Cadastrar caixa\n";
+        cout << "3. Cadastrar amiguinho\n";
+        cout << "4. Registrar empréstimo\n";
+        cout << "5. Listar empréstimos\n";
+        cout << "6. Função de Teste\n";
+        cout << "0. Sair\n";
+        cout << "Escolha: ";
+        cin >> opcao;
+        cin.ignore();
+
+        switch (opcao) {
+            case 1: {
+                string tipoColecao;
+                int numeroEdicao, ano, numeroCaixa;
+                cout << "Tipo de coleção: "; getline(cin, tipoColecao);
+                cout << "Número da edição: "; cin >> numeroEdicao;
+                cout << "Ano: "; cin >> ano;
+                cout << "Número da caixa: "; cin >> numeroCaixa;
+                cin.ignore();
+                clube.cadastrarRevista(Revista(tipoColecao, numeroEdicao, ano, numeroCaixa));
+                cout << "Revista cadastrada.\n";
+                break;
+            }
+
+            case 2: {
+                int numero;
+                string cor, etiqueta;
+                cout << "Número da caixa: "; cin >> numero;
+                cin.ignore();
+                cout << "Cor: "; getline(cin, cor);
+                cout << "Etiqueta: "; getline(cin, etiqueta);
+                clube.cadastrarCaixa(Caixa(numero, cor, etiqueta));
+                cout << "Caixa cadastrada.\n";
+                break;
+            }
+
+            case 3: {
+                string nome, nomeMae, telefone, origem;
+                cout << "Nome do amiguinho: "; getline(cin, nome);
+                cout << "Nome da mãe: "; getline(cin, nomeMae);
+                cout << "Telefone: "; getline(cin, telefone);
+                cout << "Origem (escola/prédio etc): "; getline(cin, origem);
+                clube.cadastrarAmiguinho(Amiguinho(nome, nomeMae, telefone, origem));
+                cout << "Amiguinho cadastrado.\n";
+                break;
+            }
+
+            case 4: {
+                if (clube.amiguinhos.empty() || clube.revistas.empty()) {
+                    cout << "É necessário ter ao menos um amiguinho e uma revista cadastrados.\n";
+                    break;
+                }
+
+                int idxA, idxR;
+                time_t agora = time(0);
+                time_t devolucao = agora + (7 * 24 * 3600); // 7 dias depois
+
+                cout << "\nAmiguinhos disponíveis:\n";
+                for (size_t i = 0; i < clube.amiguinhos.size(); i++)
+                    cout << i << " - " << clube.amiguinhos[i].nome << "\n";
+                cout << "Escolha o índice do amiguinho: "; cin >> idxA;
+
+                cout << "\nRevistas disponíveis:\n";
+                for (size_t i = 0; i < clube.revistas.size(); i++)
+                    cout << i << " - " << clube.revistas[i].tipoColecao << " (Edição " << clube.revistas[i].numeroEdicao << ")\n";
+                cout << "Escolha o índice da revista: "; cin >> idxR;
+                cin.ignore();
+
+                Emprestimo emp(clube.amiguinhos[idxA], clube.revistas[idxR], agora, devolucao);
+                clube.registrarEmprestimo(emp);
+                cout << "Empréstimo registrado!\n";
+                break;
+            }
+
+            case 5:
+                cout << "\nLista de empréstimos:\n";
+                clube.listarEmprestimos();
+                break;
+
+            case 6:
+                cout << "Executando função de teste...\n";
+                teste();
+                break;
+                
+            case 0:
+                cout << "Até logo, obrigado por usar o sistema!\n";
+                break;
+
+            default:
+                cout << "Opção inválida.\n";
+        }
+
+    } while (opcao != 0);
+
+    return 0;
+}

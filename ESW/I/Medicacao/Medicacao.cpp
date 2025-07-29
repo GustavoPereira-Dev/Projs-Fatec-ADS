@@ -89,7 +89,7 @@ public:
 
 // Main
 
-int main() {
+void teste() {
     Usuario usuario;
 
     // Exemplo de cadastro de medicacao
@@ -106,6 +106,82 @@ int main() {
 
     // Confirmar ingestao
     usuario.confirmarIngestao(true);
+
+    return 0;
+}
+
+int main() {
+    Usuario usuario;
+    int opcao;
+
+    do {
+        cout << "\n=== GERENCIADOR DE MEDICACAO ===\n";
+        cout << "1. Cadastrar medicacao\n";
+        cout << "2. Listar horarios sugeridos\n";
+        cout << "3. Emitir alarme para proximo horario\n";
+        cout << "4. Confirmar ingestao\n";
+        cout << "5. Teste de sistema\n";
+        cout << "0. Sair\n";
+        cout << "Escolha uma opcao: ";
+        cin >> opcao;
+        cin.ignore();
+
+        switch (opcao) {
+            case 1: {
+                string nomeRemedio, nomePaciente;
+                int dias, vezes;
+                double dosagem;
+
+                cout << "Nome do remedio: "; getline(cin, nomeRemedio);
+                cout << "Nome do paciente: "; getline(cin, nomePaciente);
+                cout << "Dias prescritos: "; cin >> dias;
+                cout << "Vezes ao dia: "; cin >> vezes;
+                cout << "Dosagem (mg): "; cin >> dosagem;
+                time_t inicio = time(0); // Agora
+
+                Medicacao m(nomeRemedio, nomePaciente, inicio, dias, vezes, dosagem);
+                usuario.cadastrarMedicacao(m);
+                cout << "Medicacao cadastrada.\n";
+                break;
+            }
+
+            case 2:
+                usuario.listarHorarios();
+                break;
+
+            case 3: {
+                if (!usuario.horario.horarios.empty()) {
+                    usuario.emitirAlarme(usuario.horario.horarios[0]);
+                } else {
+                    cout << "Nenhum horario cadastrado.\n";
+                }
+                break;
+            }
+
+            case 4: {
+                char resp;
+                cout << "Voce tomou o remedio? (s/n): ";
+                cin >> resp;
+                bool confirmacao = (resp == 's' || resp == 'S');
+                usuario.confirmarIngestao(confirmacao);
+                break;
+            }
+
+            case 5: {
+                cout << "Executando teste de sistema...\n";
+                teste();
+                break;
+            }
+
+            case 0:
+                cout << "Saindo do sistema...\n";
+                break;
+
+            default:
+                cout << "Opcao invalida.\n";
+        }
+
+    } while (opcao != 0);
 
     return 0;
 }

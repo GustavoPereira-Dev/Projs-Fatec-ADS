@@ -221,9 +221,8 @@ public:
     }
 };
 
-// Main
-
-int main() {
+// Função de Teste
+void teste() {
     ControleAcademico controle;
 
     // Disciplinas
@@ -259,6 +258,116 @@ int main() {
     controle.realizarInscricao(a1, t1, inscricoes); // OK
     inscricoes.push_back(t1);
     controle.realizarInscricao(a1, t2, inscricoes); // Falha: choque
+
+    return 0;
+}
+
+// Main
+int main() {
+    ControleAcademico controle;
+    vector<Turma*> inscricoes;
+    int opcao;
+
+    // Criação padrão inicial
+    Disciplina* d1 = new Disciplina("Matematica", 4);
+    Disciplina* d2 = new Disciplina("Fisica", 4);
+    d2->preRequisitos.push_back("Matematica");
+    controle.disciplinas.push_back(d1);
+    controle.disciplinas.push_back(d2);
+
+    Professor* p1 = new Professor("Carlos");
+    p1->habilitacoes.push_back("Matematica");
+    p1->habilitacoes.push_back("Fisica");
+    controle.professores.push_back(p1);
+
+    Sala* sala1 = new Sala("Lab1", 30);
+
+    Turma* t1 = new Turma("T1", d1, p1, 2);
+    Turma* t2 = new Turma("T2", d2, p1, 2);
+    t1->aulas.push_back(Aula("Segunda", "08:00", "10:00", sala1));
+    t2->aulas.push_back(Aula("Segunda", "09:00", "11:00", sala1));
+    controle.turmas.push_back(t1);
+    controle.turmas.push_back(t2);
+
+    Aluno* aluno1 = new Aluno("Joao");
+    controle.alunos.push_back(aluno1);
+
+    do {
+        cout << "\n====== MENU ACADÊMICO ======\n";
+        cout << "1. Listar disciplinas\n";
+        cout << "2. Listar turmas\n";
+        cout << "3. Cadastrar novo aluno\n";
+        cout << "4. Realizar inscrição\n";
+        cout << "5. Ver alunos nas turmas\n";
+        cout << "6. Função de teste\n";
+        cout << "0. Sair\n";
+        cout << "Escolha: ";
+        cin >> opcao;
+
+        switch (opcao) {
+            case 1:
+                cout << "\nDisciplinas disponíveis:\n";
+                for (auto d : controle.disciplinas)
+                    cout << "- " << d->nome << " (" << d->creditos << " créditos)\n";
+                break;
+
+            case 2:
+                cout << "\n🎓 Turmas:\n";
+                for (auto t : controle.turmas)
+                    cout << "- " << t->codigo << " (" << t->disciplina->nome << ") com Professor " << t->professor->nome << "\n";
+                break;
+
+            case 3: {
+                cin.ignore();
+                string nome;
+                cout << "Nome do aluno: ";
+                getline(cin, nome);
+                Aluno* novoAluno = new Aluno(nome);
+                controle.alunos.push_back(novoAluno);
+                cout << "Aluno cadastrado: " << nome << "\n";
+                break;
+            }
+
+            case 4: {
+                int idxAluno, idxTurma;
+                cout << "\nAlunos disponíveis:\n";
+                for (size_t i = 0; i < controle.alunos.size(); i++)
+                    cout << i << " - " << controle.alunos[i]->nome << "\n";
+                cout << "Escolha o aluno: "; cin >> idxAluno;
+
+                cout << "\nTurmas disponíveis:\n";
+                for (size_t i = 0; i < controle.turmas.size(); i++)
+                    cout << i << " - " << controle.turmas[i]->codigo << " (" << controle.turmas[i]->disciplina->nome << ")\n";
+                cout << "Escolha a turma: "; cin >> idxTurma;
+
+                Aluno* a = controle.alunos[idxAluno];
+                Turma* t = controle.turmas[idxTurma];
+
+                controle.realizarInscricao(a, t, inscricoes);
+                inscricoes.push_back(t);
+                break;
+            }
+
+            case 5:
+                for (auto t : controle.turmas) {
+                    cout << "\nTurma " << t->codigo << " - Alunos:\n";
+                    for (auto a : t->alunos)
+                        cout << "- " << a->nome << "\n";
+                }
+                break;
+            case 6:
+                cout << "Função de teste executada.\n";
+                teste(); // Chama a função de teste
+                break;
+            case 0:
+                cout << "Encerrando sistema acadêmico...\n";
+                break;
+
+            default:
+                cout << "Opção inválida.\n";
+        }
+
+    } while (opcao != 0);
 
     return 0;
 }

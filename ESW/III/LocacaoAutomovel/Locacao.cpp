@@ -171,9 +171,116 @@ public:
     }
 };
 
-// Main
 int main() {
+    GerenciadorLocacao gerenciador;
+    Marca marcaPadrao("Toyota");
+    Modelo modeloPadrao("Corolla", &marcaPadrao);
     InterfaceUsuario ui;
-    ui.demo();
+
+    int opcao;
+    do {
+        cout << "\n=== MENU LOCADORA ===\n";
+        cout << "1. Cadastrar cliente\n";
+        cout << "2. Cadastrar automóvel (passeio ou utilitário)\n";
+        cout << "3. Mostrar clientes\n";
+        cout << "4. Mostrar frota\n";
+        cout << "5. Realizar locação\n";
+        cout << "6. Teste de interface\n";
+        cout << "0. Sair\nEscolha: ";
+        cin >> opcao;
+
+        switch (opcao) {
+            case 1: {
+                cin.ignore();
+                string cpf, nome, endereco, telefone, email;
+                cout << "CPF: "; getline(cin, cpf);
+                cout << "Nome: "; getline(cin, nome);
+                cout << "Endereço: "; getline(cin, endereco);
+                cout << "Telefone: "; getline(cin, telefone);
+                cout << "Email: "; getline(cin, email);
+                gerenciador.adicionarCliente(make_unique<Cliente>(cpf, nome, endereco, telefone, email));
+                cout << "Cliente adicionado.\n";
+                break;
+            }
+
+            case 2: {
+                cin.ignore();
+                string placa, cor, tipoCombustivel, chassi;
+                int ano, portas, tipo;
+                double km, diaria;
+
+                cout << "Placa: "; getline(cin, placa);
+                cout << "Cor: "; getline(cin, cor);
+                cout << "Ano: "; cin >> ano;
+                cin.ignore();
+                cout << "Combustível: "; getline(cin, tipoCombustivel);
+                cout << "Portas: "; cin >> portas;
+                cout << "Quilometragem: "; cin >> km;
+                cin.ignore();
+                cout << "Chassi: "; getline(cin, chassi);
+                cout << "Diária (R$): "; cin >> diaria;
+                cout << "Tipo (1-Passeio, 2-Utilitário): "; cin >> tipo;
+
+                if (tipo == 1) {
+                    int lugares;
+                    cout << "Qtd. Lugares: "; cin >> lugares;
+                    gerenciador.adicionarAutomovel(make_unique<Passeio>(
+                        placa, cor, ano, tipoCombustivel, portas, km, chassi, diaria, &modeloPadrao, lugares));
+                } else {
+                    double carga;
+                    cout << "Carga Máx (kg): "; cin >> carga;
+                    gerenciador.adicionarAutomovel(make_unique<Utilitario>(
+                        placa, cor, ano, tipoCombustivel, portas, km, chassi, diaria, &modeloPadrao, carga));
+                }
+                cout << "Veículo cadastrado.\n";
+                break;
+            }
+
+            case 3: {
+                cout << "\nClientes cadastrados:\n";
+                for (const auto& c : gerenciador.clientes)
+                    cout << "- " << c->getNome() << " (CPF: " << c->getCpf() << ")\n";
+                break;
+            }
+
+            case 4: {
+                cout << "\nFrota disponível:\n";
+                for (const auto& a : gerenciador.frota)
+                    cout << "- " << a->getPlaca()
+                         << " | Modelo: " << a->getModeloNome()
+                         << " | Disponível: " << (a->isDisponivel() ? "Sim" : "Não") << "\n";
+                break;
+            }
+
+            case 5: {
+                cin.ignore();
+                string cpf, placa, dRet, hRet, dDev, hDev;
+                int dias;
+                cout << "CPF do cliente: "; getline(cin, cpf);
+                cout << "Placa do automóvel: "; getline(cin, placa);
+                cout << "Data retirada: "; getline(cin, dRet);
+                cout << "Hora retirada: "; getline(cin, hRet);
+                cout << "Data devolução: "; getline(cin, dDev);
+                cout << "Hora devolução: "; getline(cin, hDev);
+                cout << "Qtd dias: "; cin >> dias;
+                gerenciador.alugar(cpf, placa, dRet, hRet, dDev, hDev, dias);
+                break;
+            }
+
+            case 6: {
+                cout << "Iniciando interface de usuário...\n";
+                ui.demo();
+                break;
+            }
+
+            case 0:
+                cout << "Encerrando...\n";
+                break;
+
+            default:
+                cout << "Opção inválida.\n";
+        }
+    } while (opcao != 0);
+
     return 0;
 }

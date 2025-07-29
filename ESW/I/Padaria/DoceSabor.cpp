@@ -60,7 +60,7 @@ public:
     }
 };
 
-int main() {
+void teste() {
     Padaria padaria;
 
     // Cadastrar produtos
@@ -87,3 +87,88 @@ int main() {
     return 0;
 }
 
+int main() {
+    Padaria padaria;
+    int opcao;
+
+    do {
+        cout << "\n=== PADARIA DOCE SABOR ===\n";
+        cout << "1. Cadastrar produto\n";
+        cout << "2. Registrar comanda\n";
+        cout << "3. Adicionar item à comanda\n";
+        cout << "4. Imprimir comandas\n";
+        cout << "5. Teste de sistema\n";
+        cout << "0. Sair\n";
+        cout << "Escolha: ";
+        cin >> opcao;
+        cin.ignore();
+
+        switch (opcao) {
+            case 1: {
+                string nome;
+                double preco;
+                cout << "Nome do produto: "; getline(cin, nome);
+                cout << "Preço unitário: R$ "; cin >> preco;
+                padaria.cadastrarProduto(Produto(nome, preco));
+                cout << "Produto cadastrado.\n";
+                break;
+            }
+
+            case 2: {
+                int numero;
+                cout << "Número da comanda: "; cin >> numero;
+                padaria.registrarComanda(Comanda(numero));
+                cout << "Comanda registrada.\n";
+                break;
+            }
+
+            case 3: {
+                int comandaIdx, produtoIdx, quantidade;
+                if (padaria.comandas.empty() || padaria.produtos.empty()) {
+                    cout << "Nenhuma comanda ou produto cadastrado.\n";
+                    break;
+                }
+
+                cout << "\nComandas disponíveis:\n";
+                for (size_t i = 0; i < padaria.comandas.size(); i++)
+                    cout << i << " - Comanda " << padaria.comandas[i].numero << endl;
+
+                cout << "Escolha o índice da comanda: "; cin >> comandaIdx;
+
+                cout << "\nProdutos disponíveis:\n";
+                for (size_t i = 0; i < padaria.produtos.size(); i++)
+                    cout << i << " - " << padaria.produtos[i].nome << " (R$ " << padaria.produtos[i].precoUnitario << ")\n";
+
+                cout << "Escolha o índice do produto: "; cin >> produtoIdx;
+                cout << "Quantidade: "; cin >> quantidade;
+
+                if (comandaIdx < padaria.comandas.size() && produtoIdx < padaria.produtos.size()) {
+                    padaria.comandas[comandaIdx].adicionarItem(padaria.produtos[produtoIdx], quantidade);
+                    cout << "Item adicionado à comanda.\n";
+                } else {
+                    cout << "Índice inválido.\n";
+                }
+                break;
+            }
+
+            case 4:
+                padaria.imprimirComandas();
+                break;
+
+            case 5:
+                cout << "Executando teste de sistema...\n";
+                teste();
+                break;
+                
+            case 0:
+                cout << "Encerrando sistema...\n";
+                break;
+
+            default:
+                cout << "Opção inválida.\n";
+        }
+
+    } while (opcao != 0);
+
+    return 0;
+}
