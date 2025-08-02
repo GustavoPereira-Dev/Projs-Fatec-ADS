@@ -1,17 +1,9 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
- 
-int main(int argc, char *argv[]); 
-#define BUF_SIZE 4096
-#define OUTPUT_MODE 0640
+#include "utils.h"
 
-int main(int argc, char *argv[])
-{
-   copiar(argc, *argv[]);
-}
-
-void copiar(int argc, char *argv[]){
+void copiarArquivo(int argc, char *argv[]){
    int in_fd, out_fd, rd_count, wt_count;
    char buffer[BUF_SIZE];
    if (argc != 3) exit(1); 
@@ -34,4 +26,13 @@ void copiar(int argc, char *argv[]){
        exit(0);
    else
        exit(5);
+}
+
+int main(int argc, char *argv[]); 
+#define BUF_SIZE 4096
+#define OUTPUT_MODE 0640
+
+int main(int argc, char *argv[])
+{
+   copiar(argc, *argv[]);
 }

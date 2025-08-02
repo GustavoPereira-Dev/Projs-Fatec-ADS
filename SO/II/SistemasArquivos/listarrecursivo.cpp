@@ -1,9 +1,10 @@
  #include <iostream>
  #include <filesystem>
+ #include "utils.h"
  
  namespace fs = std::filesystem;
  
- void listar(std::string path)
+ void listarRecursivo(std::string path)
  {
     for (const auto & entry : fs::directory_iterator(path))
     {

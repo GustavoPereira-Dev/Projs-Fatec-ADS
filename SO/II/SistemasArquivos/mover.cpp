@@ -1,5 +1,13 @@
 #include <iostream>
 #include <cstdio>
+#include "utils.h"
+
+void moverArquivo(const std::string& origem, const std::string& destino) {
+    if (std::rename(origem.c_str(), destino.c_str()) != 0)
+        perror("Erro ao renomear arquivo");
+    else
+        std::cout << "Arquivo renomeado com sucesso." << std::endl;
+}
 
 int main(int argc, char *argv[])
 {

@@ -1,7 +1,45 @@
-#include <stdio.h> 
-#include <string.h> 
-#include <err.h> 
-#include <blkid/blkid.h> 
+#include <iostream>
+#include <blkid/blkid.h>
+#include <string>
+#include "utils.h"
+
+void obterUUIDDispositivo(const std::string& caminhoDispositivo) {
+    blkid_probe pr = blkid_new_probe_from_filename(caminhoDispositivo.c_str());
+    if (!pr) {
+        std::cerr << "Erro ao abrir " << caminhoDispositivo << std::endl;
+        return;
+    }
+
+    blkid_partlist ls = blkid_probe_get_partitions(pr);
+    int nparts = blkid_partlist_numof_partitions(ls);
+    std::cout << "Número de partições: " << nparts << std::endl;
+
+    if (nparts <= 0) {
+        std::cout << "Dispositivo inválido. Exemplo: /dev/sdc" << std::endl;
+        blkid_free_probe(pr);
+        return;
+    }
+
+    for (int i = 0; i < nparts; ++i) {
+        std::string dev_name = caminhoDispositivo + std::to_string(i + 1);
+        pr = blkid_new_probe_from_filename(dev_name.c_str());
+        if (!pr) continue;
+
+        blkid_do_probe(pr);
+        const char *uuid, *label, *type;
+
+        blkid_probe_lookup_value(pr, "UUID", &uuid, nullptr);
+        blkid_probe_lookup_value(pr, "LABEL", &label, nullptr);
+        blkid_probe_lookup_value(pr, "TYPE", &type, nullptr);
+
+        std::cout << "Nome=" << dev_name
+                  << ", UUID=" << (uuid ? uuid : "n/d")
+                  << ", LABEL=" << (label ? label : "n/d")
+                  << ", TYPE=" << (type ? type : "n/d") << std::endl;
+
+        blkid_free_probe(pr);
+    }
+}
 
 int main (int argc, char *argv[]) { 
     blkid_probe pr = blkid_new_probe_from_filename(argv[1]); 

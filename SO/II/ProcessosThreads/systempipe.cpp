@@ -1,4 +1,21 @@
 #include <iostream>
+#include <cstdio>
+#include "utils.h"
+
+void executarComPopen(const std::string& comando) {
+    FILE* fpipe = popen(comando.c_str(), "r");
+    if (!fpipe) {
+        perror("Falha ao abrir pipe");
+        return;
+    }
+
+    char linha[256];
+    while (fgets(linha, sizeof linha, fpipe)) {
+        std::cout << "Linha: " << linha;
+    }
+
+    pclose(fpipe);
+}
 
 int main() {
    FILE *fpipe;

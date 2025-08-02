@@ -1,7 +1,23 @@
-#include<iostream>
-#include<sys/stat.h>
+#include <iostream>
+#include <sys/stat.h>
+#include "utils.h"
 
 using namespace std;
+
+void mostrarInfoStat(const std::string& caminho) {
+    struct stat info;
+    if (stat(caminho.c_str(), &info) != 0) {
+        perror("Erro na chamada stat");
+        return;
+    }
+
+    std::cout << "ID do dispositivo: " << info.st_dev << std::endl;
+    std::cout << "Número inode: " << info.st_ino << std::endl;
+    std::cout << "Modo: " << info.st_mode << std::endl;
+    std::cout << "UID: " << info.st_uid << std::endl;
+    std::cout << "GID: " << info.st_gid << std::endl;
+    std::cout << "Tamanho (bytes): " << info.st_size << std::endl;
+}
 
 int main()
 {

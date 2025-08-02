@@ -1,8 +1,21 @@
 #include <iostream>
 #include <unistd.h>
-#include<sys/wait.h>
+#include <sys/wait.h>
+#include "utils.h"
 
 using namespace std;
+
+void exemploWait() {
+    pid_t pid = fork();
+
+    if (pid == 0) {
+        std::cout << "Filho terminando..." << std::endl;
+        return;
+    } else {
+        pid_t cpid = wait(nullptr);
+        std::cout << "Pai: PID=" << getpid() << ", Filho PID=" << cpid << std::endl;
+    }
+}
 
 int main() {
    // O ID retornado pelo fork() é zero quando o processo filho é criado

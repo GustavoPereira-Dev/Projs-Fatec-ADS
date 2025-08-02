@@ -1,11 +1,33 @@
 #include <iostream>
 #include <unistd.h>
+#include <string>
+#include "utils.h"
 
 using namespace std;
 
-int variavelGlobal = 2;
+void exemploVariaveisComFork() {
+    std::string identidade;
+    int variavelGlobal = 2;
+    int variavelFuncao = 20;
+
+    pid_t pID = fork();
+
+    if (pID == 0) {
+        identidade = "Processo filho:";
+        variavelGlobal++;
+        variavelFuncao++;
+    } else if (pID < 0) {
+        std::cerr << "Falha ao executar fork()" << std::endl;
+        return;
+    } else {
+        identidade = "Processo pai:";
+    }
+
+    std::cout << identidade << " Global=" << variavelGlobal << ", Local=" << variavelFuncao << std::endl;
+}
 
 int main() {
+   int variavelGlobal = 2;
    string identidade;
    int variavelFuncao = 20;
    

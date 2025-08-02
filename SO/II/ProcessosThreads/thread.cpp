@@ -1,9 +1,23 @@
 #include <iostream>
 #include <thread>
+#include "utils.h"
 
 using namespace std;
 
-// Uma função que sera executada como uma Thread
+void threadInterna(std::string msg) {
+    std::cout << "A thread está falando: " << msg << std::endl;
+}
+
+void executarThreadSimples(const std::string& mensagem) {
+    std::thread t1(threadInterna, mensagem);
+
+    // Aqui você pode adicionar tarefas paralelas simulando trabalho pesado
+    std::cout << "Thread iniciada em paralelo..." << std::endl;
+
+    t1.join(); // Aguarda finalização da thread para liberar recursos
+    std::cout << "Thread finalizada." << std::endl;
+}
+
 void task1(std::string msg)
 {
    std::cout << "A thread está falando: " << msg;

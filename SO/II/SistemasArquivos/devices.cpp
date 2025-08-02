@@ -1,23 +1,29 @@
 #include <iostream>
 #include <fstream>
 #include <optional>
+#include <string>
+#include "utils.h"
 
-std::optional<std::string> devices(std::string_view path)
-{
+std::optional<std::string> buscarDispositivoMontado(const std::string& path) {
+    std::ifstream mounts{"/proc/mounts"};
+    std::string mountPoint;
+    std::string device;
 
-   std::ifstream mounts{"/proc/mounts"};
-   std::string mountPoint;
-   std::string device;
+    while (mounts >> device >> mountPoint) {
+        if (mountPoint == path) {
+            return device;
+        }
+    }
 
-   while (mounts >> device >> mountPoint) // mounts >> device >> mountPoint equivale a 3 whiles acoplados (while mounts, while device e while mountPoint)
-   { // onde o último while entra nesse bloco/escopo de código abaixo
-      if (mountPoint == path)
-      {
-         return device;
-      }
-   }
+    return std::nullopt;
+}
 
-   return std::nullopt;
+void mostrarDispositivo(const std::string& path) {
+    auto resultado = buscarDispositivoMontado(path);
+    if (resultado)
+        std::cout << "Dispositivo montado em \"" << path << "\": " << *resultado << std::endl;
+    else
+        std::cout << "Nenhum dispositivo encontrado em \"" << path << "\"\n";
 }
 
 int main()
