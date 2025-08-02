@@ -31,6 +31,11 @@ Como enviar dados para um servidor por meio do JSON
 
 <code>./postjson</code>
 
+### getcurl.cpp
+
+Uso da libcurl para abrir um arquivo local e gravar os dados via curl para o aberto
+
+<code>./getcurl</code>
 
 ## Atividades
 

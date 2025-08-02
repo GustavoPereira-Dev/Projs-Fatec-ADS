@@ -3,7 +3,7 @@
 
 import subprocess, json;
 
-filho = subprocess.Popen(["python3", "/tmp/filho.py"], stdout=subprocess. PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE);
+filho = subprocess.Popen(["python3", "/tmp/filho.py"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE);
 
 input = json.dumps({"message" : "hello"});
 output_err = filho.communicate(input=input.encode('utf-8'));

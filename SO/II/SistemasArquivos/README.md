@@ -18,7 +18,7 @@ Listagem de arquivos por leitura padrão
 
 Listagem de arquivos (de diretórios e subdiretórios de forma recursiva)
 
-#### listaespecial.cpp
+#### listarespecial.cpp
 
 Listar os arquivos do diretório e imprimir no terminal com cout os arquivos que são de especiais de carácter e de bloco.
 
@@ -51,14 +51,22 @@ Exibir permissões do arquivo
 
 <code>./exibirperm [arquivo]</code>
 
-### devices.cpp
+#### devices.cpp
 
 Qual partição que está sendo utilizada na montagem da raiz do GNU/Linux
 
 <code>./devices.cpp </code>
 
+### Partições
+
+#### getuuid.cpp
+
+Mostra os dados da partições do dispositivo como o UUID (identificador único) LABEL (nome) e TYPE (tipo de sistema de arquivos como ext4 e ntfs).
+
+<code>./exibirperm [dispositivo]</code>
 
 ## Atividades
+
 
 ### Sistemas de Arquivos
 

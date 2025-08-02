@@ -38,3 +38,7 @@ int main()
       blkcnt_t    st_blocks;      /* número de blocos de 512 Bytes alocados */
    };
 }
+
+void exemplosstat(){
+   main();
+}

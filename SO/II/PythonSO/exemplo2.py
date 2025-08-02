@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-#/tmp/exemplo.py
-#An example of using the argparse module to handle command line arguments.
+# /tmp/exemplo2.py
+# Um exemplo de como usar o módulo argparse para tratar argumentos da linha de comando
 
-import argparse;
+import argparse
 
-parser = argparse.ArgumentParser (description='An example of using the argparse module.');
+parser = argparse.ArgumentParser(description='Exemplo de uso do módulo argparse.')
+parser.add_argument('-f', '--file', required=True, help="Informe o caminho do arquivo")
 
-parser.add_argument('a', '--file', required=True, help="Enter the file path");
-args = parser.parse_args();
+args = parser.parse_args()
 
-print("0 file is:", args.file);
+print("Caminho do arquivo:", args.file)

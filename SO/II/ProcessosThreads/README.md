@@ -14,7 +14,7 @@ Criação e finalização de thread
 
 <code>./thread</code>
 
-### userfork.cpp
+### usefork.cpp
 
 Uso de fork (um processo pai vai criar um processo filho, e cada processo irá escrever uma frase no output)
 

@@ -3,7 +3,7 @@
 
 import subprocess;
 
-process = subprocess.Popen(['ls', '/', '-lha'], stdout=subprocess. PIPE, universal_newlines=True);
+process = subprocess.Popen(['ls', '/', '-lha'], stdout=subprocess.PIPE, universal_newlines=True);
 
 # aqui tem o output capturado
 

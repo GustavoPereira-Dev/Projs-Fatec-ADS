@@ -2,12 +2,6 @@
 #include <string>
 #include <iostream>
 
-int main(int argc, char *argv[])
-{
-	exibir(argc, *argv[]);
-
-}
-
 void exibir(int argc, char *argv[]){
    if (argc != 2)
       exit(1);
@@ -15,4 +9,10 @@ void exibir(int argc, char *argv[]){
    std::string str;
    while (std::getline(file, str))
       std::cout << str << std::endl;
+}
+
+int main(int argc, char *argv[])
+{
+	exibir(argc, *argv[]);
+
 }

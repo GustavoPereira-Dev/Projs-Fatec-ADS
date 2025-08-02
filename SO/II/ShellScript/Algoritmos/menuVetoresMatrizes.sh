@@ -27,7 +27,7 @@ classificaVetor() {
 }
 
 mostraVetor() {
-    echo "➡️ Vetor:"
+    echo "Vetor:"
     for ((i=0; i<${#vetor[@]}; i++)); do
         echo "vetor[$i] = ${vetor[$i]}"
     done
@@ -90,7 +90,7 @@ main() {
     for ((i=0; i<tamV; i++)); do vetor[$i]=0; done
 
     while true; do
-        echo -e "\n🧠 Menu:"
+        echo -e "\nMenu:"
         echo "1 - Carregar vetor"
         echo "2 - Classificar vetor"
         echo "3 - Mostrar vetor"
@@ -102,13 +102,13 @@ main() {
 
         case "$opc" in
             1) carregaVetor ;;
-            2) classificaVetor; echo "✅ Vetor classificado!" ;;
+            2) classificaVetor; echo "Vetor classificado!" ;;
             3) mostraVetor ;;
             4) carregaMatriz ;;
-            5) classificaMatriz; echo "✅ Matriz classificada!" ;;
+            5) classificaMatriz; echo "Matriz classificada!" ;;
             6) mostraMatriz ;;
-            9) echo "👋 Fim do programa."; break ;;
-            *) echo "❌ Opção inválida." ;;
+            9) echo "Fim do programa."; break ;;
+            *) echo "Opção inválida." ;;
         esac
     done
 }

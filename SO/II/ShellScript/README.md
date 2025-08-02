@@ -1,5 +1,9 @@
 # ShellScript e Bash
 
+## [Algoritmos](./Algoritmos/)
+
+Códigos em SheelScripts de adaptações de algoritmos desenvolvidos em Java para o uso em Bash (Estrutura Sequencial e Funcional, Estruturas de Dados e Recursividade)
+
 ## Atividades
 1. Nesta prática o aluno deverá criar um script, de acordo com o roteiro abaixo.
 - Criar um arquivo no diretório ~/ com o nome atividadei.sh;
