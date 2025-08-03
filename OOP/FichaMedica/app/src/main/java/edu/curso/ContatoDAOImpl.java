@@ -9,17 +9,15 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FichaMedicaDAOImpl implements FichaMedicaDAO {
-	//         Connection connection = DriverManager.getConnection(String.format("jdbc:jtds:sqlserver://%s:%s;databaseName=%s;user=%s;password=%s;encrypt=false", host, port, databaseName, user, password));
-    // private static final String DB_URL = "jdbc:jtds:sqlserver://localhost:3307/pootarde";
+
+public class ContatoDAOImpl implements ContatoDAO {
 	private static final String DB_URL = "jdbc:jtds:sqlserver://localhost:51444/pootarde";
     private static final String DB_USER = "leandro";
     private static final String DB_PASSWORD = "12345678";
     private Connection con = null;
 
-    public FichaMedicaDAOImpl() { 
+    public ContatoDAOImpl() { 
         try {
-        	// org.mariadb.jdbc.Driver
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
             con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         } catch (ClassNotFoundException e) {
@@ -29,27 +27,30 @@ public class FichaMedicaDAOImpl implements FichaMedicaDAO {
         }
     }
 
-    private FichaMedica gerarFichaMedicaDoResultSet( ResultSet rs ) { 
-    	FichaMedica ficha = new FichaMedica();
+    private Contato gerarContatoDoResultSet( ResultSet rs ) { 
+        Contato contato = new Contato();
         try { 
-            ficha.setId(rs.getLong("id"));
-            ficha.setTipoSanguineo(rs.getString("tipoSanguineo"));
-            ficha.setPeso(rs.getFloat("peso"));
-            ficha.setAlergias(rs.getString("tipoSanguineo"));
+            contato.setId( rs.getLong("id") );
+            contato.setNome(rs.getString("nome"));
+            contato.setTelefone(rs.getString("telefone"));
+            contato.setEmail(rs.getString("email"));
+            contato.setNascimento(  // <== LocalDate
+                rs.getDate("nascimento").toLocalDate()  // <== SQLDate
+            );
         } catch (SQLException e) { 
             e.printStackTrace();
         }
-        return ficha;
+        return contato;
     }
 
-    public List<FichaMedica> lerTodosContatos(){
-        List<FichaMedica> lista = new ArrayList<>();
-        String sql = "SELECT * FROM FichaMedica";
+    public List<Contato> lerTodosContatos(){
+        List<Contato> lista = new ArrayList<>();
+        String sql = "SELECT * FROM contato";
         try { 
             PreparedStatement stm = con.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()) { 
-                lista.add( gerarFichaMedicaDoResultSet(rs ));
+            while( rs.next() ) { 
+                lista.add( gerarContatoDoResultSet( rs ) );
             }
         } catch (SQLException e) { 
             e.printStackTrace();
@@ -57,31 +58,34 @@ public class FichaMedicaDAOImpl implements FichaMedicaDAO {
         return lista;
     }
 
-    public void guardar(FichaMedica ficha){
-        String sql = "INSERT INTO FichaMedica (tipoSanguineo, peso, alergias) " + 
-        "VALUES (?, ?, ?)";
+    public void guardar(Contato contato){
+        String sql = "INSERT INTO contato (nome, telefone, email, nascimento) " + 
+        "VALUES (?, ?, ?, ?)";
         System.out.println("guardar() SQL: " + sql);
         try { 
             PreparedStatement stm = con.prepareStatement(sql);
-            stm.setString(1, ficha.getTipoSanguineo());
-            stm.setFloat(2, ficha.getPeso());
-            stm.setString(3, ficha.getAlergias());
+            stm.setString(1, contato.getNome() );
+            stm.setString(2, contato.getTelefone() );
+            stm.setString(3, contato.getEmail() );
+            stm.setDate(4, Date.valueOf( contato.getNascimento() ) );
             stm.executeUpdate();
         } catch (SQLException e) { 
             e.printStackTrace();
         }
     }
 
-    public boolean atualizar(Long id, FichaMedica ficha){
-        String sql = "UPDATE FichaMedia SET tipoSanguineo = ?, peso = ?, alergias = ? WHERE id = ?";
+    public boolean atualizar(Long id, Contato contato){
+        String sql = "UPDATE contato SET nome = ?, telefone = ?, " + 
+        " email = ?, nascimento = ? WHERE id = ?";
         
         System.out.println("atualizar() SQL: " + sql);
         try { 
             PreparedStatement stm = con.prepareStatement(sql);
-            stm.setString(1, ficha.getTipoSanguineo());
-            stm.setFloat(2, ficha.getPeso());
-            stm.setString(3, ficha.getAlergias());
-            stm.setLong(4, ficha.getId());
+            stm.setString(1, contato.getNome() );
+            stm.setString(2, contato.getTelefone() );
+            stm.setString(3, contato.getEmail() );
+            stm.setDate(4, Date.valueOf( contato.getNascimento() ) );
+            stm.setLong(5, contato.getId() );
             stm.executeUpdate();
             return true;
         } catch (SQLException e) { 
@@ -91,7 +95,7 @@ public class FichaMedicaDAOImpl implements FichaMedicaDAO {
     }
 
     public boolean excluir(Long id){
-        String sql = "DELETE FROM FichaMedica WHERE id = ?";
+        String sql = "DELETE FROM contato WHERE id = ?";
         
         System.out.println("excluir() SQL: " + sql);
         try { 
@@ -105,14 +109,14 @@ public class FichaMedicaDAOImpl implements FichaMedicaDAO {
         return false;
     }
 
-    public FichaMedica procurarPorId(Long id){
-        String sql = "SELECT * FROM FichaMedica WHERE id = ?";
+    public Contato procurarPorId(Long id){
+        String sql = "SELECT * FROM contato WHERE id = ?";
         try { 
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setLong(1, id);
             ResultSet rs = stm.executeQuery();
-            if(rs.first()) { 
-                return gerarFichaMedicaDoResultSet(rs);
+            if( rs.first() ) { 
+                return gerarContatoDoResultSet( rs );
             }
         } catch (SQLException e) { 
             e.printStackTrace();
@@ -120,15 +124,15 @@ public class FichaMedicaDAOImpl implements FichaMedicaDAO {
         return null;
     }
 
-    public List<FichaMedica> pesquisarPorTipoSanguineo(String tipoSanguineo ){
-        List<FichaMedica> lista = new ArrayList<>();
-        String sql = "SELECT * FROM FichaMedica WHERE tipoSanguineo LIKE ?";
+    public List<Contato> pesquisarPorNome(String nome){
+        List<Contato> lista = new ArrayList<>();
+        String sql = "SELECT * FROM contato WHERE nome LIKE ?";
         try { 
             PreparedStatement stm = con.prepareStatement(sql);
-            stm.setString(1, "%" + tipoSanguineo + "%");
+            stm.setString(1, "%" + nome + "%");
             ResultSet rs = stm.executeQuery();
-            while(rs.next()) { 
-                lista.add(gerarFichaMedicaDoResultSet(rs));
+            while( rs.next() ) { 
+                lista.add( gerarContatoDoResultSet( rs ) );
             }
         } catch (SQLException e) { 
             e.printStackTrace();

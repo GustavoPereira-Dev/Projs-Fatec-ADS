@@ -1,4 +1,4 @@
-package view;
+package edu.curso;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,13 +12,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class PrincipalBoundary extends Application {
 
-    private Boundary telaLivro = new LivroBoundary();
-    private Boundary telaProduto = new ProdutoBoundary();
+    private Boundary telaFichaMedica = new FichaMedicaBoundary();
+    private Boundary telaContato = new ContatoBoundary();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -27,22 +26,22 @@ public class PrincipalBoundary extends Application {
 
         MenuBar menuBar = new MenuBar();
 
-        Menu menuLivro = new Menu("Livro");
-        Menu menuCreditos = new Menu("Créditos");
-        menuBar.getMenus().addAll( menuLivro, menuCreditos );
+        Menu mnuCadastro = new Menu("Cadastro");
+        Menu mnuCreditos = new Menu("Créditos");
+        menuBar.getMenus().addAll( mnuCadastro, mnuCreditos );
 
-        MenuItem mnuLivro = new MenuItem("Livro");
-        MenuItem mnuProduto = new MenuItem("Produto");
+        MenuItem mnuContato = new MenuItem("Contato");
+        MenuItem mnuFichaMedica = new MenuItem("Ficha Medica");
         MenuItem mnuSair = new MenuItem("Sair");
-        menuLivro.getItems().addAll( mnuLivro, mnuProduto, mnuSair);
+        mnuCadastro.getItems().addAll( mnuContato, mnuFichaMedica, mnuSair);
 
         MenuItem mnuSobre = new MenuItem("Sobre");
-        menuCreditos.getItems().addAll( mnuSobre );
+        mnuCreditos.getItems().addAll( mnuSobre );
 
         panePrincipal.setTop(menuBar);
 
-        mnuLivro.setOnAction( e -> panePrincipal.setCenter( telaLivro.render() ));
-        mnuProduto.setOnAction( e -> panePrincipal.setCenter( telaProduto.render()));
+        mnuContato.setOnAction( e -> panePrincipal.setCenter( telaContato.render() ) );
+        mnuFichaMedica.setOnAction( e -> panePrincipal.setCenter( telaFichaMedica.render() ) );
         mnuSair.setOnAction( e -> {
             Platform.exit();
             System.exit(0);
@@ -54,10 +53,8 @@ public class PrincipalBoundary extends Application {
                 ButtonType.OK).show()
         );
 
-
-
         stage.setScene(scn);
-        stage.setTitle("Sistema Vendas");
+        stage.setTitle("Sistema Medico");
         stage.show();
     }
 

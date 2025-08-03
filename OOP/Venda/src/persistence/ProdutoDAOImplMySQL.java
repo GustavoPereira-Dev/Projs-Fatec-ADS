@@ -2,7 +2,10 @@ package persistence;
 
 import java.sql.*; import java.util.ArrayList; import java.util.List; import model.Produto; 
 
-public class ProdutoDAOImplMySQL implements ProdutoDAO { private static final String DB_URL = "jdbc:mysql://localhost:3306/estoque"; private static final String DB_USER = "root"; private static final String DB_PASSWORD = "senha"; private Connection con; 
+public class ProdutoDAOImplMySQL implements ProdutoDAO { private static final String DB_URL = "jdbc:mysql://localhost:3306/estoque"; 
+private static final String DB_USER = "root"; 
+private static final String DB_PASSWORD = "senha"; 
+private Connection con; 
 
 public ProdutoDAOImplMySQL() { 
     try { 

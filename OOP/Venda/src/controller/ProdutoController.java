@@ -27,71 +27,63 @@ public class ProdutoController {
 	    private StringProperty preco = new SimpleStringProperty("");
 	    private StringProperty quantidade = new SimpleStringProperty("");
 	    
-	    /*
-		this.id = id;
-		this.nome = nome;
-		this.descricao = descricao;
-		this.preco = preco;
-		this.quantidade = quantidade;
-		*/
-	    
 	    private ProdutoDAO produtoDAO = new ProdutoDAOImplArquivos();
 	    
 	    public void cadastrar() { 
 	        Produto c = telaParaContato();
-	        produtoDAO.guardar( c );
+	        produtoDAO.guardar(c);
 	        pesquisarNome();
 	    }
 	
 	
 	    public void pesquisarNome() { 
 	        lista.clear();
-	        lista.addAll( produtoDAO.pesquisarPorNome( nome.get() ) );
+	        lista.addAll(produtoDAO.pesquisarPorNome(nome.get()));
 	    }
 	
-	    public void remover( Produto c ) {
-	    	produtoDAO.excluir( c.getId() );
+	    public void remover(Produto c) {
+	    	produtoDAO.excluir(c.getId());
 	        pesquisarNome();
 	    }
 	
 	    public Produto telaParaContato() { 
 	    	Produto c = new Produto();
-	        c.setId( Long.parseLong( id.get() ));
-	        c.setNome( nome.get() );
-	        c.setDescricao( descricao.get() );
-	        c.setPreco( Float.parseFloat( preco.get() ));
-	        c.setQuantidade( Integer.parseInt( quantidade.get() ));
+	        c.setId(Long.parseLong(id.get()));
+	        c.setNome(nome.get());
+	        c.setDescricao(descricao.get());
+	        c.setPreco(Float.parseFloat( preco.get()));
+	        c.setQuantidade(Integer.parseInt( quantidade.get()));
 	        return c;
 	    }
 	
 
 
-	    public void contatoParaTela( Produto c ) { 
-	        id.set( Long.toString(c.getId()) );
-	        nome.set( c.getNome() );
-	        descricao.set( c.getDescricao() );
-	        preco.set( Float.toString( c.getPreco() ));
-	        quantidade.set( Integer.toString( c.getQuantidade() ));
+	    public void contatoParaTela(Produto c) { 
+	        id.set(Long.toString(c.getId()));
+	        nome.set(c.getNome());
+	        descricao.set(c.getDescricao());
+	        preco.set(Float.toString( c.getPreco()));
+	        quantidade.set(Integer.toString( c.getQuantidade()));
 	    }
 	    
 	    public StringProperty idProperty() { 
-	        return this.id;
+	        return id;
 	    }
 	
 	    public StringProperty nomeProperty() { 
-	        return this.nome;
+	        return nome;
 	    }
 	
 	    public StringProperty descricaoProperty() { 
-	        return this.descricao;
+	        return descricao;
 	    }
 	    
 	    public StringProperty precoProperty() { 
-	        return this.preco;
+	        return preco;
 	    }
 	    
 	    public StringProperty quantidadeProperty() { 
-	        return this.quantidade;
+	        return quantidade;
 	    }
 	
 	    public ObservableList<Produto> listaProperty() { 

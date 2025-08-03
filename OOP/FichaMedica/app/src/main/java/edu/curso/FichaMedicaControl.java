@@ -12,18 +12,12 @@ import javafx.collections.ObservableList;
 public class FichaMedicaControl {
     private ObservableList<FichaMedica> lista = FXCollections.observableArrayList();
 
-    private LongProperty id = new SimpleLongProperty(0);
     private StringProperty tipoSanguineo = new SimpleStringProperty("");
     private FloatProperty peso = new SimpleFloatProperty(0f);
     private StringProperty alergias = new SimpleStringProperty("");
 
     private FichaMedicaDAO fichaMedicaDAO = new FichaMedicaDAOImpl();
 
-    public FichaMedicaControl() { 
-        id.addListener( (observer, antigo, novo) -> { 
-            System.out.println(novo);
-        });
-    }
 
     public void cadastrar() { 
         FichaMedica fc = telaParaFichaMedica();
@@ -42,7 +36,6 @@ public class FichaMedicaControl {
 
     public FichaMedica telaParaFichaMedica() { 
         FichaMedica fc = new FichaMedica();
-        fc.setId(id.get());
         fc.setTipoSanguineo(tipoSanguineo.get());
         fc.setPeso(peso.get());
         fc.setAlergias(alergias.get());
@@ -50,16 +43,11 @@ public class FichaMedicaControl {
     }
 
     public void fichaMedicaParaTela(FichaMedica fc) { 
-        id.set(fc.getId());
         tipoSanguineo.set(fc.getTipoSanguineo());
         peso.set(fc.getPeso());
         alergias.set(fc.getAlergias());
     }
 
-
-    public LongProperty idProperty() { 
-        return id;
-    }
 
     public StringProperty tipoSanguineoProperty() { 
         return tipoSanguineo;

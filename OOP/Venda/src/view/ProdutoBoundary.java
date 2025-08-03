@@ -19,7 +19,7 @@ public class ProdutoBoundary implements Boundary {
     private TableView<Produto> tabela = new TableView<>();
 
     public void bindings() {
-        Bindings.bindBidirectional(txtId.textProperty(), control.idProperty());
+        Bindings.bindBidirectional(txtId.textProperty(), control.descricaoProperty());
         Bindings.bindBidirectional(txtNome.textProperty(), control.nomeProperty());
         Bindings.bindBidirectional(txtDescricao.textProperty(), control.descricaoProperty());
         Bindings.bindBidirectional(txtPreco.textProperty(), control.precoProperty());
@@ -104,6 +104,7 @@ public class ProdutoBoundary implements Boundary {
 
         principal.setTop(form);
         principal.setCenter(tabela);
+        
         return principal;
     }
 }

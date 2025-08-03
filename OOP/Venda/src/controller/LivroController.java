@@ -30,70 +30,70 @@ public class LivroController {
 	    
 	    public void cadastrar() { 
 	        Livro c = telaParaContato();
-	        livroDAO.guardar( c );
+	        livroDAO.guardar(c);
 	        pesquisarTitulo();
 	    }
 
 
 	    public void pesquisarTitulo() { 
 	        lista.clear();
-	        lista.addAll( livroDAO.pesquisarPorTitulo( titulo.get() ) );
+	        lista.addAll(livroDAO.pesquisarPorTitulo(titulo.get()));
 	    }
 
-	    public void remover( Livro c ) {
-	    	livroDAO.excluir( c.getId() );
+	    public void remover(Livro c) {
+	    	livroDAO.excluir(c.getId());
 	        pesquisarTitulo();
 	    }
 
 	    public Livro telaParaContato() { 
 	    	Livro c = new Livro();
-	        c.setId( Long.parseLong( id.get() ));
-	        c.setTitulo( titulo.get() );
-	        c.setAutor( autor.get() );
-	        c.setEditora( editora.get() );
-	        c.setCategoria( categoria.get() );
-	        c.setPreco( Float.parseFloat( preco.get() ));
-	        c.setQuantidade( Integer.parseInt( quantidade.get() ));
+	        c.setId( Long.parseLong(id.get()));
+	        c.setTitulo(titulo.get());
+	        c.setAutor(autor.get());
+	        c.setEditora(editora.get());
+	        c.setCategoria(categoria.get());
+	        c.setPreco(Float.parseFloat(preco.get()));
+	        c.setQuantidade(Integer.parseInt(quantidade.get()));
 	        return c;
 	    }
 
 	    
 	    public void contatoParaTela( Livro c ) { 
-	        id.set( Long.toString(c.getId()) );
-	        titulo.set( c.getTitulo() );
-	        autor.set( c.getAutor() );
-	        editora.set( c.getEditora() );
-	        categoria.set( c.getCategoria() );
-	        preco.set( Float.toString( c.getPreco() ));
-	        quantidade.set( Integer.toString( c.getQuantidade() ));
+	        id.set(Long.toString(c.getId()));
+	        titulo.set(c.getTitulo());
+	        autor.set(c.getAutor());
+	        editora.set(c.getEditora());
+	        categoria.set(c.getCategoria());
+	        preco.set(Float.toString(c.getPreco()));
+	        quantidade.set(Integer.toString( c.getQuantidade()));
 	    }
 	    
         public StringProperty idProperty() { 
-            return this.id;
+            return id;
         }
 
         public StringProperty tituloProperty() { 
-            return this.titulo;
+            return titulo;
         }
 
         public StringProperty autorProperty() { 
-            return this.autor;
+            return autor;
         }
         
         public StringProperty editoraProperty() { 
-            return this.editora;
+            return editora;
         }
 
         public StringProperty categoriaProperty() { 
-            return this.categoria;
+            return categoria;
         }
 
         public StringProperty precoProperty() { 
-            return this.preco;
+            return preco;
         }
         
         public StringProperty quantidadeProperty() { 
-            return this.quantidade;
+            return quantidade;
         }
 
         public ObservableList<Livro> listaProperty() { 

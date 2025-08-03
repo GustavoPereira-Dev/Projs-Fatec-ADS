@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LivroDAOImplMySQL implements LivroDAO {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/estoque?allowMultiQueries=true";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/estoque";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "teste";
     private Connection con;
