@@ -33,9 +33,9 @@ public class PessoaServlet extends HttpServlet {
 		List<Pessoa> pessoas = new ArrayList<>();
 		
 		try {
+			
 			GenericDao gDao = new GenericDao();
 			PessoaDao pDao = new PessoaDao(gDao);
-			
 			pessoas = pDao.listar();
 			if (acao != null) {
 				p.setId(Integer.parseInt(id));
@@ -68,30 +68,32 @@ public class PessoaServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		String nome = request.getParameter("nome");
-		String nascimento = request.getParameter("nascimento");
-		String email = request.getParameter("email");
-		String cmd = request.getParameter("botao");
-		
-		Pessoa p = new Pessoa();
-		if (!cmd.equalsIgnoreCase("Listar")) {
-			p.setId(Integer.parseInt(id));
-		}
-		if (cmd.equalsIgnoreCase("Inserir") || cmd.equalsIgnoreCase("Atualizar")) {
-			p.setNome(nome);
-			p.setNascimento(LocalDate.parse(nascimento));
-			p.setEmail(email);
-		}
-		
-		GenericDao gDao = new GenericDao();
-		PessoaDao pDao = new PessoaDao(gDao);
-		
 		String saida = "";
 		String erro = "";
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		Pessoa p = new Pessoa();
+		String cmd = "";
+		
 		
 		try {
+			String id = request.getParameter("id");
+			String nome = request.getParameter("nome");
+			String nascimento = request.getParameter("nascimento");
+			String email = request.getParameter("email");
+			cmd = request.getParameter("botao");
+			
+			if (!cmd.equalsIgnoreCase("Listar")) {
+				p.setId(Integer.parseInt(id));
+			}
+			if (cmd.equalsIgnoreCase("Inserir") || cmd.equalsIgnoreCase("Atualizar")) {
+				p.setNome(nome);
+				p.setNascimento(LocalDate.parse(nascimento));
+				p.setEmail(email);
+			}
+			
+			GenericDao gDao = new GenericDao();
+			PessoaDao pDao = new PessoaDao(gDao);
+			
 			if (cmd.equalsIgnoreCase("Inserir")) {
 				pDao.inserir(p);
 				saida = "Pessoa "+p.getNome()+" inserida com sucesso";
@@ -111,8 +113,12 @@ public class PessoaServlet extends HttpServlet {
 				pessoas = pDao.listar();
 			}
 
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException | ClassNotFoundException | NumberFormatException e) {
+			saida = "";
 			erro = e.getMessage();
+			if (erro.contains("input string")) {
+				erro = "Preencha os campos corretamente";
+			}
 		} finally {
 			if (!cmd.equalsIgnoreCase("Buscar")) {
 				p = null;

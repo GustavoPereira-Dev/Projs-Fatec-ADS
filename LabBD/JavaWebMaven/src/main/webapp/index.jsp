@@ -11,7 +11,7 @@
 	<div align="center">
 		<h1>Primeira Aula Java Web com Maven e SQL Server</h1>
 		<br />
-		<a href="${pageContext.request.contextPath }/pessoa">PESSOA</a>
+		<a href="${pageContext.request.contextPath}/pessoa">PESSOA</a>
 	</div>
 </body>
 </html>
