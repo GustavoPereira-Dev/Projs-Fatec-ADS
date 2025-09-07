@@ -9,7 +9,7 @@ CREATE TABLE Cliente (
     Dt_Nascimento DATE
 );
 
-CREATE PROCEDURE ValidarCPF
+CREATE PROCEDURE sp_valida_cpf
     @CPF CHAR(11),
     @Valido BIT OUTPUT
 AS
@@ -54,17 +54,17 @@ BEGIN
         SET @Valido = 0
 END
 
-CREATE PROCEDURE InserirCliente
+CREATE PROCEDURE sp_inserir_cliente
     @CPF CHAR(11),
     @Nome VARCHAR(100),
     @Email VARCHAR(200),
     @Limite DECIMAL(7,2),
-    @Nascimento DATE
+    @Nascimento DATE,
+    @saida VARCHAR(100) OUTPUT
 AS
 BEGIN
     DECLARE @Valido BIT
-    EXEC ValidarCPF @CPF, @Valido OUTPUT
-
+    EXEC sp_valida_cpf @CPF, @Valido OUTPUT
     IF @Valido = 0
     BEGIN
         RAISERROR('CPF inválido ou repetido.', 16, 1)
@@ -79,14 +79,17 @@ BEGIN
 
     INSERT INTO Cliente (CPF, Nome, Email, Limite_de_credito, Dt_Nascimento)
     VALUES (@CPF, @Nome, @Email, @Limite, @Nascimento)
+
+    SET @saida = 'Cliente ' + @Nome + ' adicionado com sucesso!';
 END
 
-CREATE PROCEDURE AtualizarCliente
+CREATE PROCEDURE sp_atualizar_cliente
     @CPF CHAR(11),
     @Nome VARCHAR(100),
     @Email VARCHAR(200),
     @Limite DECIMAL(7,2),
-    @Nascimento DATE
+    @Nascimento DATE,
+    @saida VARCHAR(100) OUTPUT
 AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM Cliente WHERE CPF = @CPF)
@@ -101,34 +104,53 @@ BEGIN
         Limite_de_credito = @Limite,
         Dt_Nascimento = @Nascimento
     WHERE CPF = @CPF
+
+    SET @saida = 'Cliente com CPF ' + @CPF + ' atualizado com sucesso!';
 END
 
-CREATE PROCEDURE ExcluirCliente
-    @CPF CHAR(11)
+CREATE PROCEDURE sp_excluir_cliente
+    @CPF CHAR(11),
+    @saida VARCHAR(100) OUTPUT
 AS
 BEGIN
+
+    IF NOT EXISTS (SELECT 1 FROM Cliente WHERE CPF = @CPF)
+    BEGIN
+        RAISERROR('Cliente não encontrado.', 16, 1)
+        RETURN
+    END
+
     DELETE FROM Cliente WHERE CPF = @CPF
+
+    SET @saida = 'Cliente com CPF ' + @CPF + ' remove com sucesso!';
 END
 
-EXEC InserirCliente '16899562004', 'João Silva', 'joao.silva@email.com', 4500.00, '1985-06-15'
-EXEC InserirCliente '39053321000', 'Maria Oliveira', 'maria.oliveira@email.com', 3200.00, '1990-03-22'
-EXEC InserirCliente '78414072038', 'Carlos Pereira', 'carlos.pereira@email.com', 2800.00, '1978-11-09'
-EXEC InserirCliente '74648796004', 'Ana Costa', 'ana.costa@email.com', 5100.00, '1992-07-30'
-EXEC InserirCliente '60694721018', 'Fernanda Lima', 'fernanda.lima@email.com', 3900.00, '1988-01-12'
-EXEC InserirCliente '71449581005', 'Rafael Souza', 'rafael.souza@email.com', 4700.00, '1995-09-05'
-EXEC InserirCliente '24749971057', 'Juliana Rocha', 'juliana.rocha@email.com', 5300.00, '1983-04-18'
-EXEC InserirCliente '97781954041', 'Bruno Martins', 'bruno.martins@email.com', 3100.00, '1991-12-25'
-EXEC InserirCliente '14342170000', 'Patrícia Mendes', 'patricia.mendes@email.com', 6000.00, '1986-08-03'
-EXEC InserirCliente '15692198002', 'Eduardo Ramos', 'eduardo.ramos@email.com', 3400.00, '1979-10-27'
-EXEC InserirCliente '88182179092', 'Camila Duarte', 'camila.duarte@email.com', 4200.00, '1993-05-14'
-EXEC InserirCliente '30544373022', 'Rodrigo Teixeira', 'rodrigo.teixeira@email.com', 3800.00, '1980-02-07'
-EXEC InserirCliente '80433435003', 'Luciana Barros', 'luciana.barros@email.com', 4600.00, '1987-06-21'
-EXEC InserirCliente '96267697002', 'Marcelo Nunes', 'marcelo.nunes@email.com', 5000.00, '1994-11-30'
-EXEC InserirCliente '12735354059', 'Vanessa Carvalho', 'vanessa.carvalho@email.com', 3700.00, '1982-03-19'
-EXEC InserirCliente '68054239025', 'Thiago Almeida', 'thiago.almeida@email.com', 3300.00, '1996-07-08'
-EXEC InserirCliente '24249946096', 'Beatriz Freitas', 'beatriz.freitas@email.com', 5500.00, '1989-09-27'
-EXEC InserirCliente '85630690043', 'Fábio Moreira', 'fabio.moreira@email.com', 2900.00, '1977-12-02'
-EXEC InserirCliente '70319156001', 'Débora Santos', 'debora.santos@email.com', 6100.00, '1997-01-20'
-EXEC InserirCliente '73103447078', 'Gustavo Ferreira', 'gustavo.ferreira@email.com', 4400.00, '1984-10-10'
+
+EXEC sp_excluir_cliente '73103447078', NULL 
+
+EXEC sp_inserir_cliente '16899562004', 'João Silva', 'joao.silva@email.com', 4500.00, '1985-06-15', NULL
+EXEC sp_inserir_cliente '39053321000', 'Maria Oliveira', 'maria.oliveira@email.com', 3200.00, '1990-03-22', NULL
+EXEC sp_inserir_cliente '78414072038', 'Carlos Pereira', 'carlos.pereira@email.com', 2800.00, '1978-11-09', NULL
+EXEC sp_inserir_cliente '74648796004', 'Ana Costa', 'ana.costa@email.com', 5100.00, '1992-07-30', NULL
+EXEC sp_inserir_cliente '60694721018', 'Fernanda Lima', 'fernanda.lima@email.com', 3900.00, '1988-01-12', NULL
+EXEC sp_inserir_cliente '71449581005', 'Rafael Souza', 'rafael.souza@email.com', 4700.00, '1995-09-05', NULL
+EXEC sp_inserir_cliente '24749971057', 'Juliana Rocha', 'juliana.rocha@email.com', 5300.00, '1983-04-18', NULL
+EXEC sp_inserir_cliente '97781954041', 'Bruno Martins', 'bruno.martins@email.com', 3100.00, '1991-12-25', NULL
+EXEC sp_inserir_cliente '14342170000', 'Patrícia Mendes', 'patricia.mendes@email.com', 6000.00, '1986-08-03', NULL
+EXEC sp_inserir_cliente '15692198002', 'Eduardo Ramos', 'eduardo.ramos@email.com', 3400.00, '1979-10-27', NULL
+EXEC sp_inserir_cliente '88182179092', 'Camila Duarte', 'camila.duarte@email.com', 4200.00, '1993-05-14', NULL
+EXEC sp_inserir_cliente '30544373022', 'Rodrigo Teixeira', 'rodrigo.teixeira@email.com', 3800.00, '1980-02-07', NULL
+EXEC sp_inserir_cliente '80433435003', 'Luciana Barros', 'luciana.barros@email.com', 4600.00, '1987-06-21', NULL
+EXEC sp_inserir_cliente '96267697002', 'Marcelo Nunes', 'marcelo.nunes@email.com', 5000.00, '1994-11-30', NULL
+EXEC sp_inserir_cliente '12735354059', 'Vanessa Carvalho', 'vanessa.carvalho@email.com', 3700.00, '1982-03-19', NULL
+EXEC sp_inserir_cliente '68054239025', 'Thiago Almeida', 'thiago.almeida@email.com', 3300.00, '1996-07-08', NULL
+EXEC sp_inserir_cliente '24249946096', 'Beatriz Freitas', 'beatriz.freitas@email.com', 5500.00, '1989-09-27', NULL
+EXEC sp_inserir_cliente '85630690043', 'Fábio Moreira', 'fabio.moreira@email.com', 2900.00, '1977-12-02', NULL
+EXEC sp_inserir_cliente '70319156001', 'Débora Santos', 'debora.santos@email.com', 6100.00, '1997-01-20', NULL
+EXEC sp_inserir_cliente '73103447078', 'Gustavo Ferreira', 'gustavo.ferreira@email.com', 4400.00, '1984-10-10', NULL
 
 SELECT * FROM Cliente;
+
+
+
+SELECT cpf, nome, email, limite_de_credito, CONVERT(CHAR(10), dt_nasciment, 103) AS dtNasc, email FROM cliente;
