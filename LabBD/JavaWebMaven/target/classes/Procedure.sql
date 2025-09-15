@@ -24,14 +24,16 @@ Oracle		- EXECUTE sp_nome param
 MySQL		- CALL sp_nome param
 */
 /*Exemplo 1 - Operação com 2 parâmetros de entrada e 1 de saída*/
+/*
 CREATE PROCEDURE sp_teste1(@num1 INT, @num2 INT, @res INT OUTPUT)
 AS
 	SET @res = @num1 + @num2
---	PRINT (@res)
+	PRINT (@res)
 
 DECLARE @resout1	INT
 EXEC sp_teste1 10, 20, @resout1 OUTPUT
 PRINT @resout1
+*/
 
 /*
 Criar uma SP que trate regras de negócio de Pessoa e permita fazer
@@ -121,14 +123,18 @@ AS
 	END
 
 --Erro de exclusão
+/*
 DECLARE @out1 VARCHAR(100)
 EXEC sp_pessoa 'D', NULL, NULL, NULL, NULL, @out1 OUTPUT
 PRINT (@out1)
+*/
 
 --Erro de operação (op)
+/*
 DECLARE @out2 VARCHAR(100)
 EXEC sp_pessoa 'H', 1000, 'Azukau', '1990-01-01', NULL, @out2 OUTPUT
 PRINT (@out2)
+*/
 
 DECLARE @out3 VARCHAR(100)
 EXEC sp_pessoa 'I', 1000, 'Azukau', '1990-01-01', 
