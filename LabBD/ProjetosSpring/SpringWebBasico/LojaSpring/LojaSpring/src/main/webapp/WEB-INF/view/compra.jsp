@@ -8,7 +8,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<title>Cadastro Produto</title>
+<title>Cadastro Compra</title>
 </head>
 <body>
 	<div align="center">
@@ -16,49 +16,68 @@
 	</div>
 	<br />
 	<div class="conteiner" align="center">
-		<h1>Listagem de Compras</h1>
+		<h1>Cadastro de Compras</h1>
 		<br />
 		<form action="compra" method="post">
 			<table>
 				<tr>
-					<td colspan="4">
-						<input type="text" min="1" step="1"
-						id="nome_cliente" name="nome_cliente" placeholder="Nome Cliente"
-						value='<c:out value="${compra.nomeCliente}"/>'
+					<td colspan="3">
+						<input type="number" min="1" step="1"
+						id="codigo" name="codigo" placeholder="#CODIGO"
+						value='<c:out value="${compra.codigo}"/>'
 						class="input-group input-group-lg" >
-					</td>			
-				</tr>
-				<tr>
-					<td colspan="4">
-						<input type="text" min="1" step="1"
-						id="nome_produto" name="nome_produto" placeholder="Nome Produto"
-						value='<c:out value="${compra.Produto}"/>'
-						class="input-group input-group-lg" >
-					</td>			
+					</td>
+					<td colspan="1">
+						<input type="submit"
+						id="botao" name="botao" value="Buscar"
+						class="btn btn-dark">
+					</td>				
 				</tr>		
 				<tr>
 					<td colspan="4">
-						<input type="number" min="1" step="1"
-						id="quantidade" name="quantidade" placeholder="Quantidade"
-						value='<c:out value="${compra.quantidade}"/>'
+						<input type="text" 
+						id="codigo_cliente" name="codigo_cliente" placeholder="Codigo Cliente"
+						value='<c:out value="${compra.codigoCliente}"/>'
 						class="input-group input-group-lg">
 					</td>
 				</tr>
 				<tr>
 					<td colspan="4">
+						<input type="text" 
+						id="codigo_produto" name="codigo_produto" placeholder="Codigo Produto"
+						value='<c:out value="${compra.codigoProduto}"/>'
+						class="input-group input-group-lg">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
 						<input type="number"
-						id="valor_total" name="valor_total" step="0.01" placeholder="Valor"
-						value='<c:out value="${compra.valorTotal}"/>'
+						id="quantidade" name="quantidade" step="1" placeholder="Quantidade"
+						value='<c:out value="${compra.quantidade}"/>'
 						class="input-group input-group-lg" >
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4">
-						<input type="date"
-						id="data" name="data" placeholder="Data de Compra"
-						value='<c:out value="${compra.dataCompra}"/>'
-						class="input-group input-group-lg" >
-					</td>
+					<td>
+						<input type="submit"
+						id="botao" name="botao" value="Inserir"
+						class="btn btn-dark">
+					</td>								
+					<td>
+						<input type="submit"
+						id="botao" name="botao" value="Atualizar"
+						class="btn btn-dark">
+					</td>								
+					<td>
+						<input type="submit"
+						id="botao" name="botao" value="Excluir"
+						class="btn btn-dark">
+					</td>								
+					<td>
+						<input type="submit"
+						id="botao" name="botao" value="Listar"
+						class="btn btn-dark">
+					</td>								
 				</tr>
 			</table>
 		</form>
@@ -75,25 +94,31 @@
 		</c:if>
 	</div>
 	<div class="conteiner" align="center">
-		<c:if test="${not empty compras}">
+		<c:if test="${not empty produtos}">
 			<table class="table table-dark table-striped">
 				<thead>
 					<tr>
+						<th>#CODIGO</th>
 						<th>Nome Cliente</th>
 						<th>Nome Produto</th>
-						<th>Quantidade</th>
-						<th>Valor Total</th>
-						<th>Date de Compra</th>
+						<th>Quantidade </th>
+						<th>Valor Total </th>
+						<th>Data </th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="c" items="${compras}">
 						<tr>
+							<td>${c.codigo}</td>
 							<td>${c.nomeCliente}</td>
 							<td>${c.nomeProduto}</td>
 							<td>${c.quantidade}</td>
 							<td>${c.valorTotal}</td>
 							<td>${c.dataCompra}</td>
+							<td><a href="compra?acao=editar&codigo=${c.codigo}">EDITAR</a></td>
+							<td><a href="compra?acao=excluir&codigo=${c.codigo}">EXCLUIR</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

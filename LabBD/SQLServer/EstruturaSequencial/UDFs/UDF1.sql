@@ -171,6 +171,7 @@ INSERT INTO Compra VALUES
 -- Nome do Cliente, Nome do Produto, Quantidade e Valor Total, Data de hoje
 CREATE FUNCTION fn_dadoscompra()
 RETURNS @tabela TABLE(
+    Codigo INT,
     Nome_Cliente VARCHAR(100),
     Nome_Produto VARCHAR(100),
     Quantidade INT,
@@ -179,7 +180,7 @@ RETURNS @tabela TABLE(
 )
 AS
 BEGIN
-    INSERT INTO @tabela (Nome_Cliente, Nome_Produto, Quantidade, Valor_Total, Data_Hoje)
+    INSERT INTO @tabela (Codigo, Nome_Cliente, Nome_Produto, Quantidade, Valor_Total, Data_Hoje)
         SELECT c.Nome AS Nome_Cliente, p.Nome AS Nome_Produto, cp.Quantidade, (cp.Quantidade * p.Valor_Unitario) AS Valor_Total,
         GETDATE() AS Data_Compra FROM Compra cp JOIN Cliente c ON cp.Codigo_Cliente = c.Codigo JOIN Produto p ON cp.Codigo_Produto = p.Codigo
     RETURN

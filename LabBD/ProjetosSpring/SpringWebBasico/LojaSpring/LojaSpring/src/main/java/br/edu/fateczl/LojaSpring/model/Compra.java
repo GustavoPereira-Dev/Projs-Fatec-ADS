@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Compra {
 	
+	private long codigo;
+	private long codigoCliente;
+	private long codigoProduto;
 	private String nomeCliente;
 	private String nomeProduto;
 	private int quantidade;
