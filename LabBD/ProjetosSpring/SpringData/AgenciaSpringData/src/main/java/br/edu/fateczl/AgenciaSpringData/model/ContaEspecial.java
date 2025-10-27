@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Table(name = "ContaEspecial")
-@PrimaryKeyJoinColumn(name = "num_conta") // <-- Define que num_conta é a PK e FK
+@PrimaryKeyJoinColumn(name = "num_conta")
 public class ContaEspecial extends ContaBancaria {
 
     @Column(name = "limite")

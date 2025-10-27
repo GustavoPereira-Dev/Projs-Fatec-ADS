@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -74,7 +75,7 @@
                         <tr>
                             <td>${cp.numConta}</td>
                             <td>${cp.nomeCliente}</td>
-                            <td>R$ ${cp.saldo}</td>
+                            <td><fmt:formatNumber value="${cp.saldo}" type="currency" currencySymbol=" R$"/></td>
                             <td>${cp.diaDeRendimento}</td>
                         </tr>
                     </c:forEach>
@@ -133,8 +134,8 @@
                         <tr>
                             <td>${ce.numConta}</td>
                             <td>${ce.nomeCliente}</td>
-                            <td>R$ ${ce.saldo}</td>
-                            <td>R$ ${ce.limite}</td>
+                            <td><fmt:formatNumber value="${ce.saldo}" type="currency" currencySymbol=" R$"/></td>
+                            <td><fmt:formatNumber value="${ce.limite}" type="currency" currencySymbol=" R$"/></td>
                         </tr>
                     </c:forEach>
                 </tbody>

@@ -28,9 +28,9 @@ public abstract class ContaBancaria {
     @Column(name = "saldo")
     private float saldo;
 
-    public void setSaldo(float saldo) throws Exception {
+    public void setSaldo(float saldo) throws NumberFormatException {
     	if(saldo < 0) {
-    		throw new Exception("Saldo nao pode ser negativo");
+    		throw new NumberFormatException("Saldo nao pode ser negativo");
     	}
     	this.saldo = saldo;
     }

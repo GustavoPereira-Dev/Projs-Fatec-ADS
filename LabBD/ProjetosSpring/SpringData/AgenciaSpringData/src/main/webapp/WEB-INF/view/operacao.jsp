@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -92,8 +93,8 @@
                             <p><strong>Conta:</strong> ${dadosCliente.numConta}</p>
                         </div>
                         <div class="col-md-6">
-                            <p><strong>Saldo Atual:</strong> R$ ${dadosCliente.saldoAtual}</p>
-                            <p><strong>Saldo Disponível:</strong> R$ ${dadosCliente.saldoDisponível}</p>
+                            <p><strong>Saldo Atual:</strong><fmt:formatNumber value="${dadosCliente.saldoAtual}" type="currency" currencySymbol=" R$"/></p>
+                            <p><strong>Saldo Disponível:</strong><fmt:formatNumber value="${dadosCliente.saldoDisponível}" type="currency" currencySymbol=" R$"/></p>
                         </div>
                     </div>
                 </div>

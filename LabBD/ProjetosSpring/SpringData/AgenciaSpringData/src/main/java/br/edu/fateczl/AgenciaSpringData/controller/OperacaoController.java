@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.fateczl.AgenciaSpringData.persistence.ContaBancariaRepository;
 
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,20 +22,17 @@ public class OperacaoController {
 
     @RequestMapping(name = "operacao", value = "/operacao", method = RequestMethod.GET)
     public ModelAndView operacaoGet(ModelMap model) {
-        // Carrega todas as contas (para popular dropdowns)
         carregarContas(model);
         return new ModelAndView("operacao");
     }
 
     @RequestMapping(name = "operacao", value = "/operacao", method = RequestMethod.POST)
     public ModelAndView operacaoPost(@RequestParam Map<String, String> params, ModelMap model) {
-        String cmd = params.get("botao"); // Botões: "Sacar", "Depositar", "Calcular Rendimento", "Consultar Saldo"
-        
+        String cmd = params.get("botao"); 
         String saida = "";
         String erro = "";
 
-        try {
-            // Ações que exigem número da conta e valor
+        try { 
             if (cmd.equalsIgnoreCase("Sacar") || cmd.equalsIgnoreCase("Depositar")) {
                 int numConta = Integer.parseInt(params.get("numConta"));
                 float valor = Float.parseFloat(params.get("valor"));
@@ -48,36 +46,47 @@ public class OperacaoController {
                     saida = "Depósito de R$ " + valor + " realizado com sucesso!";
                 }
             }
-            // Ação de Calcular Rendimento (para todas as poupanças)
+
             else if (cmd.equalsIgnoreCase("Calcular Rendimento")) {
                 float taxa = Float.parseFloat(params.get("taxaRendimento"));
                 cRep.calcularRendimento(taxa);
                 saida = "Rendimento de " + (taxa * 100) + "% aplicado a todas as Contas Poupança.";
             }
-            // Ação de Consultar Saldo (UDF)
+
             else if (cmd.equalsIgnoreCase("Consultar Saldo Disponível")) {
                 int numConta = Integer.parseInt(params.get("numConta"));
                 Optional<ContaBancariaRepository.SaldoDisponivelDTO> dtoOpt = 
                     cRep.getSaldoDisponivelCliente(numConta);
                 
                 if (dtoOpt.isPresent()) {
-                    model.addAttribute("dadosCliente", dtoOpt.get()); // Envia o DTO para a JSP
+                    model.addAttribute("dadosCliente", dtoOpt.get()); 
                     saida = "Consulta de saldo realizada.";
                 } else {
                     throw new Exception("Conta não encontrada para consulta.");
                 }
             }
 
+        } catch (NumberFormatException e) {
+            erro = "Os campos devem ser valores válidos.";
+        
         } catch (Exception e) {
-            // PONTO CRÍTICO: Captura o erro da Stored Procedure
-            // e.getCause().getMessage() pega o "RAISERROR" do SQL Server
-            if (e.getCause() != null) {
-                erro = "Falha na operação: " + e.getCause().getMessage();
+            String mensagem = null;
+            Throwable cause = e.getCause();
+
+            while (cause != null) {
+                if (cause instanceof SQLException) {
+                	mensagem = cause.getMessage();
+                    break; 
+                }
+                cause = cause.getCause();
+            }
+
+            if (mensagem != null) {
+                erro = mensagem;
             } else {
-                erro = "Falha na operação: " + e.getMessage();
+                erro = e.getMessage();
             }
         } finally {
-            // Recarrega as contas (para dropdowns)
             carregarContas(model);
             model.addAttribute("saida", saida);
             model.addAttribute("erro", erro);
@@ -86,7 +95,6 @@ public class OperacaoController {
         return new ModelAndView("operacao");
     }
     
-    // Método auxiliar para carregar todas as contas
     private void carregarContas(ModelMap model) {
         model.addAttribute("contas", cRep.findAll());
     }
