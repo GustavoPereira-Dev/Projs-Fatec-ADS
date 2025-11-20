@@ -1,0 +1,490 @@
+[
+  {
+    datasetNamed "Microbiome Project",
+    aboutd "American Gut (Microbiome Project)",
+    linkd "https://github.com/biocore/American-Gut",
+    categoryNamed "Biology",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "GloBI",
+    aboutd "Global Biotic Interactions (GloBI)",
+    linkd "https://github.com/jhpoelen/eol-globi-data/wiki#accessing-species-interaction-data",
+    categoryNamed "Biology",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Global Climate",
+    aboutd "Global Climate Data Since 1929",
+    linkd "http://en.tutiempo.net/climate",
+    categoryNamed "Climate/Weather",
+    cloudd "NA",
+    vintaged 1929
+  },
+  {
+    datasetNamed "CommonCraw 2012",
+    aboutd "3.5B Web Pages from CommonCraw 2012",
+    linkd "http://www.bigdatanews.com/profiles/blogs/big-data-set-3-5-billion-web-pages-made-available-for-all-of-us",
+    categoryNamed "Computer Networks",
+    cloudd "NA",
+    vintaged 2012
+  },
+  {
+    datasetNamed "Indiana Webclicks",
+    aboutd "53.5B Web clicks of 100K users in Indiana Univ.",
+    linkd "http://cnets.indiana.edu/groups/nan/webtraffic/click-dataset/",
+    categoryNamed "Computer Networks",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "Criteo click-through",
+    aboutd "Criteo click-through data",
+    linkd "http://labs.criteo.com/2015/03/criteo-releases-its-new-dataset/",
+    categoryNamed "Computer Networks",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "ICWSM 2009",
+    aboutd "ICWSM Data Challenge (since 2009)",
+    linkd "http://icwsm.cs.umbc.edu/",
+    categoryNamed "Data Challenges",
+    cloudd "NA",
+    vintaged 2009
+  },
+  {
+    datasetNamed "KDD Cup",
+    aboutd "KDD Cup by Tencent 2012",
+    linkd "http://www.kddcup2012.org/",
+    categoryNamed "Data Challenges",
+    cloudd "NA",
+    vintaged 2012
+  },
+  {
+    datasetNamed "Localytics Data",
+    aboutd "Localytics Data Visualization Challenge",
+    linkd "https://github.com/localytics/data-viz-challenge",
+    categoryNamed "Data Challenges",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Yelp Dataset",
+    aboutd "Yelp Dataset Challenge",
+    linkd "http://www.yelp.com/dataset_challenge",
+    categoryNamed "Data Challenges",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "Bruteforce Database",
+    aboutd "Bruteforce Database",
+    linkd "https://github.com/duyetdev/bruteforce-database",
+    categoryNamed "Data Challenges",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Countries",
+    aboutd "List of all countries in all languages",
+    linkd "https://github.com/umpirsky/country-list",
+    categoryNamed "GIS",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "TwoFishes",
+    aboutd "TwoFishes - Foursquare's coarse geocoder",
+    linkd "https://github.com/foursquare/twofishes",
+    categoryNamed "GIS",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "World countries",
+    aboutd "World countries in multiple formats",
+    linkd "https://github.com/mledoze/countries",
+    categoryNamed "GIS",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Cities and countries",
+    aboutd "A list of cities and countries contributed by community",
+    linkd "https://github.com/caesar0301/awesome-public-datasets/blob/master/Government.rst",
+    categoryNamed "Government",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Ebola cases",
+    aboutd "Number of Ebola Cases and Deaths in Affected Countries (2014)",
+    linkd "https://data.hdx.rwlabs.org/dataset/ebola-cases-2014",
+    categoryNamed "Healthcare",
+    cloudd "NA",
+    vintaged 2014
+  },
+  {
+    datasetNamed "eBay Online",
+    aboutd "eBay Online Auctions (2012)",
+    linkd "http://www.modelingonlineauctions.com/datasets",
+    categoryNamed "Machine Learning",
+    cloudd "NA",
+    vintaged 2012
+  },
+  {
+    datasetNamed "New Yorker Captions",
+    aboutd "New Yorker caption contest ratings",
+    linkd "https://github.com/nextml/caption-contest-data",
+    categoryNamed "Machine Learning",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Cooper-Hewitt's Collection",
+    aboutd "Cooper-Hewitt's Collection Database",
+    linkd "https://github.com/cooperhewitt/collection",
+    categoryNamed "Museums",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Minneapolis Institute",
+    aboutd "Minneapolis Institute of Arts metadata",
+    linkd "https://github.com/artsmia/collection",
+    categoryNamed "Museums",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Tate Collection",
+    aboutd "Tate Collection metadata",
+    linkd "https://github.com/tategallery/collection",
+    categoryNamed "Museums",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Google 5gram",
+    aboutd "Google Web 5gram (1TB; 2006)",
+    linkd "https://catalog.ldc.upenn.edu/LDC2006T13",
+    categoryNamed "Natural Language",
+    cloudd "NA",
+    vintaged 2006
+  },
+  {
+    datasetNamed "Arabic; 30K articles",
+    aboutd "SaudiNewsNet Collection of Saudi Newspaper Articles (Arabic; 30K articles)",
+    linkd "https://github.com/ParallelMazen/SaudiNewsNet",
+    categoryNamed "Natural Language",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "USENET postings",
+    aboutd "USENET postings corpus of 2005~2011",
+    linkd "http://www.psych.ualberta.ca/~westburylab/downloads/usenetcorpus.download.html",
+    categoryNamed "Natural Language",
+    cloudd "NA",
+    vintaged 2005
+  },
+  {
+    datasetNamed "Datahub.io",
+    aboutd "Datahub.io",
+    linkd "https://datahub.io/dataset",
+    categoryNamed "Search Engines",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "Twitter Scrape CIKM",
+    aboutd "Cheng-Caverlee-Lee September 2009 - January 2010 Twitter Scrape",
+    linkd "https://archive.org/details/twitter_cikm_2010",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 2009
+  },
+  {
+    datasetNamed "Facebook Data",
+    aboutd "Facebook Data Scrape (2005)",
+    linkd "https://archive.org/details/oxford-2005-facebook-matrix",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 2005
+  },
+  {
+    datasetNamed "LAW graphs",
+    aboutd "Facebook Social Networks from LAW (since 2007)",
+    linkd "http://law.di.unimi.it/datasets.php",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 2007
+  },
+  {
+    datasetNamed "Foursquare from",
+    aboutd "Foursquare from UMN/Sarwat (2013)",
+    linkd "https://archive.org/details/201309_foursquare_dataset_umn",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 2013
+  },
+  {
+    datasetNamed "Skytrax' Air",
+    aboutd "Skytrax' Air Travel Reviews Dataset",
+    linkd "https://github.com/quankiquanki/skytrax-reviews-dataset",
+    categoryNamed "Social Networks",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Twitter Scrape",
+    aboutd "Twitter Scrape Calufa May 2011",
+    linkd "http://archive.org/details/2011-05-calufa-twitter-sql",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 2011
+  },
+  {
+    datasetNamed "Youtube Video",
+    aboutd "Youtube Video Social Graph in 2007;2008",
+    linkd "http://netsg.cs.sfu.ca/youtubedata/",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 2007
+  },
+  {
+    datasetNamed "FBI Hate Crime 2013",
+    aboutd "FBI Hate Crime 2013 - aggregated data",
+    linkd "https://github.com/emorisse/FBI-Hate-Crime-Statistics/tree/master/2013",
+    categoryNamed "Social Sciences",
+    cloudd "GitHub",
+    vintaged 2013
+  },
+  {
+    datasetNamed "GSS",
+    aboutd "General Social Survey (GSS) since 1972",
+    linkd "http://gss.norc.org",
+    categoryNamed "Social Sciences",
+    cloudd "NA",
+    vintaged 1972
+  },
+  {
+    datasetNamed "Texas Inmates",
+    aboutd "Texas Inmates Executed Since 1984",
+    linkd "http://www.tdcj.state.tx.us/death_row/dr_executed_offenders.html",
+    categoryNamed "Social Sciences",
+    cloudd "NA",
+    vintaged 1984
+  },
+  {
+    datasetNamed "Formula 1",
+    aboutd "Ergast Formula 1; from 1950 up to date (API)",
+    linkd "http://ergast.com/mrd/db",
+    categoryNamed "Sports",
+    cloudd "NA",
+    vintaged 1950
+  },
+  {
+    datasetNamed "Pinhooker: Thoroughbred",
+    aboutd "Pinhooker: Thoroughbred Bloodstock Sale Data",
+    linkd "https://github.com/phillc73/pinhooker",
+    categoryNamed "Sports",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Airlines OD",
+    aboutd "Airlines OD Data 1987-2008",
+    linkd "http://stat-computing.org/dataexpo/2009/the-data.html",
+    categoryNamed "Transportation",
+    cloudd "NA",
+    vintaged 2008
+  },
+  {
+    datasetNamed "BSS",
+    aboutd "Bike Share Systems (BSS) collection",
+    linkd "https://github.com/BetaNYC/Bike-Share-Data-Best-Practices/wiki/Bike-Share-Data-Systems",
+    categoryNamed "Transportation",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "NYC Taxi",
+    aboutd "NYC Taxi Trip Data 2009-",
+    linkd "http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml",
+    categoryNamed "Transportation",
+    cloudd "NA",
+    vintaged 2009
+  },
+  {
+    datasetNamed "FOIA/FOILed",
+    aboutd "NYC Taxi Trip Data 2013 (FOIA/FOILed)",
+    linkd "https://archive.org/details/nycTaxiTripData2013",
+    categoryNamed "Transportation",
+    cloudd "NA",
+    vintaged 2013
+  },
+  {
+    datasetNamed "NYC Uber",
+    aboutd "NYC Uber trip data April 2014 to September 2014",
+    linkd "https://github.com/fivethirtyeight/uber-tlc-foil-response",
+    categoryNamed "Transportation",
+    cloudd "GitHub",
+    vintaged 2014
+  },
+  {
+    datasetNamed "Open Traffic",
+    aboutd "Open Traffic collection",
+    linkd "https://github.com/graphhopper/open-traffic-collection",
+    categoryNamed "Transportation",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Plane Crash",
+    aboutd "Plane Crash Database; since 1920",
+    linkd "http://www.planecrashinfo.com/database.htm",
+    categoryNamed "Transportation",
+    cloudd "NA",
+    vintaged 1920
+  },
+  {
+    datasetNamed "U.S. Domestic",
+    aboutd "U.S. Domestic Flights 1990 to 2009",
+    linkd "http://academictorrents.com/details/a2ccf94bbb4af222bf8e69dad60a68a29f310d9a",
+    categoryNamed "Transportation",
+    cloudd "NA",
+    vintaged 2009
+  },
+  {
+    datasetNamed "U.S. Freight",
+    aboutd "U.S. Freight Analysis Framework since 2007",
+    linkd "http://ops.fhwa.dot.gov/freight/freight_analysis/faf/index.htm",
+    categoryNamed "Transportation",
+    cloudd "NA",
+    vintaged 2007
+  },
+  {
+    datasetNamed "Data Packaged",
+    aboutd "Data Packaged Core Datasets",
+    linkd "https://github.com/datasets/",
+    categoryNamed "Complementary Collections",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "USDA PLANTS",
+    aboutd "U.S. Department of Agriculture's PLANTS Database",
+    linkd "http://www.plants.usda.gov/dl_all.html",
+    categoryNamed "Agriculture",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "ClueWeb09",
+    aboutd "ClueWeb09 - 1B web pages",
+    linkd "http://lemurproject.org/clueweb09/",
+    categoryNamed "Computer Networks",
+    cloudd "NA",
+    vintaged 2009
+  },
+  {
+    datasetNamed "ClueWeb12",
+    aboutd "ClueWeb12 - 733M web pages",
+    linkd "http://lemurproject.org/clueweb12/",
+    categoryNamed "Computer Networks",
+    cloudd "NA",
+    vintaged 2012
+  },
+  {
+    datasetNamed "DEFRA Projects",
+    aboutd "DEFRA Science and Research Projects data",
+    linkd "http://randd.defra.gov.uk/",
+    categoryNamed "Energy",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "UK-DALE",
+    aboutd "UK Domestic Appliance-Level Electricity (UK-DALE) dataset",
+    linkd "http://www.doc.ic.ac.uk/~dk3810/data/",
+    categoryNamed "Energy",
+    cloudd "NA",
+    vintaged 2016
+  },
+  {
+    datasetNamed "Landsat 8",
+    aboutd "Landsat 8 on AWS",
+    linkd "https://aws.amazon.com/public-data-sets/landsat/",
+    categoryNamed "GIS",
+    cloudd "Amazon",
+    vintaged 0
+  },
+  {
+    datasetNamed "Reverse Geocode",
+    aboutd "Simple but fast reverse geocoding up to city granularitiy level",
+    linkd "https://github.com/kno10/reversegeocode",
+    categoryNamed "GIS",
+    cloudd "GitHub",
+    vintaged 0
+  },
+  {
+    datasetNamed "Faces Database",
+    aboutd "10k US Adult Faces Database",
+    linkd "http://wilmabainbridge.com/facememorability2.html",
+    categoryNamed "Image Processing",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "ClueWeb09 FACC",
+    aboutd "ClueWeb09 FACC",
+    linkd "http://lemurproject.org/clueweb09/FACC1/",
+    categoryNamed "Natural Language",
+    cloudd "NA",
+    vintaged 2009
+  },
+  {
+    datasetNamed "ClueWeb12 FACC",
+    aboutd "ClueWeb12 FACC",
+    linkd "http://lemurproject.org/clueweb12/FACC1/",
+    categoryNamed "Natural Language",
+    cloudd "NA",
+    vintaged 2012
+  },
+  {
+    datasetNamed "Google Ngrams",
+    aboutd "Google Books Ngrams (2.2TB)",
+    linkd "https://aws.amazon.com/datasets/google-books-ngrams/",
+    categoryNamed "Natural Language",
+    cloudd "Amazon",
+    vintaged 0
+  },
+  {
+    datasetNamed "EDRM Enron",
+    aboutd "EDRM Enron EMail of 151 users; hosted on S3",
+    linkd "https://aws.amazon.com/datasets/enron-email-data/",
+    categoryNamed "Social Networks",
+    cloudd "Amazon",
+    vintaged 0
+  },
+  {
+    datasetNamed "GetGlue",
+    aboutd "GetGlue - users rating TV shows",
+    linkd "http://getglue-data.s3.amazonaws.com/getglue_sample.tar.gz",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 0
+  },
+  {
+    datasetNamed "Twitter RepLab",
+    aboutd "Twitter Data for Online Reputation Management",
+    linkd "http://nlp.uned.es/replab2013/",
+    categoryNamed "Social Networks",
+    cloudd "NA",
+    vintaged 2013
+  }
+]
