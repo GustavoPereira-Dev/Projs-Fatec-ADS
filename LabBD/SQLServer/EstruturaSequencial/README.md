@@ -2,7 +2,14 @@
 
 Fazer no SQL Server os seguintes algoritmos:
 
-## ProgramaçãoSQL1.sql
+- [Procedures](./Procedures/): Uso de Procedures, procedimentos no contexto de SQL
+- [Funções (UDF)](./UDFs/): Uso de User Defined Functions, Funções no contexto de SQL
+- [Triggers (Gatilhos)](./Triggers/): Uso de Gatilhos ou pequenos blocos de códigos que são executados em algum tipo de ação de CRUD/DML em uma Tabela específica (INSERT, UPDATE e/ou DELETE)
+- [Cursors (Cursores)](./Cursores/): Uso de Cursores para percorrer dados de consultas de determinadas tabelas e uso de Transactions e Rollbacks
+
+## Outros exercícios
+
+### ProgramaçãoSQL1.sql
 
 a) Dado um número inteiro. Calcule e mostre seu fatorial. (Não use entrada superior a 12)
 
@@ -15,7 +22,7 @@ d) Seja a seguinte série: 1, 4, 4, 2, 5, 5, 3, 6, 6, 4, 7, 7, ...
 
 e) Considerando a tabela abaixo, gere um banco de dados, a tabela e crie um algoritmo para inserir uma massa de dados, com 50 registros, para fins de teste, com as regras estabelecidas (Não usar restrições na criação da tabela)
 
-### Produto
+#### Produto
 
 | Campo      | Tipo de Dado     | Observação         |
 |------------|------------------|--------------------|
@@ -33,7 +40,7 @@ e) Considerando a tabela abaixo, gere um banco de dados, a tabela e crie um algo
 
 f) Considerando a tabela abaixo, gere um banco de dados, a tabela e crie um algoritmo para inserir uma massa de dados, com 50 registros, para fins de teste, com as regras estabelecidas. (Não use restrições na criação da tabela)
 
-### Livro
+#### Livro
 
 | Campo        | Tipo de Dado     | Observação         |
 |--------------|------------------|--------------------|
@@ -47,7 +54,7 @@ f) Considerando a tabela abaixo, gere um banco de dados, a tabela e crie um algo
 - Qtd_páginas deve ser um número aleatório entre 100 e 400
 - Qtd_Estoque deve ser um número aleatório entre 2 e 20
 
-## ProgramaçãoSQL2.sql
+### ProgramaçãoSQL2.sql
 
 Usar no SQL Server os seguintes algoritmos:
 
@@ -65,7 +72,7 @@ e) Fazer um algoritmo que inverta uma palavra (Usar a função SUBSTRING)
 
 f) Calcular a tabela abaixo, gerar uma massa de dados, com 100 registros, para fins de teste com as regras estabelecidas (Não usar restrições na criação da tabela)
 
-### Computador
+#### Computador
 
 | Campo     | Tipo de Dado     | Observação         |
 |-----------|------------------|--------------------|
@@ -89,3 +96,6 @@ f) Calcular a tabela abaixo, gerar uma massa de dados, com 100 registros, para f
   - FreqHD é um número aleatório* entre 1,70 e 3,20
 
 *A função RAND() gera números aleatórios entre 0 e 0,9999...
+
+
+### ProceduresFunctionsTriggers.sql
