@@ -34,7 +34,7 @@ Calcule o frete pelo produto, ou por peso ou por caixa. Não se esqueça que a e
   - Mapplus
   - OpenRouteService
 
-<b>  Integrantes: @GustavoPereira-Dev, [@Joaoftito](https://github.com/Joaoftito), [@NicolasDomingos09](https://github.com/LiaWyllde) e [@LiaWyllde](https://github.com/LiaWyllde) </b>
+<b>  Integrantes: @GustavoPereira-Dev, [@Joaoftito](https://github.com/Joaoftito), [@NicolasDomingos09](https://github.com/NicolasDomingos09) e [@LiaWyllde](https://github.com/LiaWyllde) </b>
 
 
 ## [Controle Logístico (API)](https://github.com/NicolasDomingos09/ControleLogistico)
@@ -44,4 +44,5 @@ Calcule o frete pelo produto, ou por peso ou por caixa. Não se esqueça que a e
 - O motorista deve ter um app que envia as coordenadas dele para o sistema, que envia uma msg pelo WhatsApp do destinatário que o produto está chegando. Após a entrega o motorista deve sinalizar no app que a entrega foi realizada. O cliente pode dar um feedback sobre cada solicitação de entrega. O recebedor pode pontuar a entrega que ele recebeu. 
 - Conteúdo extra: fazer um sistema de autenticação/acesso da API utilizando métodos como Redis (o que foi escolhido pelo grupo) ou JWT (JSON Web Tokens)
 
-<b> Integrantes: @GustavoPereira-Dev, [@Joaoftito](https://github.com/Joaoftito), [@NicolasDomingos09](https://github.com/LiaWyllde), [@LiaWyllde](https://github.com/LiaWyllde) , [@LucaspeOliveira](https://github.com/LucaspeOliveira), [@flwbiel](https://github.com/flwbiel), [@julioferrazz](https://github.com/julioferrazz), [@PauIo-Soares](https://github.com/PauIo-Soares) </b>
+
+<b> Integrantes: @GustavoPereira-Dev, [@Joaoftito](https://github.com/Joaoftito), [@NicolasDomingos09](https://github.com/NicolasDomingos09), [@LiaWyllde](https://github.com/LiaWyllde) , [@LucaspeOliveira](https://github.com/LucaspeOliveira), [@flwbiel](https://github.com/flwbiel), [@julioferrazz](https://github.com/julioferrazz), [@PauIo-Soares](https://github.com/PauIo-Soares) </b>
