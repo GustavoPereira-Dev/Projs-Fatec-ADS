@@ -99,3 +99,36 @@ f) Calcular a tabela abaixo, gerar uma massa de dados, com 100 registros, para f
 
 
 ### ProceduresFunctionsTriggers.sql
+1) Elabore uma entidade e uma classe ContaBancaria, com os seguintes membros:
+
+- atributo String nome_cliente
+- atributo int num_conta
+- atributo float saldo
+- método sacar (o saldo não pode ficar negativo)
+- método depositar
+Agora acrescente ao projeto duas classes herdadas de ContaBancaria: ContaPoupança e
+ContaEspecial, com as seguintes características a mais:
+- Classe ContaPoupança:
+  - atributo int dia de rendimento
+  - método calcularNovoSaldo, recebe a taxa de rendimento da poupança e atualiza
+  - saldo.
+- Classe ContaEspecial
+  - atributo float limite
+  - redefinição do método sacar, permitindo saldo negativo até o valor do limite.
+- Após a implementação das classes acima, você deverá implementar projeto Spring Web para
+cada tipo de conta. Um menu deve facilitar o acesso de cada JSP. Nesta camada, você deverá
+implementar:
+  - Fazer um CRUD para Conta Poupança e Conta Especial
+  - As regras de negócio de saque para ambos os tipos de contas devem ser tratada no banco
+de dados com Triggers
+  - Implementar um botão para ação de sacar um determinado valor da(s) sua(s) conta(s);
+  - Ter, no Controller, ação e retorno para saque um valor dentro do limite superior ao saldo
+da poupança;
+  - Ter, no Controller, ação e retorno para saque de um valor dentro do limite da conta
+especial e acima do limite;
+  - Ter, no Controller, ação e retorno para depósito um determinado valor na(s) sua(s)
+conta(s);
+  - Ter, no Controller, ação e retorno para mostrar o novo saldo do cliente, a partir da taxa de
+rendimento, daqueles que possuem conta poupança;
+  - Mostrar os dados da(s) conta(s) de um cliente, baseado em uma UDF que apresenta o
+saldo e o saldo com o limite agregado ao saldo quando aplicável;
