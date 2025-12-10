@@ -41,3 +41,5 @@ Lombok):
 - [MongoDB](./MongoDB/): Uso básico e geral do MongoDB, um Banco de Dados não-relacional (NoSQL)
 
 - [Avaliação 3](https://github.com/GustavoPereira-Dev/AV3-LabBD-Delivery): Última atividade avaliativa utilizando todos os conhecimentos adquiridos anteriormente (Spring Web, Data e conceitos de avaliações anteriores), Cursores e a Geração de Relatórios
+
+<b>Nota: Todas as avaliações da disciplina foram desenvolvidas por mim (projeto em Java) e pelo [@Joaoftito](https://github.com/Joaoftito) (SQL, Diagramação e Relatórios)</b>
