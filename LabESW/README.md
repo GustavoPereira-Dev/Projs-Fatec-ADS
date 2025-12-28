@@ -4,7 +4,11 @@
 
 Aula inicial do uso prático do Hibernate, um framework de ORM (Object-Relational Mapping) com o objetivo de facilitar a criação e o mapameamento de entidades, relacionamentos e conexões entre a aplicação (Java BackEnd) com o Banco de Dados (que nesse caso foi o MySQL mas poderia ser outros SQL ou NoSQL)
 
-## [AcessoAPI](./AcessoAPI/)
+## [Projeto de Frota (Caminhão)](./frota/)
+
+Projeto desenvolvido ao decorrer das aulas utilizando o Hibernate, Spring e Thymeleaf, com Entidades como Marca e Caminhão e divisão de responsabilidades com classes como Model (nome da entidade), EntidadeRepository, EntidadeDTO (Cadastro, Atualizacao e Listagem), EntidadeMapper, EntidadeService e EntidadeController, enquanto o FrontEnd possuí duas telas para cada Entidade (Listar e Formulário) e uso básico de CSS e Fragmentos que são utilizados em diversos HTMLs
+
+## [AcessoAPI (OMDb)](./AcessoAPI/)
 
 Exemplo da aula de acesso de uso de uma API do OMDb (Open Movie Database)
 
