@@ -32,4 +32,6 @@ Seja bem vindo ao repositório de alguns projetos, códigos e conversões de con
 
 - [Testes de Software](./Testes/): Disciplina que estuda métodos, técnicas e ferramentas para verificar e validar sistemas, garantindo qualidade, confiabilidade e segurança no desenvolvimento de aplicações ou softwares. No caso dos projetos no diretório, ambos se referem ao uso de Testes no contexto de Clientes e Faturas desenvolvidas pelo professor, para misturar os conhecimentos teóricos adquiridos em aula nos utilizados na prática
 
+- [Programação Linear e Aplicações](./PL/): Alguns códigos no âmbito de uso da Programação Linear, com os usos de Métodos Gráficos, Analíticos, Solver, etc., sendo uma técnica matemática usada para otimizar o desempenho ou eficiência de um sistema, tornando-se amplamente utilizada no mundo dos negócios para solucionar problemas de planejamento, alocação de recursos e tomada de decisão.
+
 - [Estágio Supervisionado](https://github.com/GustavoPereira-Dev/AcademicReviewer): Repositório que desenvolvi e utilizei na disciplina pelo Estágio Supervisionado no âmbito de Desenvolvimento. Consiste em uma aplicação de avaliação dos documentos de Trabalho de Conclusão de Curso dos alunos nas disciplinas de Trabalho de Graduação
