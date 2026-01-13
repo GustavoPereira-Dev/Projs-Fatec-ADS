@@ -182,3 +182,120 @@ try:
     print(f"MAC Decimal: {mac_dec_cisco} -> Hex: {mac_hex_back_cisco}")
 except ValueError as e:
     print(f"Erro MAC (Cisco): {e}")
+
+def analyze_ipv6_properties(ipv6_decimal_int):
+    """
+    Analyzes properties of a given IPv6 decimal integer.
+    Returns a dictionary of properties.
+    """
+    properties = {}
+
+    # 1. Check for Loopback Address (::1)
+    properties['is_loopback'] = (ipv6_decimal_int == 1)
+
+    # 2. Check for Multicast Address (FF00::/8)
+    # The first 8 bits are 11111111 (0xFF in hex). IPv6 is 128 bits.
+    # Shift right by 128 - 8 = 120 bits to get the first 8 bits.
+    properties['is_multicast'] = ((ipv6_decimal_int >> 120) == 0xFF)
+
+    # 3. Check for Global Unicast Address (2000::/3)
+    # The first 3 bits are 001. IPv6 is 128 bits.
+    # Shift right by 128 - 3 = 125 bits to get the first 3 bits.
+    # 0b001 is equivalent to 1 in decimal.
+    properties['is_global_unicast'] = ((ipv6_decimal_int >> 125) == 0b001)
+
+    return properties
+
+def analyze_ipv6_properties(ipv6_decimal_int):
+    """
+    Analyzes properties of a given IPv6 decimal integer.
+    Returns a dictionary of properties.
+    """
+    properties = {}
+
+    # 1. Check for Loopback Address (::1)
+    properties['is_loopback'] = (ipv6_decimal_int == 1)
+
+    # 2. Check for Multicast Address (FF00::/8)
+    # The first 8 bits are 11111111 (0xFF in hex). IPv6 is 128 bits.
+    # Shift right by 128 - 8 = 120 bits to get the first 8 bits.
+    properties['is_multicast'] = ((ipv6_decimal_int >> 120) == 0xFF)
+
+    # 3. Check for Global Unicast Address (2000::/3)
+    # The first 3 bits are 001. IPv6 is 128 bits.
+    # Shift right by 128 - 3 = 125 bits to get the first 3 bits.
+    # 0b001 is equivalent to 1 in decimal.
+    properties['is_global_unicast'] = ((ipv6_decimal_int >> 125) == 0b001)
+
+    return properties
+
+
+print("\n--- Análise de Propriedades IPv6 ---")
+
+# Analyze full IPv6
+print(f"\nAnálise para IPv6: {ipv6_hex_example_full}")
+properties_full = analyze_ipv6_properties(ipv6_dec_full)
+for key, value in properties_full.items():
+    print(f"  {key}: {value}")
+
+# Analyze compressed IPv6
+print(f"\nAnálise para IPv6: {ipv6_hex_example_compressed}")
+properties_compressed = analyze_ipv6_properties(ipv6_dec_compressed)
+for key, value in properties_compressed.items():
+    print(f"  {key}: {value}")
+
+# Analyze loopback IPv6
+print(f"\nAnálise para IPv6: {ipv6_hex_example_loopback}")
+properties_loopback = analyze_ipv6_properties(ipv6_dec_loopback)
+for key, value in properties_loopback.items():
+    print(f"  {key}: {value}")
+
+# Analyze all zeros IPv6
+print(f"\nAnálise para IPv6: {ipv6_hex_example_all_zeros}")
+properties_all_zeros = analyze_ipv6_properties(ipv6_dec_all_zeros)
+for key, value in properties_all_zeros.items():
+    print(f"  {key}: {value}")
+
+def analyze_mac_properties(mac_decimal_int):
+    """
+    Analyzes properties of a given MAC address decimal integer.
+    Returns a dictionary of properties.
+    """
+    properties = {}
+
+    # Determine if the MAC address is unicast or multicast
+    # The least significant bit of the first octet (the 8th bit from the left of the entire 48-bit address)
+    # 0 = unicast, 1 = multicast
+    # Isolate the first octet by shifting right by 40 bits (48 - 8 = 40)
+    first_octet_lsb = (mac_decimal_int >> 40) & 1
+    properties['is_multicast'] = (first_octet_lsb == 1)
+    properties['is_unicast'] = (first_octet_lsb == 0)
+
+    # Extract the OUI (Organizationally Unique Identifier)
+    # The OUI consists of the first 24 bits (first three octets)
+    # Shift right by 24 bits to get the OUI, then format as 6-char uppercase hex.
+    oui = (mac_decimal_int >> 24)
+    properties['oui'] = f'{oui:06X}'
+
+    return properties
+
+    print(
+"\n--- Análise de Propriedades MAC ---")
+
+# Analyze MAC (colon format)
+print(f"\nAnálise para MAC: {mac_hex_example}")
+properties_mac = analyze_mac_properties(mac_dec)
+for key, value in properties_mac.items():
+    print(f"  {key}: {value}")
+
+# Analyze MAC (dash format)
+print(f"\nAnálise para MAC: {mac_hex_example_dash}")
+properties_mac_dash = analyze_mac_properties(mac_dec_dash)
+for key, value in properties_mac_dash.items():
+    print(f"  {key}: {value}")
+
+# Analyze MAC (Cisco format)
+print(f"\nAnálise para MAC: {mac_hex_example_cisco}")
+properties_mac_cisco = analyze_mac_properties(mac_dec_cisco)
+for key, value in properties_mac_cisco.items():
+    print(f"  {key}: {value}")
