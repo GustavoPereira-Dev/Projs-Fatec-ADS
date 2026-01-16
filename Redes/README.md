@@ -275,3 +275,182 @@ for key, value in properties_mac.items():
   - is_multicast: False
   - is_unicast: True
   - oui: AABBCC
+
+## Subredes.py
+
+Este script Python oferece funcionalidades para conversão, análise e alocação de sub-redes IPv4 utilizando CIDR (Classless Inter-Domain Routing) e VLSM (Variable Length Subnet Masking).
+
+### Menu Interativo
+
+O script inclui um menu interativo para facilitar o uso das suas funcionalidades:
+```
+--- Ferramenta de Análise e Conversão de IP ---
+1. Converter IP Binário para Decimal
+2. Converter IP Decimal para Binário
+3. Analisar Propriedades de IP
+4. Realizar Cálculo VLSM
+5. Sair
+Escolha uma opção (1-5):
+```
+
+### CIDR para Máscara de Sub-rede
+
+A função `cidr_to_subnet_mask` converte um prefixo CIDR (por exemplo, /24) em uma máscara de sub-rede decimal pontilhada (por exemplo, 255.255.255.0).
+
+#### Exemplos de Conversão
+```python
+# Exemplo 1: /24
+cidr_prefix_1 = 24
+subnet_mask_1 = cidr_to_subnet_mask(cidr_prefix_1)
+print(f"CIDR /{cidr_prefix_1} -> Subnet Mask: {subnet_mask_1}")
+
+# Exemplo 2: /8
+cidr_prefix_2 = 8
+subnet_mask_2 = cidr_to_subnet_mask(cidr_prefix_2)
+print(f"CIDR /{cidr_prefix_2} -> Subnet Mask: {subnet_mask_2}")
+
+# Exemplo 3: /30
+cidr_prefix_3 = 30
+subnet_mask_3 = cidr_to_subnet_mask(cidr_prefix_3)
+print(f"CIDR /{cidr_prefix_3} -> Subnet Mask: {subnet_mask_3}")
+```
+**Saída:**
+```
+--- CIDR to Subnet Mask Conversion ---
+CIDR /24 -> Subnet Mask: 255.255.255.0
+CIDR /8 -> Subnet Mask: 255.0.0.0
+CIDR /30 -> Subnet Mask: 255.255.255.252
+```
+
+### Análise de Detalhes de Sub-rede
+
+A função `calculate_subnet_details` recebe um endereço IP e um prefixo CIDR, retornando detalhes abrangentes da sub-rede, como endereço de rede, endereço de broadcast, primeiro e último hosts utilizáveis, e o número total de hosts utilizáveis.
+
+#### Exemplos de Análise
+```python
+# Exemplo 1: /24
+ip_1 = '192.168.1.10'
+cidr_1 = 24
+details_1 = calculate_subnet_details(ip_1, cidr_1)
+print(f"\nIP: {ip_1}, CIDR: /{cidr_1}")
+for key, value in details_1.items():
+    print(f"  {key}: {value}")
+
+# Exemplo 3: /30 (link ponto a ponto)
+ip_3 = '172.16.1.5'
+cidr_3 = 30
+details_3 = calculate_subnet_details(ip_3, cidr_3)
+print(f"\nIP: {ip_3}, CIDR: /{cidr_3}")
+for key, value in details_3.items():
+    print(f"  {key}: {value}")
+
+# Exemplo 4: /31 (nenhum host utilizável)
+ip_4 = '192.168.10.0'
+cidr_4 = 31
+details_4 = calculate_subnet_details(ip_4, cidr_4)
+print(f"\nIP: {ip_4}, CIDR: /{cidr_4}")
+for key, value in details_4.items():
+    print(f"  {key}: {value}")
+```
+**Saída:**
+```
+--- Análise de Detalhes de Sub-rede ---
+
+IP: 192.168.1.10, CIDR: /24
+  network_address: 192.168.1.0
+  broadcast_address: 192.168.1.255
+  first_usable_host: 192.168.1.1
+  last_usable_host: 192.168.1.254
+  num_usable_hosts: 254
+
+IP: 172.16.1.5, CIDR: /30
+  network_address: 172.16.1.4
+  broadcast_address: 172.16.1.7
+  first_usable_host: 172.16.1.5
+  last_usable_host: 172.16.1.6
+  num_usable_hosts: 2
+
+IP: 192.168.10.0, CIDR: /31
+  network_address: 192.168.10.0
+  broadcast_address: 192.168.10.1
+  first_usable_host: N/A
+  last_usable_host: N/A
+  num_usable_hosts: 0
+```
+
+### Cálculo VLSM (Variable Length Subnet Masking)
+
+A função `perform_vlsm_calculation` implementa a lógica VLSM para alocar sub-redes com base nos requisitos de hosts dos departamentos. Ela ordena os requisitos, aloca sub-redes de forma eficiente e retorna suas propriedades.
+
+#### Exemplos de Alocação VLSM
+```python
+# Exemplo 1: Alocação básica
+main_ip_1 = '192.168.1.0'
+main_cidr_1 = 24
+departments_1 = [
+    ('Sales', 100),
+    ('IT', 50),
+    ('Guest_Wifi', 25),
+    ('Servers', 10),
+    ('Printers', 5),
+    ('Management', 2)
+]
+
+vlsm_result_1 = perform_vlsm_calculation(main_ip_1, main_cidr_1, departments_1)
+print(f"\n--- Resultados do Cálculo VLSM para {main_ip_1}/{main_cidr_1} ---")
+for subnet in vlsm_result_1:
+    print(f"  Departamento: {subnet['department']}, Hosts Solicitados: {subnet['requested_hosts']}, CIDR Alocado: /{subnet['allocated_cidr']}")
+    print(f"    Rede: {subnet['network_address']}, Broadcast: {subnet['broadcast_address']}")
+    print(f"    Primeiro Host: {subnet['first_usable_host']}, Último Host: {subnet['last_usable_host']}, Hosts Utilizáveis: {subnet['num_usable_hosts']}")
+
+# Exemplo 3: Departamentos que precisam de 0 hosts (links ponto a ponto)
+main_ip_3 = '172.16.0.0'
+main_cidr_3 = 24
+departments_3 = [
+    ('Link1', 0),
+    ('Link2', 0),
+    ('Users', 20)
+]
+
+vlsm_result_3 = perform_vlsm_calculation(main_ip_3, main_cidr_3, departments_3)
+print(f"\n--- Resultados do Cálculo VLSM para {main_ip_3}/{main_cidr_3} ---")
+for subnet in vlsm_result_3:
+    print(f"  Departamento: {subnet['department']}, Hosts Solicitados: {subnet['requested_hosts']}, CIDR Alocado: /{subnet['allocated_cidr']}")
+    print(f"    Rede: {subnet['network_address']}, Broadcast: {subnet['broadcast_address']}")
+    print(f"    Primeiro Host: {subnet['first_usable_host']}, Último Host: {subnet['last_usable_host']}, Hosts Utilizáveis: {subnet['num_usable_hosts']}")
+```
+**Saída:**
+```
+--- VLSM Subnet Allocation ---
+
+--- Resultados do Cálculo VLSM para 192.168.1.0/24 ---
+  Departamento: Sales, Hosts Solicitados: 100, CIDR Alocado: /25
+    Rede: 192.168.1.0, Broadcast: 192.168.1.127
+    Primeiro Host: 192.168.1.1, Último Host: 192.168.1.126, Hosts Utilizáveis: 126
+  Departamento: IT, Hosts Solicitados: 50, CIDR Alocado: /26
+    Rede: 192.168.1.128, Broadcast: 192.168.1.191
+    Primeiro Host: 192.168.1.129, Último Host: 192.168.1.190, Hosts Utilizáveis: 62
+  Departamento: Guest_Wifi, Hosts Solicitados: 25, CIDR Alocado: /27
+    Rede: 192.168.1.192, Broadcast: 192.168.1.223
+    Primeiro Host: 192.168.1.193, Último Host: 192.168.1.222, Hosts Utilizáveis: 30
+  Departamento: Servers, Hosts Solicitados: 10, CIDR Alocado: /28
+    Rede: 192.168.1.224, Broadcast: 192.168.1.239
+    Primeiro Host: 192.168.1.225, Último Host: 192.168.1.238, Hosts Utilizáveis: 14
+  Departamento: Printers, Hosts Solicitados: 5, CIDR Alocado: /29
+    Rede: 192.168.1.240, Broadcast: 192.168.1.247
+    Primeiro Host: 192.168.1.241, Último Host: 192.168.1.246, Hosts Utilizáveis: 6
+  Departamento: Management, Hosts Solicitados: 2, CIDR Alocado: /30
+    Rede: 192.168.1.248, Broadcast: 192.168.1.251
+    Primeiro Host: 192.168.1.249, Último Host: 192.168.1.250, Hosts Utilizáveis: 2
+
+--- Resultados do Cálculo VLSM para 172.16.0.0/24 ---
+  Departamento: Users, Hosts Solicitados: 20, CIDR Alocado: /27
+    Rede: 172.16.0.0, Broadcast: 172.16.0.31
+    Primeiro Host: 172.16.0.1, Último Host: 172.16.0.30, Hosts Utilizáveis: 30
+  Departamento: Link1, Hosts Solicitados: 0, CIDR Alocado: /31
+    Rede: 172.16.0.32, Broadcast: 172.16.0.33
+    Primeiro Host: N/A, Último Host: N/A, Hosts Utilizáveis: 0
+  Departamento: Link2, Hosts Solicitados: 0, CIDR Alocado: /31
+    Rede: 172.16.0.34, Broadcast: 172.16.0.35
+    Primeiro Host: N/A, Último Host: N/A, Hosts Utilizáveis: 0
+```

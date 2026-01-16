@@ -466,3 +466,71 @@ try:
 except (ValueError, Exception) as e:
     print(f"\nError during VLSM calculation: {e}")
 
+
+# --- Menu Interativo ---
+def run_ip_tool():
+    while True:
+        print("\n--- Ferramenta de Análise e Conversão de IP ---")
+        print("1. Converter IP Binário para Decimal")
+        print("2. Converter IP Decimal para Binário")
+        print("3. Analisar Propriedades de IP")
+        print("4. Realizar Cálculo VLSM")
+        print("5. Sair")
+
+        choice = input("Escolha uma opção (1-5): ")
+
+        if choice == '1':
+            binary_ip = input("Digite o endereço IP binário (ex: 11000000.10101000.00000001.00000001): ")
+            try:
+                decimal_result = binary_to_decimal_ip(binary_ip)
+                print(f"IP Binário: {binary_ip} -> IP Decimal: {decimal_result}")
+            except ValueError as e:
+                print(f"Erro: {e}")
+        elif choice == '2':
+            decimal_ip = input("Digite o endereço IP decimal (ex: 192.168.1.1): ")
+            try:
+                binary_result = decimal_to_binary_ip(decimal_ip)
+                print(f"IP Decimal: {decimal_ip} -> IP Binário: {binary_result}")
+            except ValueError as e:
+                print(f"Erro: {e}")
+        elif choice == '3':
+            decimal_ip = input("Digite o endereço IP decimal para análise (ex: 192.168.1.10): ")
+            subnet_mask = input("Digite a máscara de sub-rede (padrão: 255.255.255.0): ")
+            if not subnet_mask:
+                subnet_mask = '255.255.255.0'
+            try:
+                properties = analyze_ip_properties(decimal_ip, subnet_mask)
+                print(f"\nAnálise para IP: {decimal_ip}, Máscara: {subnet_mask}")
+                for key, value in properties.items():
+                    print(f"  {key}: {value}")
+            except ValueError as e:
+                print(f"Erro: {e}")
+        elif choice == '4':
+            try:
+                main_ip = input("Digite o endereço IP da rede principal (ex: 192.168.1.0): ")
+                main_cidr = int(input("Digite o prefixo CIDR da rede principal (ex: 24): "))
+                num_departments = int(input("Quantos departamentos precisam de sub-redes? "))
+                department_requirements = []
+                for i in range(num_departments):
+                    dept_name = input(f"Nome do departamento {i+1}: ")
+                    num_hosts = int(input(f"Número de hosts necessários para {dept_name}: "))
+                    department_requirements.append((dept_name, num_hosts))
+
+                vlsm_result = perform_vlsm_calculation(main_ip, main_cidr, department_requirements)
+                print(f"\n--- Resultados do Cálculo VLSM para {main_ip}/{main_cidr} ---")
+                for subnet in vlsm_result:
+                    print(f"  Departamento: {subnet['department']}, Hosts Solicitados: {subnet['requested_hosts']}, CIDR Alocado: /{subnet['allocated_cidr']}")
+                    print(f"    Rede: {subnet['network_address']}, Broadcast: {subnet['broadcast_address']}")
+                    print(f"    Primeiro Host: {subnet['first_usable_host']}, Último Host: {subnet['last_usable_host']}, Hosts Utilizáveis: {subnet['num_usable_hosts']}")
+            except ValueError as e:
+                print(f"Erro na entrada: {e}")
+            except Exception as e:
+                print(f"Erro no cálculo VLSM: {e}")
+        elif choice == '5':
+            print("Saindo da ferramenta. Até logo!")
+            break
+        else:
+            print("Opção inválida. Por favor, escolha um número entre 1 e 5.")
+
+# Para executar a ferramenta, chame:
+run_ip_tool()
