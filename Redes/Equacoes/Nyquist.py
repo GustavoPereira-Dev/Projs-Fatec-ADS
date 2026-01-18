@@ -1,47 +1,48 @@
 def nyquist_sampling_rate(max_frequency):
     """
-    Calcula a taxa de amostragem mínima (frequência de Nyquist) necessária
-    para um sinal, de acordo com o Teorema de Nyquist.
+    Calculates the minimum sampling rate (Nyquist frequency) required
+    for a signal, according to the Nyquist Theorem.
 
-    O Teorema de Nyquist afirma que, para reconstruir um sinal analógico
-    completamente a partir de suas amostras digitais, a taxa de amostragem
-    deve ser no mínimo o dobro da frequência mais alta presente no sinal.
+    The Nyquist Theorem states that, to fully reconstruct an analog signal
+    from its digital samples, the sampling rate must be at least twice
+    the highest frequency present in the signal.
 
     Args:
-        max_frequency (float): A frequência mais alta (em Hz) presente no sinal.
+        max_frequency (float): The highest frequency (in Hz) present in the signal.
 
     Returns:
-        float: A taxa de amostragem mínima necessária (em Hz).
+        float: The minimum required sampling rate (in Hz).
     Raises:
-        ValueError: Se a frequência máxima for negativa.
+        ValueError: If the maximum frequency is negative.
     """
     if max_frequency < 0:
-        raise ValueError("A frequência máxima não pode ser negativa.")
+        raise ValueError("The maximum frequency cannot be negative.")
     return 2 * max_frequency
 
-# --- Exemplos de Uso do Teorema de Nyquist ---
-print("### Teorema de Nyquist ###")
+def run_nyquist_tool():
+    print("\n--- Ferramenta do Teorema de Nyquist ---")
+    while True:
+        print("\nEscolha uma opção:")
+        print("1. Calcular Taxa de Amostragem de Nyquist")
+        print("2. Sair")
 
-# Exemplo 1: Sinal com frequência máxima de 100 Hz
-max_freq_1 = 100 # Hz
-nyquist_rate_1 = nyquist_sampling_rate(max_freq_1)
-print(f"Para um sinal com frequência máxima de {max_freq_1} Hz, a taxa de amostragem mínima (Nyquist) é de {nyquist_rate_1} Hz.")
+        choice = input("Sua escolha: ")
 
-# Exemplo 2: Sinal de áudio com frequência máxima de 20 kHz (faixa audível humana)
-max_freq_2 = 20000 # Hz (20 kHz)
-nyquist_rate_2 = nyquist_sampling_rate(max_freq_2)
-print(f"Para um sinal de áudio com frequência máxima de {max_freq_2/1000} kHz, a taxa de amostragem mínima (Nyquist) é de {nyquist_rate_2/1000} kHz.")
+        if choice == '1':
+            try:
+                max_freq_input = float(input("Digite a frequência máxima do sinal em Hz (ex: 20000 para 20kHz): "))
+                nyquist_rate = nyquist_sampling_rate(max_freq_input)
+                print(f"Para um sinal com frequência máxima de {max_freq_input} Hz, a taxa de amostragem mínima (Nyquist) é de {nyquist_rate} Hz.")
+            except ValueError as e:
+                print(f"Erro: {e}. Por favor, digite um número válido e não negativo.")
+        elif choice == '2':
+            print("Saindo da ferramenta do Teorema de Nyquist. Até logo!")
+            break
+        else:
+            print("Opção inválida. Por favor, escolha '1' ou '2'.")
 
-# Exemplo 3: Sinal de vídeo com frequência máxima de 5 MHz
-max_freq_3 = 5 * 10**6 # Hz (5 MHz)
-nyquist_rate_3 = nyquist_sampling_rate(max_freq_3)
-print(f"Para um sinal de vídeo com frequência máxima de {max_freq_3/10**6} MHz, a taxa de amostragem mínima (Nyquist) é de {nyquist_rate_3/10**6} MHz.")
-
-# Exemplo 4: Tentativa com frequência negativa
-try:
-    nyquist_sampling_rate(-50)
-except ValueError as e:
-    print(f"Erro esperado ao passar uma frequência negativa: {e}")
+# Chama a ferramenta interativa
+run_nyquist_tool()
 
 print("""
 **Explicação do Teorema de Nyquist:**

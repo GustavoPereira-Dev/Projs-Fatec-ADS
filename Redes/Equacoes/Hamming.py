@@ -27,65 +27,32 @@ def hamming_distance(binary_string1, binary_string2):
     for i in range(len(binary_string1)):
         if binary_string1[i] != binary_string2[i]:
             distance += 1
-            
+
     return distance
 
-# --- Example Usage ---
-print("### Hamming Distance Calculation ###")
+def run_hamming_tool():
+    print("\n--- Ferramenta de Cálculo de Distância de Hamming ---")
+    while True:
+        print("\nEscolha uma opção:")
+        print("1. Calcular Distância de Hamming")
+        print("2. Sair")
 
-# Valid examples
-example1_str1 = "1011001"
-example1_str2 = "1010001"
-try:
-    dist1 = hamming_distance(example1_str1, example1_str2)
-    print(f"\nStrings: '{example1_str1}', '{example1_str2}'")
-    print(f"Hamming Distance: {dist1}") # Expected: 1
-except ValueError as e:
-    print(f"Error for '{example1_str1}', '{example1_str2}': {e}")
+        choice = input("Sua escolha: ")
 
-example2_str1 = "11110000"
-example2_str2 = "00001111"
-try:
-    dist2 = hamming_distance(example2_str1, example2_str2)
-    print(f"\nStrings: '{example2_str1}', '{example2_str2}'")
-    print(f"Hamming Distance: {dist2}") # Expected: 8
-except ValueError as e:
-    print(f"Error for '{example2_str1}', '{example2_str2}': {e}")
+        if choice == '1':
+            try:
+                str1 = input("Digite a primeira string binária (ex: 1011001): ")
+                str2 = input("Digite a segunda string binária (ex: 1010001): ")
+                dist = hamming_distance(str1, str2)
+                print(f"Strings: '{str1}', '{str2}'")
+                print(f"Distância de Hamming: {dist}")
+            except ValueError as e:
+                print(f"Erro: {e}. Por favor, verifique as strings digitadas.")
+        elif choice == '2':
+            print("Saindo da ferramenta da Distância de Hamming. Até logo!")
+            break
+        else:
+            print("Opção inválida. Por favor, escolha '1' ou '2'.")
 
-example3_str1 = "00000"
-example3_str2 = "00000"
-try:
-    dist3 = hamming_distance(example3_str1, example3_str2)
-    print(f"\nStrings: '{example3_str1}', '{example3_str2}'")
-    print(f"Hamming Distance: {dist3}") # Expected: 0
-except ValueError as e:
-    print(f"Error for '{example3_str1}', '{example3_str2}': {e}")
-
-# Invalid examples (different lengths)
-example_invalid_len_str1 = "101"
-example_invalid_len_str2 = "1010"
-try:
-    dist_invalid_len = hamming_distance(example_invalid_len_str1, example_invalid_len_str2)
-    print(f"\nStrings: '{example_invalid_len_str1}', '{example_invalid_len_str2}'")
-    print(f"Hamming Distance: {dist_invalid_len}")
-except ValueError as e:
-    print(f"Error for '{example_invalid_len_str1}', '{example_invalid_len_str2}': {e}")
-
-# Invalid examples (non-binary characters)
-example_invalid_char_str1 = "10120"
-example_invalid_char_str2 = "10110"
-try:
-    dist_invalid_char = hamming_distance(example_invalid_char_str1, example_invalid_char_str2)
-    print(f"\nStrings: '{example_invalid_char_str1}', '{example_invalid_char_str2}'")
-    print(f"Hamming Distance: {dist_invalid_char}")
-except ValueError as e:
-    print(f"Error for '{example_invalid_char_str1}', '{example_invalid_char_str2}': {e}")
-
-example_invalid_char2_str1 = "abc"
-example_invalid_char2_str2 = "def"
-try:
-    dist_invalid_char2 = hamming_distance(example_invalid_char2_str1, example_invalid_char2_str2)
-    print(f"\nStrings: '{example_invalid_char2_str1}', '{example_invalid_char2_str2}'")
-    print(f"Hamming Distance: {dist_invalid_char2}")
-except ValueError as e:
-    print(f"Error for '{example_invalid_char2_str1}', '{example_invalid_char2_str2}': {e}")
+# Chama a ferramenta interativa
+run_hamming_tool()

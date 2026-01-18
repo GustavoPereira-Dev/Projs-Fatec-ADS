@@ -67,137 +67,53 @@ def convolutional_encode(message_bits, generator_polynomials, initial_state=None
                 if poly_str[i] == '1':
                     output_bit ^= shift_register[i] # XOR operation
             current_output_bits.append(output_bit)
-        
+
         encoded_bits.extend(current_output_bits)
 
     # 7. Convert the encoded_bits (list of integers) back into a single binary string.
     return ''.join(map(str, encoded_bits))
 
-# --- Example Usage ---
-print("### Simplified Convolutional Encoding ###")
+def run_convolutional_tool():
+    print("\n--- Ferramenta de Codificação Convolucional Simplificada ---")
+    while True:
+        print("\nEscolha uma opção:")
+        print("1. Realizar Codificação Convolucional")
+        print("2. Sair")
 
-# Example 1: Basic encoding
-message_1 = '1011'
-generator_polynomials_1 = ['1101', '1111'] # G1 = 1+X^1+X^3, G2 = 1+X^1+X^2+X^3
-# Number of memory elements = len(poly) - 1 = 4 - 1 = 3
-# Initial state will be '000'
+        choice = input("Sua escolha: ")
 
-try:
-    encoded_output_1 = convolutional_encode(message_1, generator_polynomials_1)
-    print(f"\nMessage: {message_1}")
-    print(f"Generator Polynomials: {generator_polynomials_1}")
-    print(f"Encoded Output: {encoded_output_1}")
-    # Expected output for message '1011' and initial state '000' (G1=1101, G2=1111):
-    # Input: 1
-    # Reg: [1,0,0,0]
-    # G1: 1*1^0+0*1^1+0*0^2+0*1^3 = 1 -> 1
-    # G2: 1*1^0+0*1^1+0*1^2+0*1^3 = 1 -> 1
-    # Output: 11
+        if choice == '1':
+            try:
+                message = input("Digite a mensagem binária (ex: 1011): ")
+                num_polynomials = int(input("Quantos polinômios geradores você tem? "))
+                generator_polynomials_input = []
+                for i in range(num_polynomials):
+                    poly = input(f"Digite o polinômio gerador {i+1} (binário, ex: 1101): ")
+                    generator_polynomials_input.append(poly)
 
-    # Input: 0
-    # Reg: [0,1,0,0]
-    # G1: 0*1+1*1+0*0+0*1 = 1 -> 1
-    # G2: 0*1+1*1+0*1+0*1 = 1 -> 1
-    # Output: 11
+                initial_state_choice = input("Deseja especificar um estado inicial para o registrador de deslocamento? (s/n, padrão 'n'): ")
+                initial_state = None
+                if initial_state_choice.lower() == 's':
+                    # Determine expected length based on first polynomial's length
+                    poly_length_for_state = len(generator_polynomials_input[0])
+                    num_memory_elements_for_state = poly_length_for_state - 1
+                    initial_state = input(f"Digite o estado inicial (binário, {num_memory_elements_for_state} bits): ")
 
-    # Input: 1
-    # Reg: [1,0,1,0]
-    # G1: 1*1+0*1+1*0+0*1 = 1 -> 1
-    # G2: 1*1+0*1+1*1+0*1 = 0 -> 0
-    # Output: 10
+                encoded_output = convolutional_encode(message, generator_polynomials_input, initial_state)
+                print(f"\nMensagem Original: {message}")
+                print(f"Polinômios Geradores: {generator_polynomials_input}")
+                print(f"Saída Codificada: {encoded_output}")
 
-    # Input: 1
-    # Reg: [1,1,0,1]
-    # G1: 1*1+1*1+0*0+1*1 = 1 -> 1
-    # G2: 1*1+1*1+0*1+1*1 = 1 -> 1
-    # Output: 11
+            except ValueError as e:
+                print(f"Erro: {e}. Por favor, verifique as entradas.")
+            except Exception as e:
+                print(f"Ocorreu um erro inesperado: {e}")
 
-    # Flush 0
-    # Reg: [0,1,1,0]
-    # G1: 0*1+1*1+1*0+0*1 = 1 -> 1
-    # G2: 0*1+1*1+1*1+0*1 = 0 -> 0
-    # Output: 10
+        elif choice == '2':
+            print("Saindo da ferramenta de Codificação Convolucional. Até logo!")
+            break
+        else:
+            print("Opção inválida. Por favor, escolha '1' ou '2'.")
 
-    # Flush 0
-    # Reg: [0,0,1,1]
-    # G1: 0*1+0*1+1*0+1*1 = 1 -> 1
-    # G2: 0*1+0*1+1*1+1*1 = 0 -> 0
-    # Output: 10
-
-    # Flush 0
-    # Reg: [0,0,0,1]
-    # G1: 0*1+0*1+0*0+1*1 = 1 -> 1
-    # G2: 0*1+0*1+0*1+1*1 = 1 -> 1
-    # Output: 11
-
-    # Expected: '11111011101011'
-
-except ValueError as e:
-    print(f"Error: {e}")
-
-# Example 2: Different message and generators
-message_2 = '10'
-generator_polynomials_2 = ['11', '10'] # G1 = 1+X^1, G2 = 1
-# Number of memory elements = len(poly) - 1 = 2 - 1 = 1
-# Initial state will be '0'
-
-try:
-    encoded_output_2 = convolutional_encode(message_2, generator_polynomials_2)
-    print(f"\nMessage: {message_2}")
-    print(f"Generator Polynomials: {generator_polynomials_2}")
-    print(f"Encoded Output: {encoded_output_2}")
-    # Expected output for message '10' and initial state '0' (G1=11, G2=10):
-    # Input: 1
-    # Reg: [1,0]
-    # G1: 1*1+0*1 = 1 -> 1
-    # G2: 1*1+0*0 = 1 -> 1
-    # Output: 11
-
-    # Input: 0
-    # Reg: [0,1]
-    # G1: 0*1+1*1 = 1 -> 1
-    # G2: 0*1+1*0 = 0 -> 0
-    # Output: 10
-
-    # Flush 0
-    # Reg: [0,0]
-    # G1: 0*1+0*1 = 0 -> 0
-    # G2: 0*1+0*0 = 0 -> 0
-    # Output: 00
-
-    # Expected: '111000'
-except ValueError as e:
-    print(f"Error: {e}")
-
-# Example 3: Invalid input - non-binary message
-message_3 = '1012'
-generator_polynomials_3 = ['110', '101']
-try:
-    convolutional_encode(message_3, generator_polynomials_3)
-except ValueError as e:
-    print(f"\nError (invalid message_bits): {e}")
-
-# Example 4: Invalid input - generator polynomial with invalid chars
-message_4 = '101'
-generator_polynomials_4 = ['110', '10X']
-try:
-    convolutional_encode(message_4, generator_polynomials_4)
-except ValueError as e:
-    print(f"\nError (invalid generator_polynomials): {e}")
-
-# Example 5: Invalid input - generator polynomials with different lengths
-message_5 = '101'
-generator_polynomials_5 = ['110', '10']
-try:
-    convolutional_encode(message_5, generator_polynomials_5)
-except ValueError as e:
-    print(f"\nError (generator_polynomials different lengths): {e}")
-
-# Example 6: Invalid input - initial_state wrong length
-message_6 = '101'
-generator_polynomials_6 = ['110', '101'] # 2 memory elements
-initial_state_6 = '0'
-try:
-    convolutional_encode(message_6, generator_polynomials_6, initial_state_6)
-except ValueError as e:
-    print(f"\nError (initial_state wrong length): {e}")
+# Chama a ferramenta interativa
+run_convolutional_tool()

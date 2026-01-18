@@ -24,50 +24,39 @@ def shannon_hartley_capacity(bandwidth, snr_linear):
         raise ValueError("A largura de banda não pode ser negativa.")
     if snr_linear < 0:
         raise ValueError("A relação sinal-ruído (SNR) linear não pode ser negativa.")
-    
+
     # A capacidade de Shannon é calculada por C = B * log2(1 + SNR)
     capacity = bandwidth * math.log2(1 + snr_linear)
     return capacity
 
-# --- Exemplos de Uso do Teorema de Shannon-Hartley ---
-print("### Teorema de Shannon-Hartley (Capacidade do Canal) ###")
+def run_shannon_hartley_tool():
+    print("\n--- Ferramenta do Teorema de Shannon-Hartley ---")
+    while True:
+        print("\nEscolha uma opção:")
+        print("1. Calcular Capacidade de Shannon")
+        print("2. Sair")
 
-# Exemplo 1: Canal telefônico
-# Largura de banda típica: 3100 Hz
-# SNR típica: 30 dB
-# Convertendo SNR de dB para linear: 10^(30/10) = 1000
-bandwidth_1 = 3100 # Hz
-snr_db_1 = 30      # dB
-snr_linear_1 = 10**(snr_db_1 / 10)
-try:
-    capacity_1 = shannon_hartley_capacity(bandwidth_1, snr_linear_1)
-    print(f"\nPara um canal com Largura de Banda de {bandwidth_1} Hz e SNR de {snr_db_1} dB ({snr_linear_1:.0f} linear):")
-    print(f"A capacidade máxima teórica é de {capacity_1:.2f} bps ({capacity_1 / 1000:.2f} kbps).")
-except ValueError as e:
-    print(f"Erro: {e}")
+        choice = input("Sua escolha: ")
 
-# Exemplo 2: Canal de satélite
-# Largura de banda: 1 MHz
-# SNR: 20 dB
-bandwidth_2 = 1 * 10**6 # Hz (1 MHz)
-snr_db_2 = 20           # dB
-snr_linear_2 = 10**(snr_db_2 / 10)
-try:
-    capacity_2 = shannon_hartley_capacity(bandwidth_2, snr_linear_2)
-    print(f"\nPara um canal com Largura de Banda de {bandwidth_2/10**6:.0f} MHz e SNR de {snr_db_2} dB ({snr_linear_2:.0f} linear):")
-    print(f"A capacidade máxima teórica é de {capacity_2:.2f} bps ({capacity_2 / 10**6:.2f} Mbps).")
-except ValueError as e:
-    print(f"Erro: {e}")
+        if choice == '1':
+            try:
+                bandwidth_input = float(input("Digite a largura de banda do canal em Hz (ex: 3100 para canal telefônico): "))
+                snr_db_input = float(input("Digite a relação sinal-ruído (SNR) em dB (ex: 30 para canal telefônico): "))
+                snr_linear = 10**(snr_db_input / 10)
 
-# Exemplo 3: Tentativa com valores negativos
-try:
-    shannon_hartley_capacity(-100, 100)
-except ValueError as e:
-    print(f"\nErro esperado ao passar largura de banda negativa: {e}")
-try:
-    shannon_hartley_capacity(1000, -50)
-except ValueError as e:
-    print(f"Erro esperado ao passar SNR linear negativa: {e}")
+                capacity = shannon_hartley_capacity(bandwidth_input, snr_linear)
+                print(f"Para Largura de Banda de {bandwidth_input} Hz e SNR de {snr_db_input} dB ({snr_linear:.2f} linear):")
+                print(f"A capacidade máxima teórica do canal é de {capacity:.2f} bps.")
+            except ValueError as e:
+                print(f"Erro: {e}. Por favor, digite números válidos e não negativos.")
+        elif choice == '2':
+            print("Saindo da ferramenta do Teorema de Shannon-Hartley. Até logo!")
+            break
+        else:
+            print("Opção inválida. Por favor, escolha '1' ou '2'.")
+
+# Chama a ferramenta interativa
+run_shannon_hartley_tool()
 
 print("""
 **Explicação do Teorema de Shannon-Hartley:**
