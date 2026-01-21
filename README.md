@@ -34,4 +34,6 @@ Seja bem vindo ao repositório de alguns projetos, códigos e conversões de con
 
 - [Programação Linear e Aplicações](./PL/): Alguns códigos no âmbito de uso da Programação Linear, com os usos de Métodos Gráficos, Analíticos, Solver, etc., sendo uma técnica matemática usada para otimizar o desempenho ou eficiência de um sistema, tornando-se amplamente utilizada no mundo dos negócios para solucionar problemas de planejamento, alocação de recursos e tomada de decisão.
 
+- [Redes de Computadores](./Redes/): Códigos e algoritmos de conversão dos conhecimentos adquiridos na disciplina, como fórmulas, cálculos de conversões e detalhes de endereços, configuração de Subredes e Simulação prática
+
 - [Estágio Supervisionado](https://github.com/GustavoPereira-Dev/AcademicReviewer): Repositório que desenvolvi e utilizei na disciplina pelo Estágio Supervisionado no âmbito de Desenvolvimento. Consiste em uma aplicação de avaliação dos documentos de Trabalho de Conclusão de Curso dos alunos nas disciplinas de Trabalho de Graduação

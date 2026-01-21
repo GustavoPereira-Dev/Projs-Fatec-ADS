@@ -454,3 +454,9 @@ for subnet in vlsm_result_3:
     Rede: 172.16.0.34, Broadcast: 172.16.0.35
     Primeiro Host: N/A, Último Host: N/A, Hosts Utilizáveis: 0
 ```
+
+## [Equações em Redes](./Equacoes/)
+Códigos que possuem algorítmos de fórmulas e outros tipos de cálculos avulsos no contexto da matéria (Fourier, Hamming, Nyquist, Shannon, CheckSum, Convolutional, etc.)
+
+## [Simulador de Redes de Computadores](./Simulador/)
+Simulação de Redes, o que incluí criação de Dispositivos, Criação/Alteração de endereços e propriedades de Aparelhos, conexões entre eles e entre outros itens, para se assemelhar de forma mais próxima à vida real e, especialmente, a modelagem utilizada pelo Cisco Packet Tracer
